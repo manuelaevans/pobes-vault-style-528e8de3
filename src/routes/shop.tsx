@@ -11,28 +11,28 @@ import {
 } from "@/lib/products";
 
 export type ShopSearch = {
-  q?: string;
-  category?: string;
-  sort?: string;
-  size?: string;
-  colour?: string;
-  availability?: string;
-  maxPrice?: number;
-  page?: number;
+  q?: string | undefined;
+  category?: string | undefined;
+  sort?: string | undefined;
+  size?: string | undefined;
+  colour?: string | undefined;
+  availability?: string | undefined;
+  maxPrice?: number | undefined;
+  page?: number | undefined;
 };
 
 const str = (v: unknown) => (typeof v === "string" && v ? v : undefined);
 
 export const Route = createFileRoute("/shop")({
   validateSearch: (search: Record<string, unknown>): ShopSearch => ({
-    q: str(search.q),
-    category: str(search.category),
-    sort: str(search.sort),
-    size: str(search.size),
-    colour: str(search.colour),
-    availability: str(search.availability),
-    maxPrice: Number(search.maxPrice) > 0 ? Number(search.maxPrice) : undefined,
-    page: Number(search.page) > 0 ? Number(search.page) : undefined,
+    q: str(search["q"]),
+    category: str(search["category"]),
+    sort: str(search["sort"]),
+    size: str(search["size"]),
+    colour: str(search["colour"]),
+    availability: str(search["availability"]),
+    maxPrice: Number(search["maxPrice"]) > 0 ? Number(search["maxPrice"]) : undefined,
+    page: Number(search["page"]) > 0 ? Number(search["page"]) : undefined,
   }),
   head: () => ({
     meta: [
