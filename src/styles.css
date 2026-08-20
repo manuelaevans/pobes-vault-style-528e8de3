@@ -19,6 +19,11 @@
  */
 
 @theme inline {
+  --font-display: "Anton", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --color-gold: var(--gold);
+  --color-gold-foreground: var(--gold-foreground);
+  --color-bone: var(--bone);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
