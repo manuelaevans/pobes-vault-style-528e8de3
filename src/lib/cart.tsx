@@ -63,9 +63,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
           const i = prev.findIndex(
             (l) => l.slug === line.slug && l.size === line.size && l.colour === line.colour,
           );
-          if (i >= 0) {
+          const existing = prev[i];
+          if (existing) {
             const next = [...prev];
-            next[i] = { ...next[i], qty: next[i].qty + line.qty };
+            next[i] = { ...existing, qty: existing.qty + line.qty };
             return next;
           }
           return [...prev, line];
