@@ -61,10 +61,6 @@ function Section({
 function Index() {
   return (
     <>
-      <div className="mx-auto max-w-7xl px-4 pt-4 xl:hidden">
-        <p className="label-xs text-muted-foreground">Vendor · Accra · Ghana</p>
-      </div>
-
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border">
         <img
@@ -105,7 +101,7 @@ function Index() {
         </div>
       </section>
 
-      <div className="mx-auto max-w-3xl px-4 pt-8">
+      <div className="mx-auto hidden max-w-3xl px-4 pt-8 xl:block">
         <SearchBar />
       </div>
 
