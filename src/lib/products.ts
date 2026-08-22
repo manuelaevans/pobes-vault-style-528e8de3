@@ -10,6 +10,16 @@ import teesAsset from "@/assets/tees.asset.json";
 import sweatpantsAsset from "@/assets/sweatpants.asset.json";
 import blackJeansAsset from "@/assets/jeans.asset.json";
 import greyJeansAsset from "@/assets/greyjeans.asset.json";
+import pumaBlackAsset from "@/assets/pumasuede-black.asset.json";
+import pumaBwAsset from "@/assets/pumasuede-bw.asset.json";
+import coachAsset from "@/assets/coachslides.asset.json";
+import airmaxAsset from "@/assets/airmax95.asset.json";
+import adiletteAsset from "@/assets/adilette.asset.json";
+import crocsAsset from "@/assets/crocs-yukon.asset.json";
+import timberlandAsset from "@/assets/timberland.asset.json";
+import poloHoodieAsset from "@/assets/polohoodie.asset.json";
+import burberryAsset from "@/assets/burberryslides.asset.json";
+import asicsAsset from "@/assets/asicsgel.asset.json";
 
 const jordan4 = jordan4Asset.url;
 const samba = sambaAsset.url;
@@ -26,9 +36,10 @@ const greyJeans = greyJeansAsset.url;
 
 export type Badge = "NEW" | "BEST SELLER" | "SALE" | "LIMITED";
 
-export type Category = "Shoes" | "Slides" | "Shirts" | "Jeans" | "Pants";
+export type Category = "Shoes" | "Slides" | "Shirts" | "Hoodies" | "Jeans" | "Pants";
 
-export const CATEGORIES: Category[] = ["Shoes", "Slides", "Shirts", "Jeans", "Pants"];
+export const CATEGORIES: Category[] = ["Shoes", "Slides", "Shirts", "Hoodies", "Jeans", "Pants"];
+
 
 export type Product = {
   slug: string;
@@ -237,6 +248,158 @@ export const PRODUCTS: Product[] = [
     addedIndex: 1,
     description:
       "Acid-washed grey denim with contrast white panels down the leg and a stacked, frayed flare hem.",
+  },
+  {
+    slug: "puma-suede-xl-triple-black",
+    name: "Suede XL — Triple Black",
+    brand: "Puma",
+    category: "Shoes",
+    price: 780,
+    images: [pumaBlackAsset.url],
+    sizes: ["40", "41", "42", "43", "44", "45"],
+    colours: ["Black"],
+    inStock: true,
+    badges: ["NEW"],
+    addedIndex: 22,
+    description:
+      "All-black suede XL with fat laces, gold Puma branding and the chunky ribbed sole. Boxed.",
+  },
+  {
+    slug: "puma-suede-xl-black-white",
+    name: "Suede XL — Black / White",
+    brand: "Puma",
+    category: "Shoes",
+    price: 780,
+    images: [pumaBwAsset.url],
+    sizes: ["40", "41", "42", "43", "44", "45"],
+    colours: ["Black", "White"],
+    inStock: true,
+    badges: ["NEW", "BEST SELLER"],
+    bestSellerRank: 6,
+    addedIndex: 21,
+    description:
+      "Black suede upper on a white XL sole with oversized white laces and the classic formstrip.",
+  },
+  {
+    slug: "nike-air-max-95-grey",
+    name: "Air Max 95 — Neutral Grey",
+    brand: "Nike",
+    category: "Shoes",
+    price: 1350,
+    images: [airmaxAsset.url],
+    sizes: ["40", "41", "42", "43", "44", "45"],
+    colours: ["Grey", "White", "Black"],
+    inStock: true,
+    badges: ["LIMITED"],
+    addedIndex: 20,
+    description:
+      "The OG Air Max 95 in layered greys with visible Air units front and back. Comes with box.",
+  },
+  {
+    slug: "asics-gel-kayano-14-cream",
+    name: "Gel-Kayano 14 — Cream / Silver",
+    brand: "Asics",
+    category: "Shoes",
+    price: 1250,
+    images: [asicsAsset.url],
+    sizes: ["40", "41", "42", "43", "44"],
+    colours: ["Cream", "Silver"],
+    inStock: true,
+    badges: ["NEW"],
+    addedIndex: 19,
+    description:
+      "Cream mesh runner with silver overlays and gel cushioning. Y2K shape that goes with everything.",
+  },
+  {
+    slug: "timberland-6-inch-wheat",
+    name: "6-Inch Premium Boot — Wheat",
+    brand: "Timberland",
+    category: "Shoes",
+    price: 1500,
+    images: [timberlandAsset.url],
+    sizes: ["40", "41", "42", "43", "44", "45"],
+    colours: ["Wheat"],
+    inStock: true,
+    badges: ["NEW"],
+    addedIndex: 18,
+    description:
+      "Waterproof wheat nubuck boot with padded collar and lug outsole. Original box and hang tag.",
+  },
+  {
+    slug: "crocs-yukon-vista-clogs",
+    name: "Yukon Vista Clogs",
+    brand: "Crocs",
+    category: "Slides",
+    price: 560,
+    images: [crocsAsset.url],
+    sizes: ["40", "41", "42", "43", "44", "45"],
+    colours: ["Black", "Brown", "Khaki", "Espresso"],
+    inStock: true,
+    badges: ["NEW"],
+    addedIndex: 17,
+    description:
+      "Rugged Yukon Vista clogs with adjustable heel strap and thick tread. Four colourways available.",
+  },
+  {
+    slug: "adidas-adilette-slides",
+    name: "Adilette Slides — Black / White",
+    brand: "Adidas",
+    category: "Slides",
+    price: 380,
+    images: [adiletteAsset.url],
+    sizes: ["40", "41", "42", "43", "44"],
+    colours: ["Black", "White"],
+    inStock: true,
+    badges: ["BEST SELLER"],
+    bestSellerRank: 7,
+    addedIndex: 16,
+    description:
+      "Classic three-stripe Adilette with a cushioned footbed. Brand new with tags.",
+  },
+  {
+    slug: "burberry-check-slides",
+    name: "Check Slides — Archive Beige",
+    brand: "Burberry",
+    category: "Slides",
+    price: 890,
+    images: [burberryAsset.url],
+    sizes: ["40", "41", "42", "43", "44"],
+    colours: ["Beige", "Black"],
+    inStock: true,
+    badges: ["LIMITED"],
+    addedIndex: 15,
+    description:
+      "Vintage check strap over a black moulded footbed. Comes with the Burberry box.",
+  },
+  {
+    slug: "coach-signature-slides",
+    name: "Signature Slides — Black",
+    brand: "Coach",
+    category: "Slides",
+    price: 620,
+    images: [coachAsset.url],
+    sizes: ["40", "41", "42", "43", "44"],
+    colours: ["Black"],
+    inStock: true,
+    badges: ["NEW"],
+    addedIndex: 14,
+    description:
+      "Monogram signature strap with a pebbled leather-look footbed and embossed Coach logo.",
+  },
+  {
+    slug: "polo-full-zip-hoodie-grey",
+    name: "Full-Zip Hoodie — Heather Grey",
+    brand: "Polo Ralph Lauren",
+    category: "Hoodies",
+    price: 550,
+    images: [poloHoodieAsset.url],
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    colours: ["Grey"],
+    inStock: true,
+    badges: ["NEW"],
+    addedIndex: 13,
+    description:
+      "Fleece-back full-zip hoodie in heather grey with the navy pony logo and kangaroo pockets.",
   },
 ];
 
