@@ -35,7 +35,8 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
-      <div className="mx-auto grid max-w-7xl grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 lg:gap-6">
+      <div className="mx-auto grid max-w-7xl grid-cols-[auto_auto_minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 lg:gap-6">
+        <BackButton />
         <Link to="/" className="font-display text-lg tracking-wide lg:text-xl">
           Pobe's <span className="text-gold">Vault</span>
         </Link>
