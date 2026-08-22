@@ -1,9 +1,23 @@
-import { Link } from "@tanstack/react-router";
-import { Menu, ShoppingBag, X } from "lucide-react";
+import { Link, useRouterState } from "@tanstack/react-router";
+import { ArrowLeft, Menu, ShoppingBag, X } from "lucide-react";
 import { useState } from "react";
 import { SearchBar } from "./search-bar";
 import { useCart, waLink } from "@/lib/cart";
 import { WHATSAPP_DISPLAY } from "@/lib/products";
+
+function BackButton() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  if (pathname === "/") return null;
+  return (
+    <button
+      onClick={() => window.history.back()}
+      aria-label="Go back"
+      className="shrink-0 rounded-sm border border-border p-2 transition-colors hover:border-gold"
+    >
+      <ArrowLeft className="h-4 w-4" />
+    </button>
+  );
+}
 
 const NAV = [
   { to: "/", label: "Home" },
