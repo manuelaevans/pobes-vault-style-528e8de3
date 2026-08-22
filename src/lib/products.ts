@@ -10,6 +10,16 @@ import teesAsset from "@/assets/tees.asset.json";
 import sweatpantsAsset from "@/assets/sweatpants.asset.json";
 import blackJeansAsset from "@/assets/jeans.asset.json";
 import greyJeansAsset from "@/assets/greyjeans.asset.json";
+import pumaBlackAsset from "@/assets/pumasuede-black.asset.json";
+import pumaBwAsset from "@/assets/pumasuede-bw.asset.json";
+import coachAsset from "@/assets/coachslides.asset.json";
+import airmaxAsset from "@/assets/airmax95.asset.json";
+import adiletteAsset from "@/assets/adilette.asset.json";
+import crocsAsset from "@/assets/crocs-yukon.asset.json";
+import timberlandAsset from "@/assets/timberland.asset.json";
+import poloHoodieAsset from "@/assets/polohoodie.asset.json";
+import burberryAsset from "@/assets/burberryslides.asset.json";
+import asicsAsset from "@/assets/asicsgel.asset.json";
 
 const jordan4 = jordan4Asset.url;
 const samba = sambaAsset.url;
@@ -26,9 +36,10 @@ const greyJeans = greyJeansAsset.url;
 
 export type Badge = "NEW" | "BEST SELLER" | "SALE" | "LIMITED";
 
-export type Category = "Shoes" | "Slides" | "Shirts" | "Jeans" | "Pants";
+export type Category = "Shoes" | "Slides" | "Shirts" | "Hoodies" | "Jeans" | "Pants";
 
-export const CATEGORIES: Category[] = ["Shoes", "Slides", "Shirts", "Jeans", "Pants"];
+export const CATEGORIES: Category[] = ["Shoes", "Slides", "Shirts", "Hoodies", "Jeans", "Pants"];
+
 
 export type Product = {
   slug: string;
