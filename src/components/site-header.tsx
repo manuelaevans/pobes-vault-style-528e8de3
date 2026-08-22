@@ -1,9 +1,23 @@
-import { Link } from "@tanstack/react-router";
-import { Menu, ShoppingBag, X } from "lucide-react";
+import { Link, useRouterState } from "@tanstack/react-router";
+import { ArrowLeft, Menu, ShoppingBag, X } from "lucide-react";
 import { useState } from "react";
 import { SearchBar } from "./search-bar";
 import { useCart, waLink } from "@/lib/cart";
 import { WHATSAPP_DISPLAY } from "@/lib/products";
+
+function BackButton() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  if (pathname === "/") return null;
+  return (
+    <button
+      onClick={() => window.history.back()}
+      aria-label="Go back"
+      className="shrink-0 rounded-sm border border-border p-2 transition-colors hover:border-gold"
+    >
+      <ArrowLeft className="h-4 w-4" />
+    </button>
+  );
+}
 
 const NAV = [
   { to: "/", label: "Home" },
@@ -21,7 +35,8 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
-      <div className="mx-auto grid max-w-7xl grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 lg:gap-6">
+      <div className="mx-auto grid max-w-7xl grid-cols-[auto_auto_minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 lg:gap-6">
+        <BackButton />
         <Link to="/" className="font-display text-lg tracking-wide lg:text-xl">
           Pobe's <span className="text-gold">Vault</span>
         </Link>
