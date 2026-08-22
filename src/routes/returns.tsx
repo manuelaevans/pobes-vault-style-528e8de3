@@ -42,7 +42,7 @@ export const Route = createFileRoute("/returns")({
         <ul>
           <li>Clearance and final-sale items</li>
           <li>Worn or damaged items</li>
-          <li>Accessories such as caps and belts once used</li>
+          <li>Worn slides or sandals</li>
         </ul>
         <p>Final terms are confirmed by Pobe's Vault when your order is placed.</p>
       </Prose>

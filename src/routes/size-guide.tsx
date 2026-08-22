@@ -41,7 +41,7 @@ const TABLES: { title: string; head: string[]; rows: string[][] }[] = [
     ],
   },
   {
-    title: "Shorts",
+    title: "Sweatpants",
     head: ["Size", "Waist (in)", "Length (in)"],
     rows: [
       ["S", "28–30", "18"],

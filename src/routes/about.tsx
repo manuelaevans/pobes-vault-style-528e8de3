@@ -31,7 +31,7 @@ export const Route = createFileRoute("/about")({
         <ul>
           <li>Clothing</li>
           <li>Footwear</li>
-          <li>Accessories</li>
+          <li>Sneakers, slides and clogs</li>
           <li>New and trending pieces</li>
           <li>Special deals</li>
         </ul>
