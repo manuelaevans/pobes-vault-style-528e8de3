@@ -1,31 +1,34 @@
-import samba from "@/assets/p-samba.jpg";
-import oldskool from "@/assets/p-oldskool.jpg";
-import slides from "@/assets/p-slides.jpg";
-import tee from "@/assets/p-tee.jpg";
-import jeans from "@/assets/p-jeans.jpg";
-import shorts from "@/assets/p-shorts.jpg";
-import acc from "@/assets/p-acc.jpg";
+import jordan4Asset from "@/assets/jordan4.asset.json";
+import sambaAsset from "@/assets/samba.asset.json";
+import campusAsset from "@/assets/campus.asset.json";
+import oldskoolAsset from "@/assets/oldskool.asset.json";
+import numerisAsset from "@/assets/numeris.asset.json";
+import bostonAsset from "@/assets/boston.asset.json";
+import amiriAsset from "@/assets/slides.asset.json";
+import yeezyAsset from "@/assets/yeezyslides.asset.json";
+import teesAsset from "@/assets/tees.asset.json";
+import sweatpantsAsset from "@/assets/sweatpants.asset.json";
+import blackJeansAsset from "@/assets/jeans.asset.json";
+import greyJeansAsset from "@/assets/greyjeans.asset.json";
+
+const jordan4 = jordan4Asset.url;
+const samba = sambaAsset.url;
+const campus = campusAsset.url;
+const oldskool = oldskoolAsset.url;
+const numeris = numerisAsset.url;
+const boston = bostonAsset.url;
+const amiri = amiriAsset.url;
+const yeezy = yeezyAsset.url;
+const tees = teesAsset.url;
+const sweatpants = sweatpantsAsset.url;
+const blackJeans = blackJeansAsset.url;
+const greyJeans = greyJeansAsset.url;
 
 export type Badge = "NEW" | "BEST SELLER" | "SALE" | "LIMITED";
 
-export type Category =
-  | "Shoes"
-  | "Shirts"
-  | "Jeans"
-  | "Pants"
-  | "Shorts"
-  | "Slides"
-  | "Accessories";
+export type Category = "Shoes" | "Slides" | "Shirts" | "Jeans" | "Pants";
 
-export const CATEGORIES: Category[] = [
-  "Shoes",
-  "Shirts",
-  "Jeans",
-  "Pants",
-  "Shorts",
-  "Slides",
-  "Accessories",
-];
+export const CATEGORIES: Category[] = ["Shoes", "Slides", "Shirts", "Jeans", "Pants"];
 
 export type Product = {
   slug: string;
@@ -49,229 +52,191 @@ export const WHATSAPP_DISPLAY = "0558763858";
 
 export const PRODUCTS: Product[] = [
   {
-    slug: "samba-white-black",
-    name: "Samba — White / Black",
-    brand: "Adidas",
+    slug: "air-jordan-4-white-cement",
+    name: "Air Jordan 4 — White Cement",
+    brand: "Jordan",
     category: "Shoes",
-    price: 320,
-    images: [samba, oldskool],
+    price: 1450,
+    images: [jordan4],
     sizes: ["40", "41", "42", "43", "44", "45"],
-    colours: ["White", "Black"],
+    colours: ["White", "Grey", "Black"],
     inStock: true,
     badges: ["NEW", "BEST SELLER"],
     bestSellerRank: 1,
     addedIndex: 12,
     description:
-      "A hand-picked pair in clean white with black stripes. Low profile suede and leather build that pairs with denim, shorts or trousers. Stock is limited and rotates whenever something new lands.",
+      "The White Cement 4 in full box. White leather upper with cement-speckled grey overlays, black netting and visible Air unit. Comes as pictured with box.",
   },
   {
-    slug: "old-skool-black-white",
+    slug: "adidas-samba-white-black",
+    name: "Samba — White / Black",
+    brand: "Adidas",
+    category: "Shoes",
+    price: 850,
+    images: [samba],
+    sizes: ["40", "41", "42", "43", "44", "45"],
+    colours: ["White", "Black"],
+    inStock: true,
+    badges: ["BEST SELLER"],
+    bestSellerRank: 2,
+    addedIndex: 11,
+    description:
+      "Clean white leather Samba with black stripes, gum sole and grey suede toe. Low profile, pairs with denim, shorts or trousers.",
+  },
+  {
+    slug: "adidas-campus-00s-black",
+    name: "Campus 00s — Black / White",
+    brand: "Adidas",
+    category: "Shoes",
+    price: 880,
+    images: [campus],
+    sizes: ["40", "41", "42", "43", "44"],
+    colours: ["Black", "White"],
+    inStock: true,
+    badges: ["NEW"],
+    addedIndex: 10,
+    description:
+      "Black suede Campus 00s with white three stripes, fat laces and gum outsole. Chunky retro shape, boxed.",
+  },
+  {
+    slug: "vans-old-skool-black-white",
     name: "Old Skool — Black / White",
     brand: "Vans",
     category: "Shoes",
-    price: 400,
-    oldPrice: 470,
-    images: [oldskool, samba],
+    price: 620,
+    oldPrice: 700,
+    images: [oldskool],
     sizes: ["39", "40", "41", "42", "43", "44"],
     colours: ["Black", "White"],
     inStock: true,
     badges: ["SALE", "BEST SELLER"],
-    bestSellerRank: 2,
-    addedIndex: 11,
+    bestSellerRank: 3,
+    addedIndex: 9,
     description:
-      "Canvas and suede skate silhouette in the classic black and white colourway. Padded collar, waffle outsole, everyday durability.",
+      "Canvas and suede skate silhouette with the classic white sidestripe. Padded collar, waffle outsole, everyday durability.",
   },
   {
-    slug: "air-force-triple-white",
-    name: "Air Force 1 — Triple White",
-    brand: "Nike",
+    slug: "numeris-low-black-white",
+    name: "Numeris Low — Black / White",
+    brand: "Numeriś",
     category: "Shoes",
-    price: 520,
-    images: [samba],
+    price: 950,
+    images: [numeris],
     sizes: ["40", "41", "42", "43", "44"],
-    colours: ["White"],
+    colours: ["Black", "White"],
     inStock: true,
-    badges: ["BEST SELLER"],
-    bestSellerRank: 3,
+    badges: ["LIMITED"],
     addedIndex: 8,
     description:
-      "The all-white staple. Leather upper, cushioned Air sole, goes with everything in the vault.",
+      "Distressed black canvas low top on a chunky white sawtooth sole, with fat rope laces. Ships with dust bag, spare laces and box.",
   },
   {
-    slug: "arizona-sand-sandals",
-    name: "Arizona — Sand Sandals",
+    slug: "birkenstock-boston-clogs",
+    name: "Boston Clogs — Suede & Leather",
     brand: "Birkenstock",
     category: "Slides",
-    price: 380,
-    images: [slides],
+    price: 780,
+    images: [boston],
     sizes: ["40", "41", "42", "43", "44"],
-    colours: ["Sand", "Brown"],
+    colours: ["Black", "Grey", "Sand", "Brown"],
     inStock: true,
     badges: ["NEW"],
-    addedIndex: 13,
+    addedIndex: 7,
     description:
-      "Two-strap, cork footbed sandals in soft sand leather. Broken-in comfort straight out of the box.",
+      "Closed-toe Boston clogs with buckle strap and cork footbed. Available in black, taupe grey, sand and oiled brown.",
   },
   {
-    slug: "leather-slides-black",
-    name: "Leather Slides — Black",
-    brand: "Pobe's Select",
+    slug: "amiri-slides",
+    name: "Amiri Slides — Logo Strap",
+    brand: "Amiri",
     category: "Slides",
-    price: 220,
-    oldPrice: 280,
-    images: [slides],
-    sizes: ["40", "41", "42", "43", "44", "45"],
-    colours: ["Black", "Brown"],
-    inStock: true,
-    badges: ["SALE"],
-    addedIndex: 6,
-    description: "Simple single-strap leather slides for everyday wear.",
-  },
-  {
-    slug: "essential-white-tee",
-    name: "Essential Tee — White",
-    brand: "Pobe's Select",
-    category: "Shirts",
-    price: 120,
-    images: [tee],
-    sizes: ["S", "M", "L", "XL", "XXL"],
-    colours: ["White", "Black", "Grey"],
+    price: 520,
+    images: [amiri],
+    sizes: ["40", "41", "42", "43", "44"],
+    colours: ["Blue", "Red", "Black"],
     inStock: true,
     badges: ["BEST SELLER"],
     bestSellerRank: 4,
-    addedIndex: 10,
+    addedIndex: 6,
     description:
-      "Heavyweight cotton crew neck with a boxy fit. A plain, well-cut white t-shirt that holds its shape after washing.",
+      "Moulded rubber slides with a raised logo strap. Blue, red and two black colourways, boxed.",
   },
   {
-    slug: "boxy-black-shirt",
-    name: "Boxy Shirt — Black",
+    slug: "yeezy-slides",
+    name: "Yeezy Slides",
+    brand: "Adidas",
+    category: "Slides",
+    price: 690,
+    oldPrice: 760,
+    images: [yeezy],
+    sizes: ["40", "41", "42", "43", "44"],
+    colours: ["Onyx", "Soot", "Ochre"],
+    inStock: true,
+    badges: ["SALE"],
+    addedIndex: 5,
+    description:
+      "Soft EVA foam slides with a grooved sole. Onyx black, soot brown and ochre tan, each with original box.",
+  },
+  {
+    slug: "essential-tee-two-pack",
+    name: "Essential Tee — Black / White",
     brand: "Pobe's Select",
     category: "Shirts",
     price: 180,
-    images: [tee],
-    sizes: ["S", "M", "L", "XL"],
-    colours: ["Black"],
+    images: [tees],
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    colours: ["Black", "White"],
     inStock: true,
-    badges: ["NEW"],
-    addedIndex: 14,
-    description: "Relaxed black shirt in soft cotton twill. Wear it open or buttoned.",
+    badges: ["BEST SELLER"],
+    bestSellerRank: 5,
+    addedIndex: 4,
+    description:
+      "Heavyweight cotton crew neck with a clean boxy fit. Take it in black, white, or both as a pair.",
   },
   {
-    slug: "grey-washed-flare-denim",
-    name: "Grey Washed Flare Denim",
-    brand: "Levi's",
+    slug: "grey-wide-sweatpants",
+    name: "Wide Leg Sweatpants — Grey",
+    brand: "Pobe's Select",
+    category: "Pants",
+    price: 320,
+    images: [sweatpants],
+    sizes: ["S", "M", "L", "XL"],
+    colours: ["Grey"],
+    inStock: true,
+    badges: ["NEW"],
+    addedIndex: 3,
+    description:
+      "Heather grey fleece-back sweatpants with an elastic waist, side pockets and a relaxed wide leg.",
+  },
+  {
+    slug: "black-painted-flare-jeans",
+    name: "Painted Flare Jeans — Black",
+    brand: "Pobe's Select",
     category: "Jeans",
-    price: 300,
-    images: [jeans],
+    price: 450,
+    images: [blackJeans],
+    sizes: ["30", "32", "34", "36"],
+    colours: ["Black"],
+    inStock: true,
+    badges: ["LIMITED"],
+    addedIndex: 2,
+    description:
+      "Washed black denim with white paint splatter, panelled flare through the leg and a raw frayed hem.",
+  },
+  {
+    slug: "grey-panelled-flare-jeans",
+    name: "Panelled Flare Jeans — Grey",
+    brand: "Pobe's Select",
+    category: "Jeans",
+    price: 430,
+    images: [greyJeans],
     sizes: ["30", "32", "34", "36"],
     colours: ["Grey"],
     inStock: true,
-    badges: ["LIMITED"],
-    addedIndex: 9,
-    description:
-      "Stone wash grey denim with a slight flare through the leg. Raw hem, parallel fit, single piece only in some sizes.",
-  },
-  {
-    slug: "straight-blue-jeans",
-    name: "Straight Jeans — Mid Blue",
-    brand: "Levi's",
-    category: "Jeans",
-    price: 280,
-    images: [jeans],
-    sizes: ["30", "32", "34", "36", "38"],
-    colours: ["Blue"],
-    inStock: false,
-    badges: [],
-    addedIndex: 4,
-    description: "Classic straight-leg blue denim, mid-rise, everyday wash.",
-  },
-  {
-    slug: "cargo-pants-black",
-    name: "Cargo Pants — Black",
-    brand: "Pobe's Select",
-    category: "Pants",
-    price: 260,
-    images: [shorts],
-    sizes: ["30", "32", "34", "36"],
-    colours: ["Black", "Olive"],
-    inStock: true,
     badges: ["NEW"],
-    addedIndex: 15,
-    description: "Utility cargo trousers with side pockets and a tapered leg.",
-  },
-  {
-    slug: "pleated-trousers-stone",
-    name: "Pleated Trousers — Stone",
-    brand: "Pobe's Select",
-    category: "Pants",
-    price: 240,
-    images: [shorts],
-    sizes: ["30", "32", "34"],
-    colours: ["Stone", "Black"],
-    inStock: true,
-    badges: [],
-    addedIndex: 3,
-    description: "Smart pleated trousers with a clean drape. Dress them up or down.",
-  },
-  {
-    slug: "cargo-shorts-black",
-    name: "Cargo Shorts — Black",
-    brand: "Pobe's Select",
-    category: "Shorts",
-    price: 170,
-    oldPrice: 210,
-    images: [shorts],
-    sizes: ["S", "M", "L", "XL"],
-    colours: ["Black"],
-    inStock: true,
-    badges: ["SALE"],
-    addedIndex: 7,
-    description: "Knee-length cargo shorts in a hard-wearing cotton blend.",
-  },
-  {
-    slug: "denim-shorts-washed",
-    name: "Denim Shorts — Washed Blue",
-    brand: "Pobe's Select",
-    category: "Shorts",
-    price: 150,
-    images: [jeans],
-    sizes: ["30", "32", "34"],
-    colours: ["Blue"],
-    inStock: true,
-    badges: [],
-    addedIndex: 2,
-    description: "Cut-off style washed denim shorts for warm days.",
-  },
-  {
-    slug: "cap-and-belt-set",
-    name: "Cap & Leather Belt Set",
-    brand: "Pobe's Select",
-    category: "Accessories",
-    price: 190,
-    oldPrice: 250,
-    images: [acc],
-    sizes: ["One Size"],
-    colours: ["Black", "Tan"],
-    inStock: true,
-    badges: ["LIMITED", "SALE"],
-    addedIndex: 5,
-    description:
-      "Bundle deal: a plain black cap plus a tan leather belt. Limited number of sets available.",
-  },
-  {
-    slug: "black-cap",
-    name: "Classic Cap — Black",
-    brand: "Pobe's Select",
-    category: "Accessories",
-    price: 90,
-    images: [acc],
-    sizes: ["One Size"],
-    colours: ["Black"],
-    inStock: true,
-    badges: [],
     addedIndex: 1,
-    description: "Six-panel cotton cap with an adjustable strap.",
+    description:
+      "Acid-washed grey denim with contrast white panels down the leg and a stacked, frayed flare hem.",
   },
 ];
 
