@@ -176,9 +176,10 @@ function ProductPage() {
               href={productWaLink(product, { size, colour, qty })}
               target="_blank"
               rel="noreferrer"
-              className="label-xs rounded-sm bg-gold py-3 text-center text-gold-foreground"
+              aria-label="Order via WhatsApp"
+              className="grid place-items-center rounded-sm bg-gold py-3 text-gold-foreground"
             >
-              Order via WhatsApp
+              <WhatsAppIcon className="h-5 w-5" />
             </a>
           </div>
 
