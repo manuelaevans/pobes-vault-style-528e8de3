@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { toast } from "sonner";
+import { WhatsAppIcon } from "@/components/whatsapp-icon";
 import { productWaLink, useCart } from "@/lib/cart";
 import { cedis, type Product } from "@/lib/products";
 
@@ -94,9 +95,10 @@ export function ProductCard({ product }: { product: Product }) {
               href={productWaLink(product, { size, colour, qty: 1 })}
               target="_blank"
               rel="noreferrer"
-              className="label-xs rounded-sm bg-gold py-2 text-center text-gold-foreground"
+              aria-label="Order via WhatsApp"
+              className="grid place-items-center rounded-sm bg-gold py-2 text-gold-foreground"
             >
-              WhatsApp
+              <WhatsAppIcon className="h-5 w-5" />
             </a>
           </div>
         </div>
