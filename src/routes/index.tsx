@@ -133,7 +133,7 @@ function Index() {
           {newArrivals()
             .slice(0, 4)
             .map((p) => (
-              <ProductCard key={p.slug} product={p} />
+              <ProductCard key={p.slug} product={p} compact />
             ))}
         </div>
       </Section>
@@ -150,7 +150,7 @@ function Index() {
           {bestSellers()
             .slice(0, 4)
             .map((p) => (
-              <ProductCard key={p.slug} product={p} />
+              <ProductCard key={p.slug} product={p} compact />
             ))}
         </div>
       </Section>
@@ -160,7 +160,7 @@ function Index() {
           {deals()
             .slice(0, 4)
             .map((p) => (
-              <ProductCard key={p.slug} product={p} />
+              <ProductCard key={p.slug} product={p} compact />
             ))}
         </div>
       </Section>
