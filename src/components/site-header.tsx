@@ -1,4 +1,4 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { ArrowLeft, Menu, ShoppingBag, X } from "lucide-react";
 import { useState } from "react";
 import { SearchBar } from "./search-bar";
@@ -7,11 +7,12 @@ import { WHATSAPP_DISPLAY } from "@/lib/products";
 
 function BackButton() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
   if (pathname === "/") return null;
   return (
     <button
-      onClick={() => window.history.back()}
-      aria-label="Go back"
+      onClick={() => navigate({ to: "/" })}
+      aria-label="Back to home"
       className="shrink-0 rounded-sm border border-border p-2 transition-colors hover:border-gold"
     >
       <ArrowLeft className="h-4 w-4" />
