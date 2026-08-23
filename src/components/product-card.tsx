@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { toast } from "sonner";
+import { WhatsAppIcon } from "@/components/whatsapp-icon";
 import { productWaLink, useCart } from "@/lib/cart";
 import { cedis, type Product } from "@/lib/products";
 
