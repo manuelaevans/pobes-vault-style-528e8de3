@@ -107,7 +107,14 @@ function ProductPage() {
             <p className="label-xs text-muted-foreground">Select size</p>
             <div className="mt-2 flex flex-wrap gap-2">
               {product.sizes.map((s) => (
-                <button key={s} onClick={() => setSize(s)} className={chip(s === size)}>
+                <button
+                  key={s}
+                  onClick={() => {
+                    setSize(s);
+                    setQty(1);
+                  }}
+                  className={chip(s === size)}
+                >
                   {s}
                 </button>
               ))}

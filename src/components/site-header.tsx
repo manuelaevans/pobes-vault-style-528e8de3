@@ -55,7 +55,7 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="flex items-center justify-end gap-2">
+        <div className="flex items-center justify-end gap-2 pl-6 sm:pl-10 lg:pl-6">
           <div className="hidden w-56 xl:block">
             <SearchBar placeholder="Search products…" />
           </div>
