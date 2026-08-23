@@ -4,7 +4,13 @@ import { WhatsAppIcon } from "@/components/whatsapp-icon";
 import { productWaLink, useCart } from "@/lib/cart";
 import { cedis, type Product } from "@/lib/products";
 
-export function ProductCard({ product }: { product: Product }) {
+export function ProductCard({
+  product,
+  compact = false,
+}: {
+  product: Product;
+  compact?: boolean;
+}) {
   const { add } = useCart();
   const badges = product.inStock ? product.badges : (["OUT OF STOCK"] as const);
   const size = product.sizes[0] ?? "One Size";
