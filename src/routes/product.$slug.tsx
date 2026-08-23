@@ -2,6 +2,7 @@ import { Link, createFileRoute, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { ProductCard } from "@/components/product-card";
+import { WhatsAppIcon } from "@/components/whatsapp-icon";
 import { productWaLink, useCart, waLink } from "@/lib/cart";
 import { bySlug, cedis, relatedTo } from "@/lib/products";
 
