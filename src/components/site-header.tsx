@@ -1,8 +1,9 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { ArrowLeft, Menu, ShoppingBag, X } from "lucide-react";
+import { ArrowLeft, Menu, Moon, ShoppingBag, Sun, X } from "lucide-react";
 import { useState } from "react";
 import { SearchBar } from "./search-bar";
 import { useCart, waLink } from "@/lib/cart";
+import { useTheme } from "@/lib/theme";
 import { WHATSAPP_DISPLAY } from "@/lib/products";
 
 function BackButton() {
@@ -16,6 +17,21 @@ function BackButton() {
       className="shrink-0 rounded-sm border border-border p-2 transition-colors hover:border-gold"
     >
       <ArrowLeft className="h-4 w-4" />
+    </button>
+  );
+}
+
+function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  const next = theme === "dark" ? "light" : "dark";
+  return (
+    <button
+      onClick={() => setTheme(next)}
+      aria-label={`Switch to ${next} appearance`}
+      title={`Switch to ${next} appearance`}
+      className="shrink-0 rounded-sm border border-border p-2 transition-colors hover:border-gold"
+    >
+      {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
     </button>
   );
 }
@@ -68,6 +84,7 @@ export function SiteHeader() {
           >
             WhatsApp
           </a>
+          <ThemeToggle />
           <Link
             to="/cart"
             aria-label="Cart"

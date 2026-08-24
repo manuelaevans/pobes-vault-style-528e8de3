@@ -16,14 +16,12 @@ type CartCtx = {
   clear: () => void;
   count: number;
   subtotal: number;
-  deliveryFee: number;
   total: number;
   detailed: { line: CartLine; product: Product }[];
 };
 
 const Ctx = createContext<CartCtx | null>(null);
 const KEY = "pobes-vault-cart";
-export const DELIVERY_FEE = 30;
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
@@ -50,14 +48,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
       .map((line) => ({ line, product: PRODUCTS.find((p) => p.slug === line.slug)! }))
       .filter((x) => Boolean(x.product));
     const subtotal = detailed.reduce((s, x) => s + x.product.price * x.line.qty, 0);
-    const deliveryFee = subtotal > 0 ? DELIVERY_FEE : 0;
     return {
       lines,
       detailed,
       count: lines.reduce((s, l) => s + l.qty, 0),
       subtotal,
-      deliveryFee,
-      total: subtotal + deliveryFee,
+      total: subtotal,
       add: (line) =>
         setLines((prev) => {
           const i = prev.findIndex(
@@ -111,7 +107,7 @@ export function productWaLink(
 
 export function cartWaLink(
   detailed: { line: CartLine; product: Product }[],
-  totals: { subtotal: number; deliveryFee: number; total: number },
+  totals: { subtotal: number; total: number },
   customer?: string,
 ) {
   const msg = [
@@ -123,7 +119,7 @@ export function cartWaLink(
     ),
     "",
     `Subtotal: ${cedis(totals.subtotal)}`,
-    `Delivery: ${cedis(totals.deliveryFee)}`,
+    "Delivery: charged separately based on location",
     `Total: ${cedis(totals.total)}`,
     ...(customer ? ["", customer] : []),
     "",

@@ -20,7 +20,7 @@ export const Route = createFileRoute("/cart")({
 });
 
 function CartPage() {
-  const { detailed, update, remove, subtotal, deliveryFee, total } = useCart();
+  const { detailed, update, remove, subtotal, total } = useCart();
 
   const selectCls =
     "h-9 rounded-sm border border-border bg-background px-2 text-xs text-foreground focus:border-gold focus:outline-none";
@@ -120,9 +120,11 @@ function CartPage() {
                   <dt className="text-muted-foreground">Subtotal</dt>
                   <dd>{cedis(subtotal)}</dd>
                 </div>
-                <div className="flex justify-between">
-                  <dt className="text-muted-foreground">Delivery fee</dt>
-                  <dd>{cedis(deliveryFee)}</dd>
+                <div className="flex justify-between gap-3">
+                  <dt className="text-muted-foreground">Delivery</dt>
+                  <dd className="text-right text-xs text-muted-foreground">
+                    Varies by location — confirmed on WhatsApp
+                  </dd>
                 </div>
                 <div className="hairline flex justify-between pt-3 font-bold">
                   <dt>Total</dt>
@@ -137,7 +139,7 @@ function CartPage() {
                   Checkout
                 </Link>
                 <a
-                  href={cartWaLink(detailed, { subtotal, deliveryFee, total })}
+                  href={cartWaLink(detailed, { subtotal, total })}
                   target="_blank"
                   rel="noreferrer"
                   className="label-xs rounded-sm bg-gold py-3 text-center text-gold-foreground"
