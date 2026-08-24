@@ -16,14 +16,12 @@ type CartCtx = {
   clear: () => void;
   count: number;
   subtotal: number;
-  deliveryFee: number;
   total: number;
   detailed: { line: CartLine; product: Product }[];
 };
 
 const Ctx = createContext<CartCtx | null>(null);
 const KEY = "pobes-vault-cart";
-export const DELIVERY_FEE = 30;
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
