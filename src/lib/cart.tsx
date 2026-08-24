@@ -119,7 +119,7 @@ export function cartWaLink(
     ),
     "",
     `Subtotal: ${cedis(totals.subtotal)}`,
-    `Delivery: ${cedis(totals.deliveryFee)}`,
+    "Delivery: charged separately based on location",
     `Total: ${cedis(totals.total)}`,
     ...(customer ? ["", customer] : []),
     "",

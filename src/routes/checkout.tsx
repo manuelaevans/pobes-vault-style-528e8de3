@@ -58,7 +58,7 @@ const FIELDS: { key: keyof Form; label: string; type?: string }[] = [
 ];
 
 function CheckoutPage() {
-  const { detailed, subtotal, deliveryFee, total } = useCart();
+  const { detailed, subtotal, total } = useCart();
   const [form, setForm] = useState<Form>(EMPTY);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -89,7 +89,7 @@ function CheckoutPage() {
     ]
       .filter(Boolean)
       .join("\n");
-    window.open(cartWaLink(detailed, { subtotal, deliveryFee, total }, customer), "_blank");
+    window.open(cartWaLink(detailed, { subtotal, total }, customer), "_blank");
   };
 
   if (detailed.length === 0) {
@@ -165,9 +165,11 @@ function CheckoutPage() {
               <dt className="text-muted-foreground">Subtotal</dt>
               <dd>{cedis(subtotal)}</dd>
             </div>
-            <div className="flex justify-between">
-              <dt className="text-muted-foreground">Delivery fee</dt>
-              <dd>{cedis(deliveryFee)}</dd>
+            <div className="flex justify-between gap-3">
+              <dt className="text-muted-foreground">Delivery</dt>
+              <dd className="text-right text-xs text-muted-foreground">
+                Varies by location — confirmed on WhatsApp
+              </dd>
             </div>
             <div className="hairline flex justify-between pt-3 font-bold">
               <dt>Total</dt>
