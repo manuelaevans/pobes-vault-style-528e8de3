@@ -48,14 +48,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
       .map((line) => ({ line, product: PRODUCTS.find((p) => p.slug === line.slug)! }))
       .filter((x) => Boolean(x.product));
     const subtotal = detailed.reduce((s, x) => s + x.product.price * x.line.qty, 0);
-    const deliveryFee = subtotal > 0 ? DELIVERY_FEE : 0;
     return {
       lines,
       detailed,
       count: lines.reduce((s, l) => s + l.qty, 0),
       subtotal,
-      deliveryFee,
-      total: subtotal + deliveryFee,
+      total: subtotal,
       add: (line) =>
         setLines((prev) => {
           const i = prev.findIndex(
