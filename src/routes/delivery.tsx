@@ -25,11 +25,10 @@ export const Route = createFileRoute("/delivery")({
           <li>Other regions nationwide via bus or courier</li>
         </ul>
         <h2>Delivery Fees</h2>
-        <ul>
-          <li>Within Accra: from GH₵30</li>
-          <li>Other regions: from GH₵50, confirmed based on your location</li>
-          <li>The exact fee is confirmed on WhatsApp before dispatch</li>
-        </ul>
+        <p>
+          Delivery fees are not added to your order total because they vary depending on your
+          location. We confirm the exact fee with you on WhatsApp before dispatch.
+        </p>
         <h2>Estimated Delivery Times</h2>
         <ul>
           <li>Accra: 1–2 working days</li>
