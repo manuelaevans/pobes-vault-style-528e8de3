@@ -107,7 +107,7 @@ export function productWaLink(
 
 export function cartWaLink(
   detailed: { line: CartLine; product: Product }[],
-  totals: { subtotal: number; deliveryFee: number; total: number },
+  totals: { subtotal: number; total: number },
   customer?: string,
 ) {
   const msg = [
