@@ -96,17 +96,26 @@ function CartPage() {
                           </option>
                         ))}
                       </select>
-                      <select
-                        className={selectCls}
-                        value={line.qty}
-                        onChange={(e) => update(i, { qty: Number(e.target.value) })}
-                      >
-                        {Array.from({ length: 10 }, (_, n) => n + 1).map((n) => (
-                          <option key={n} value={n}>
-                            Qty {n}
-                          </option>
-                        ))}
-                      </select>
+                      <div className="inline-flex items-center rounded-sm border border-border">
+                        <button
+                          type="button"
+                          aria-label="Decrease quantity"
+                          onClick={() => update(i, { qty: Math.max(1, line.qty - 1) })}
+                          className="px-3 py-1.5 text-base leading-none text-muted-foreground hover:text-gold"
+                        >
+                          −
+                        </button>
+                        <span className="w-8 text-center text-sm font-bold">{line.qty}</span>
+                        <button
+                          type="button"
+                          aria-label="Increase quantity"
+                          onClick={() => update(i, { qty: Math.min(20, line.qty + 1) })}
+                          className="px-3 py-1.5 text-base leading-none text-muted-foreground hover:text-gold"
+                        >
+                          +
+                        </button>
+                      </div>
+
                     </div>
                   </div>
                 </div>

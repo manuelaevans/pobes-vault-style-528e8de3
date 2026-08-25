@@ -166,8 +166,10 @@ function ProductPage() {
               disabled={!product.inStock}
               onClick={() => {
                 add({ slug: product.slug, size, colour, qty });
-                toast.success("Added to cart");
+                toast.success(`Added ${qty} × ${product.name} (${size} · ${colour}) to cart`);
+                setQty(1);
               }}
+
               className="label-xs rounded-sm bg-primary py-3 text-primary-foreground disabled:opacity-40"
             >
               Add to Cart
