@@ -300,7 +300,7 @@ export const PRODUCTS: Product[] = [
     name: "Air Force 1 — White",
     brand: "Nike",
     category: "Shoes",
-    price: 350,
+    price: 250,
     images: ["/images/airforce1.jpg"],
     sizes: ["40", "41", "42", "43", "44", "45"],
     colours: [ "White", "Black"],
