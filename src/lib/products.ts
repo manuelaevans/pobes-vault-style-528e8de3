@@ -100,7 +100,7 @@ export const PRODUCTS: Product[] = [
     brand: "Adidas",
     category: "Shoes",
     price: 550,
-    images: ["/images/sambagreen.jpg", "/images/airforce1a.jpg"],
+    images: ["/images/sambagreen.jpg"],
     sizes: ["40", "41", "42", "43", "44", "45"],
     colours: ["Green"],
     inStock: true,
