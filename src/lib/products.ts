@@ -95,6 +95,22 @@ export const PRODUCTS: Product[] = [
       "Clean white leather Samba with black stripes, gum sole and grey suede toe. Low profile, pairs with denim, shorts or trousers.",
   },
   {
+    slug: "adidas-samba-green",
+    name: "Samba OG — Green",
+    brand: "Adidas",
+    category: "Shoes",
+    price: 550,
+    images: ["/images/sambagreen.jpg"],
+    sizes: ["40", "41", "42", "43", "44", "45"],
+    colours: ["Green"],
+    inStock: true,
+    badges: ["BEST SELLER"],
+    bestSellerRank: 2,
+    addedIndex: 11,
+    description:
+      "Clean white-and-green Samba-inspired sneakers featuring a sleek retro silhouette, suede-style accents, and bold green detailing for an effortless everyday streetwear look.",
+  },
+  {
     slug: "adidas-campus-00s-black",
     name: "Campus 00s — Black / White",
     brand: "Adidas",
