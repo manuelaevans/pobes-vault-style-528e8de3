@@ -11,11 +11,11 @@ import { CTA } from "./scenes/CTA";
 import { COLORS } from "./theme";
 
 const heroes = [
-  { img: "jordan4.jpeg", name: "Air Jordan 4", sub: "White Cement", price: 1450 },
-  { img: "samba.jpeg", name: "Adidas Samba", sub: "White / Black", price: 850 },
-  { img: "boston.jpeg", name: "Boston Clogs", sub: "Suede & Leather", price: 780 },
-  { img: "timberland.jpeg", name: "Timberland 6″", sub: "Wheat Premium", price: 1500 },
-  { img: "polohoodie.jpeg", name: "Polo Full-Zip", sub: "Heather Grey", price: 550 },
+  { img: "jordan4.jpeg", name: "Air Jordan 4", sub: "White Cement" },
+  { img: "samba.jpeg", name: "Adidas Samba", sub: "White / Black" },
+  { img: "boston.jpeg", name: "Boston Clogs", sub: "Suede & Leather" },
+  { img: "timberland.jpeg", name: "Timberland 6″", sub: "Wheat Premium" },
+  { img: "polohoodie.jpeg", name: "Polo Full-Zip", sub: "Heather Grey" },
 ];
 
 const INTRO = 90;
