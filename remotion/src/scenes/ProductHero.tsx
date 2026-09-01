@@ -6,11 +6,10 @@ type Props = {
   img: string;
   name: string;
   sub: string;
-  price: number;
   index: number;
 };
 
-export const ProductHero: React.FC<Props> = ({ img, name, sub, price, index }) => {
+export const ProductHero: React.FC<Props> = ({ img, name, sub, index }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const flip = index % 2 === 0;
@@ -20,7 +19,7 @@ export const ProductHero: React.FC<Props> = ({ img, name, sub, price, index }) =
   const slide = interpolate(enter, [0, 1], [flip ? 120 : -120, 0]);
 
   const nameIn = spring({ frame: frame - 8, fps, config: { damping: 20, stiffness: 140 } });
-  const priceIn = spring({ frame: frame - 18, fps, config: { damping: 12, stiffness: 160 } });
+
 
   return (
     <AbsoluteFill>
@@ -85,22 +84,6 @@ export const ProductHero: React.FC<Props> = ({ img, name, sub, price, index }) =
             }}
           >
             {sub}
-          </div>
-          <div
-            style={{
-              marginTop: 38,
-              display: "inline-block",
-              padding: "18px 40px",
-              border: `3px solid ${COLORS.gold}`,
-              color: COLORS.gold,
-              fontFamily: display,
-              fontSize: 62,
-              letterSpacing: 1,
-              transform: `scale(${interpolate(priceIn, [0, 1], [0.7, 1])}) rotate(${interpolate(priceIn, [0, 1], [flip ? -4 : 4, 0])}deg)`,
-              opacity: priceIn,
-            }}
-          >
-            GH₵ {price.toLocaleString()}
           </div>
         </div>
       </AbsoluteFill>
