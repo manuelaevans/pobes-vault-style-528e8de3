@@ -43,18 +43,16 @@ export const MainVideo: React.FC = () => {
           timing={springTiming({ config: { damping: 200 }, durationInFrames: T })}
         />
 
-        {heroes.map((h, i) => (
-          <>
-            <TransitionSeries.Sequence key={h.img} durationInFrames={HERO}>
-              <ProductHero {...h} index={i} />
-            </TransitionSeries.Sequence>
-            <TransitionSeries.Transition
-              key={`${h.img}-t`}
-              presentation={i % 2 === 0 ? slide({ direction: "from-right" }) : slide({ direction: "from-left" })}
-              timing={linearTiming({ durationInFrames: T })}
-            />
-          </>
-        ))}
+        {heroes.flatMap((h, i) => [
+          <TransitionSeries.Sequence key={h.img} durationInFrames={HERO}>
+            <ProductHero {...h} index={i} />
+          </TransitionSeries.Sequence>,
+          <TransitionSeries.Transition
+            key={`${h.img}-t`}
+            presentation={i % 2 === 0 ? slide({ direction: "from-right" }) : slide({ direction: "from-left" })}
+            timing={linearTiming({ durationInFrames: T })}
+          />,
+        ])}
 
         <TransitionSeries.Sequence durationInFrames={MOSAIC}>
           <Mosaic />
