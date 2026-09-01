@@ -8,11 +8,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const bundled = await bundle({
   entryPoint: path.resolve(__dirname, "../src/index.ts"),
-  publicDir: path.resolve(__dirname, "../public"),
+  publicDir: "/tmp/rpublic",
   webpackOverride: (config) => config,
 });
 
-fs.cpSync(path.resolve(__dirname, "../public"), path.join(bundled, "public"), { recursive: true });
+fs.cpSync("/tmp/rpublic", path.join(bundled, "public"), { recursive: true });
 
 const browser = await openBrowser("chrome", {
   browserExecutable: process.env.PUPPETEER_EXECUTABLE_PATH ?? "/bin/chromium",
@@ -20,7 +20,7 @@ const browser = await openBrowser("chrome", {
   chromeMode: "chrome-for-testing",
 });
 
-const publicDir = path.resolve(__dirname, "../public");
+const publicDir = "/tmp/rpublic";
 const composition = await selectComposition({ serveUrl: bundled, id: "main", puppeteerInstance: browser, publicDir });
 
 await renderMedia({
