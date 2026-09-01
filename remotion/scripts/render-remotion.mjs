@@ -17,7 +17,8 @@ const browser = await openBrowser("chrome", {
   chromeMode: "chrome-for-testing",
 });
 
-const composition = await selectComposition({ serveUrl: bundled, id: "main", puppeteerInstance: browser });
+const publicDir = path.resolve(__dirname, "../public");
+const composition = await selectComposition({ serveUrl: bundled, id: "main", puppeteerInstance: browser, publicDir });
 
 await renderMedia({
   composition,
@@ -26,6 +27,7 @@ await renderMedia({
   outputLocation: process.argv[2] ?? "/mnt/documents/pobes-vault-ad.mp4",
   puppeteerInstance: browser,
   muted: true,
+  publicDir,
   concurrency: 1,
 });
 
