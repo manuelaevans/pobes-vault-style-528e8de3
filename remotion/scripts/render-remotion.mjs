@@ -1,6 +1,7 @@
 import { bundle } from "@remotion/bundler";
 import { renderMedia, selectComposition, openBrowser } from "@remotion/renderer";
 import path from "path";
+import fs from "fs";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -10,6 +11,8 @@ const bundled = await bundle({
   publicDir: path.resolve(__dirname, "../public"),
   webpackOverride: (config) => config,
 });
+
+fs.cpSync(path.resolve(__dirname, "../public"), path.join(bundled, "public"), { recursive: true });
 
 const browser = await openBrowser("chrome", {
   browserExecutable: process.env.PUPPETEER_EXECUTABLE_PATH ?? "/bin/chromium",
