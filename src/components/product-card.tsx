@@ -119,7 +119,7 @@ export function ProductCard({
             {product.name}
           </Link>
           <div className="shrink-0 text-right">
-            <p className="text-sm font-bold text-gold">{cedis(product.price)}</p>
+            <p className="text-sm font-bold text-gold">GH¢{product.price.toLocaleString()}</p>
             {product.oldPrice && (
               <p className="text-xs text-muted-foreground line-through">
                 {cedis(product.oldPrice)}
