@@ -464,28 +464,31 @@ export const PRODUCTS: Product[] = [
   },
 ];
 
-export const bySlug = (slug: string) => PRODUCTS.find((p) => p.slug === slug);
+export const bySlug = (slug: string, list: Product[] = PRODUCTS) =>
+  list.find((p) => p.slug === slug);
 
-export const newArrivals = () =>
-  [...PRODUCTS].sort((a, b) => b.addedIndex - a.addedIndex).slice(0, 8);
+export const newArrivals = (list: Product[] = PRODUCTS) =>
+  [...list].sort((a, b) => b.addedIndex - a.addedIndex).slice(0, 8);
 
-export const bestSellers = () =>
-  PRODUCTS.filter((p) => p.bestSellerRank).sort(
-    (a, b) => (a.bestSellerRank ?? 99) - (b.bestSellerRank ?? 99),
-  );
+export const bestSellers = (list: Product[] = PRODUCTS) =>
+  list
+    .filter((p) => p.bestSellerRank)
+    .sort((a, b) => (a.bestSellerRank ?? 99) - (b.bestSellerRank ?? 99));
 
-export const deals = () => PRODUCTS.filter((p) => p.oldPrice || p.badges.includes("LIMITED"));
+export const deals = (list: Product[] = PRODUCTS) =>
+  list.filter((p) => p.oldPrice || p.badges.includes("LIMITED"));
 
-export const relatedTo = (p: Product) =>
-  PRODUCTS.filter((x) => x.slug !== p.slug && x.category === p.category)
-    .concat(PRODUCTS.filter((x) => x.slug !== p.slug && x.category !== p.category))
+export const relatedTo = (p: Product, list: Product[] = PRODUCTS) =>
+  list
+    .filter((x) => x.slug !== p.slug && x.category === p.category)
+    .concat(list.filter((x) => x.slug !== p.slug && x.category !== p.category))
     .slice(0, 4);
 
-export const allSizes = () =>
-  Array.from(new Set(PRODUCTS.flatMap((p) => p.sizes))).sort((a, b) => a.localeCompare(b));
+export const allSizes = (list: Product[] = PRODUCTS) =>
+  Array.from(new Set(list.flatMap((p) => p.sizes))).sort((a, b) => a.localeCompare(b));
 
-export const allColours = () =>
-  Array.from(new Set(PRODUCTS.flatMap((p) => p.colours))).sort();
+export const allColours = (list: Product[] = PRODUCTS) =>
+  Array.from(new Set(list.flatMap((p) => p.colours))).sort();
 
 export function searchProducts(query: string, list: Product[] = PRODUCTS) {
   const q = query.trim().toLowerCase();
