@@ -4,11 +4,11 @@ import { PageHeader } from "@/components/page";
 import { SearchBar } from "@/components/search-bar";
 import {
   CATEGORIES,
-  PRODUCTS,
   allColours,
   allSizes,
   searchProducts,
 } from "@/lib/products";
+import { useProducts } from "@/lib/catalog";
 
 export type ShopSearch = {
   q?: string | undefined;
@@ -66,7 +66,8 @@ function ShopPage() {
   const set = (patch: ShopSearch) =>
     navigate({ search: (prev) => ({ ...prev, ...patch }) });
 
-  let list = searchProducts(search.q ?? "", PRODUCTS);
+  const products = useProducts();
+  let list = searchProducts(search.q ?? "", products);
   if (search.category) list = list.filter((p) => p.category === search.category);
   if (search.size) list = list.filter((p) => p.sizes.includes(search.size!));
   if (search.colour) list = list.filter((p) => p.colours.includes(search.colour!));
@@ -126,7 +127,7 @@ function ShopPage() {
             onChange={(e) => set({ size: e.target.value || undefined })}
           >
             <option value="">All sizes</option>
-            {allSizes().map((s) => (
+            {allSizes(products).map((s) => (
               <option key={s} value={s}>
                 Size {s}
               </option>
@@ -138,7 +139,7 @@ function ShopPage() {
             onChange={(e) => set({ colour: e.target.value || undefined })}
           >
             <option value="">All colours</option>
-            {allColours().map((c) => (
+            {allColours(products).map((c) => (
               <option key={c} value={c}>
                 {c}
               </option>

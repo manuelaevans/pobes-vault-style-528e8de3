@@ -5,6 +5,7 @@ import { ProductCard } from "@/components/product-card";
 import { SearchBar } from "@/components/search-bar";
 import { waLink } from "@/lib/cart";
 import { CATEGORIES, WHATSAPP_DISPLAY, bestSellers, deals, newArrivals } from "@/lib/products";
+import { useProducts } from "@/lib/catalog";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -130,7 +131,7 @@ function Index() {
         }
       >
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-          {newArrivals()
+          {newArrivals(products)
             .slice(0, 4)
             .map((p) => (
               <ProductCard key={p.slug} product={p} compact />
@@ -147,7 +148,7 @@ function Index() {
         }
       >
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-          {bestSellers()
+          {bestSellers(products)
             .slice(0, 4)
             .map((p) => (
               <ProductCard key={p.slug} product={p} compact />
@@ -157,7 +158,7 @@ function Index() {
 
       <Section title="Featured Deals">
         <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-          {deals()
+          {deals(products)
             .slice(0, 4)
             .map((p) => (
               <ProductCard key={p.slug} product={p} compact />

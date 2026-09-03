@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader } from "@/components/page";
 import { ProductCard } from "@/components/product-card";
 import { bestSellers } from "@/lib/products";
+import { useProducts } from "@/lib/catalog";
 
 export const Route = createFileRoute("/best-sellers")({
   head: () => ({
@@ -15,7 +16,12 @@ export const Route = createFileRoute("/best-sellers")({
       { property: "og:description", content: "Our most ordered footwear and clothing." },
     ],
   }),
-  component: () => (
+  component: BestSellersPage,
+});
+
+function BestSellersPage() {
+  const products = useProducts();
+  return (
     <>
       <PageHeader
         eyebrow="Customer Favourites"
@@ -23,10 +29,10 @@ export const Route = createFileRoute("/best-sellers")({
         subtitle="Not sure what to pick? These are the pieces customers keep coming back for."
       />
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 px-4 py-8 lg:grid-cols-4">
-        {bestSellers().map((p) => (
+        {bestSellers(products).map((p) => (
           <ProductCard key={p.slug} product={p} />
         ))}
       </div>
     </>
-  ),
-});
+  );
+}

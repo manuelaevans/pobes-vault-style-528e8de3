@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { PRODUCTS, WHATSAPP_NUMBER, cedis, type Product } from "./products";
+import { WHATSAPP_NUMBER, cedis, type Product } from "./products";
+import { useCatalog } from "./catalog";
 
 export type CartLine = {
   slug: string;
@@ -25,6 +26,7 @@ const KEY = "pobes-vault-cart";
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
+  const { products } = useCatalog();
 
   useEffect(() => {
     try {
@@ -45,7 +47,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<CartCtx>(() => {
     const detailed = lines
-      .map((line) => ({ line, product: PRODUCTS.find((p) => p.slug === line.slug)! }))
+      .map((line) => ({ line, product: products.find((p) => p.slug === line.slug)! }))
       .filter((x) => Boolean(x.product));
     const subtotal = detailed.reduce((s, x) => s + x.product.price * x.line.qty, 0);
     return {
@@ -72,7 +74,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         setLines((prev) => prev.map((l, i) => (i === index ? { ...l, ...patch } : l))),
       clear: () => setLines([]),
     };
-  }, [lines]);
+  }, [lines, products]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
