@@ -1,11 +1,11 @@
 import { supabase } from "@/integrations/supabase/client";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { usePaystackPayment } from "react-paystack";
 import { z } from "zod";
 import { PageHeader } from "@/components/page";
 import { cartWaLink, useCart } from "@/lib/cart";
 import { cedis } from "@/lib/products";
-import { Phone } from "lucide-react";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -67,30 +67,30 @@ function CheckoutPage() {
   const inputCls =
     "h-11 w-full rounded-sm border border-border bg-card px-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-gold focus:outline-none";
 
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const parsed = schema.safeParse(form);
-    if (!parsed.success) {
-      const next: Record<string, string> = {};
-      for (const issue of parsed.error.issues) next[String(issue.path[0])] = issue.message;
-      setErrors(next);
-      return;
-    }
+  // 1. Order Code & Paystack Config at TOP LEVEL of component
+  const orderCode = `PV-${Math.floor(1000 + Math.random() * 9000)}`;
 
-    setErrors({});
+  const paystackConfig = {
+    reference: orderCode,
+    email: form.email || "customer@pobesvault.com",
+    amount: Math.round(total * 100), // convert GHS to Pesewas
+    publicKey: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
+    currency: "GHS",
+  };
 
-    // 1. Generate unique order code
-    const orderCode = `PV-${Math.floor(1000 + Math.random() * 9000)}`;
+  const initializePayment = usePaystackPayment(paystackConfig);
 
-    // 2. Save order to Supabase
+  // 2. Paystack Success Callback
+  const onSuccess = async (reference: any) => {
+    // Save order to Supabase
     const { error } = await supabase.from("orders").insert([
       {
         order_code: orderCode,
         customer_name: form.name,
-        phone: form.phone,
-        location: `${form.city}, ${form.region}`,
-        note: form.directions ? `Directions: ${form.directions}` : "",
-        total_amount: total,
+        customer_phone: form.phone,
+        customer_email: form.email,
+        payment_ref: reference.reference,
+        status: "paid",
         items: detailed,
       },
     ]);
@@ -99,7 +99,7 @@ function CheckoutPage() {
       console.error("Error saving order to Supabase:", error.message);
     }
 
-    // 3. WhatsApp Redirect
+    // Build WhatsApp order summary
     const itemDetails = detailed
       .map(
         ({ line, product }) =>
@@ -107,7 +107,7 @@ function CheckoutPage() {
       )
       .join("\n");
 
-    const customer = [
+    const customerSummary = [
       `🛍️ *NEW ORDER: ${orderCode}*`,
       "",
       "*Order Items:*",
@@ -129,18 +129,42 @@ function CheckoutPage() {
       .filter(Boolean)
       .join("\n");
 
-    const waUrl = cartWaLink(detailed, { subtotal, total } as Parameters<typeof cartWaLink>[1]);
-    const message = encodeURIComponent(customer);
+    // Redirect to WhatsApp
+    const waUrl = cartWaLink(detailed, { subtotal, total });
+    const message = encodeURIComponent(customerSummary);
     const separator = waUrl.includes("?") ? "&" : "?";
     window.open(`${waUrl}${separator}text=${message}`, "_blank");
   };
+
+  const onClose = () => {
+    alert("Payment cancelled.");
+  };
+
+  // 3. Submit Handler
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const result = schema.safeParse(form);
+    if (!result.success) {
+      setErrors(
+        Object.fromEntries(result.error.issues.map((issue) => [issue.path[0], issue.message])),
+      );
+      return;
+    }
+
+    setErrors({});
+    initializePayment({ onSuccess, onClose });
+  };
+
   if (detailed.length === 0) {
     return (
       <>
         <PageHeader eyebrow="Order" title="Checkout" />
         <div className="py-20 text-center">
           <p className="text-sm text-muted-foreground">Your cart is empty.</p>
-          <Link to="/shop" className="label-xs mt-5 inline-block rounded-sm bg-gold px-5 py-3 text-gold-foreground">
+          <Link
+            to="/shop"
+            className="label-xs mt-5 inline-block rounded-sm bg-gold px-5 py-3 text-gold-foreground"
+          >
             Start Shopping
           </Link>
         </div>
@@ -153,7 +177,7 @@ function CheckoutPage() {
       <PageHeader
         eyebrow="Order"
         title="Checkout"
-        subtitle="Fill in your details and we'll confirm your order and delivery on WhatsApp."
+        subtitle="Fill in your details and pay securely. We will confirm delivery on WhatsApp."
       />
       <form onSubmit={submit} className="mx-auto grid max-w-7xl gap-8 px-4 py-8 lg:grid-cols-[minmax(0,1fr)_340px]">
         <div className="space-y-4">
@@ -185,7 +209,7 @@ function CheckoutPage() {
             >
               <option>Mobile Money</option>
               <option>Bank Transfer</option>
-              <option>Cash on Delivery</option>
+              <option>Card</option>
             </select>
           </div>
         </div>
@@ -219,13 +243,12 @@ function CheckoutPage() {
             </div>
           </dl>
           <button type="submit" className="label-xs mt-5 w-full rounded-sm bg-gold py-3 text-gold-foreground">
-            Place Order via WhatsApp
+            Pay Now & Confirm on WhatsApp
           </button>
           <p className="mt-3 text-xs text-muted-foreground">
-            We confirm stock, delivery fee and payment details on WhatsApp before dispatch.
+            Complete payment securely via Paystack, then we confirm delivery details on WhatsApp.
           </p>
         </aside>
       </form>
     </>
   );
-}

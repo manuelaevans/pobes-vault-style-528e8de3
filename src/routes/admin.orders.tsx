@@ -34,7 +34,7 @@ async function fetchOrders(): Promise<Order[]> {
   return (data ?? []).map((o) => ({
     ...(o as unknown as Order),
     items: (o.items as unknown as OrderItem[]) ?? [],
-    total_amount: Number(o.total),
+    total_amount: Number(o.total_amount),
   }));
 }
 
