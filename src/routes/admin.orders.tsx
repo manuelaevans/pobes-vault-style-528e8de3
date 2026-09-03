@@ -34,7 +34,7 @@ async function fetchOrders(): Promise<Order[]> {
   return (data ?? []).map((o) => ({
     ...(o as unknown as Order),
     items: (o.items as unknown as OrderItem[]) ?? [],
-    total: Number(o.total),
+    total_amount: Number(o.total),
   }));
 }
 
@@ -83,7 +83,7 @@ function OrdersAdmin() {
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
               <h2 className="font-display text-lg">
-                #{o.order_code} · <span className="text-gold">{cedis(o.total_amount)}</span>
+                #{o.order_code} · <span className="text-gold">{cedis(o.total_amount ?? o.total ?? 0)}</span>
               </h2>
               <p className="text-sm text-muted-foreground">
                 {o.customer_name} · {o.phone}
