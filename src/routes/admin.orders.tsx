@@ -47,7 +47,10 @@ function OrdersAdmin() {
 
   const setStatus = async (id: string, status: string) => {
     const { error: err } = await supabase.from("orders").update({ status }).eq("id", id);
-    if (err) return toast.error(err.message);
+    if (err) {
+      toast.error(err.message);
+      return;
+    }
     toast.success(`Order marked ${status}`);
     qc.invalidateQueries({ queryKey: ["admin", "orders"] });
   };
@@ -55,7 +58,10 @@ function OrdersAdmin() {
   const remove = async (id: string) => {
     if (!confirm("Delete this order?")) return;
     const { error: err } = await supabase.from("orders").delete().eq("id", id);
-    if (err) return toast.error(err.message);
+    if (err) {
+      toast.error(err.message);
+      return;
+    }
     toast.success("Order deleted");
     qc.invalidateQueries({ queryKey: ["admin", "orders"] });
   };
