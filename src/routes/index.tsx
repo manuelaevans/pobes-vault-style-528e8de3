@@ -60,6 +60,7 @@ function Section({
 }
 
 function Index() {
+  const products = useProducts();
   return (
     <>
       {/* Hero */}
