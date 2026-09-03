@@ -18,7 +18,7 @@ type Order = {
   location: string;
   note: string;
   items: OrderItem[];
-  total: number;
+  total_amount: number;
   status: string;
   created_at: string;
 };
@@ -83,7 +83,7 @@ function OrdersAdmin() {
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
               <h2 className="font-display text-lg">
-                #{o.order_code} · <span className="text-gold">{cedis(o.total)}</span>
+                #{o.order_code} · <span className="text-gold">{cedis(o.total_amount)}</span>
               </h2>
               <p className="text-sm text-muted-foreground">
                 {o.customer_name} · {o.phone}
