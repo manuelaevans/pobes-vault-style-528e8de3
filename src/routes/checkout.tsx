@@ -1,9 +1,11 @@
+import { supabase } from "@/integrations/supabase/client";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { z } from "zod";
 import { PageHeader } from "@/components/page";
 import { cartWaLink, useCart } from "@/lib/cart";
 import { cedis } from "@/lib/products";
+import { Phone } from "lucide-react";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -65,7 +67,7 @@ function CheckoutPage() {
   const inputCls =
     "h-11 w-full rounded-sm border border-border bg-card px-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-gold focus:outline-none";
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const parsed = schema.safeParse(form);
     if (!parsed.success) {
@@ -74,7 +76,28 @@ function CheckoutPage() {
       setErrors(next);
       return;
     }
+
     setErrors({});
+
+    // 1. Generate unique order code
+    const orderCode = `PV-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    // 2. Save order to Supabase
+    const { error } = await supabase.from("orders").insert([
+      {
+        order_code: orderCode,
+        customer_name: form.name,
+        phone: form.phone,
+        location: `${form.city}, ${form.region}`,
+        note: form.directions ? `Directions: ${form.directions}` : "",
+      },
+    ]);
+
+    if (error) {
+      console.error("Error saving order to Supabase:", error.message);
+    }
+
+    // 3. WhatsApp Redirect
     const customer = [
       "Customer details:",
       `Name: ${form.name}`,
@@ -83,15 +106,16 @@ function CheckoutPage() {
       form.email ? `Email: ${form.email}` : "",
       `Region: ${form.region}`,
       `City/Town: ${form.city}`,
-      `Address: ${form.address}`,
+      `Delivery Address: ${form.address}`,
       form.directions ? `Directions: ${form.directions}` : "",
-      `Preferred payment: ${form.payment}`,
-    ]
-      .filter(Boolean)
-      .join("\n");
-    window.open(cartWaLink(detailed, { subtotal, total }, customer), "_blank");
-  };
+      `Order Ref: ${orderCode}`,
+    ].filter(Boolean).join("\n");
 
+    const waUrl = cartWaLink(detailed, { subtotal, total } as Parameters<typeof cartWaLink>[1]);
+    const message = encodeURIComponent(customer);
+    const separator = waUrl.includes("?") ? "&" : "?";
+    window.open(`${waUrl}${separator}text=${message}`, "_blank");
+  };
   if (detailed.length === 0) {
     return (
       <>
