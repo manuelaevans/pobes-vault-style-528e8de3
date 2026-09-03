@@ -90,6 +90,8 @@ function CheckoutPage() {
         phone: form.phone,
         location: `${form.city}, ${form.region}`,
         note: form.directions ? `Directions: ${form.directions}` : "",
+        total_amount: total,
+        items: detailed,
       },
     ]);
 
