@@ -98,18 +98,34 @@ function CheckoutPage() {
     }
 
     // 3. WhatsApp Redirect
+    const itemDetails = detailed
+      .map(
+        ({ line, product }) =>
+          `• ${product.name} (${line.size} / ${line.colour}) × ${line.qty} - ${cedis(product.price * line.qty)}`,
+      )
+      .join("\n");
+
     const customer = [
-      "Customer details:",
+      `🛍️ *NEW ORDER: ${orderCode}*`,
+      "",
+      "*Order Items:*",
+      itemDetails,
+      "",
+      `*Total:* ${cedis(total)}`,
+      "",
+      "*Customer Details:*",
       `Name: ${form.name}`,
       `Phone: ${form.phone}`,
       `WhatsApp: ${form.whatsapp}`,
-      form.email ? `Email: ${form.email}` : "",
       `Region: ${form.region}`,
       `City/Town: ${form.city}`,
       `Delivery Address: ${form.address}`,
+      form.email ? `Email: ${form.email}` : "",
       form.directions ? `Directions: ${form.directions}` : "",
-      `Order Ref: ${orderCode}`,
-    ].filter(Boolean).join("\n");
+      `Payment: ${form.payment}`,
+    ]
+      .filter(Boolean)
+      .join("\n");
 
     const waUrl = cartWaLink(detailed, { subtotal, total } as Parameters<typeof cartWaLink>[1]);
     const message = encodeURIComponent(customer);
