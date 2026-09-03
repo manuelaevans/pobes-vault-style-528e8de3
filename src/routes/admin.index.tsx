@@ -77,6 +77,7 @@ function ProductsAdmin() {
   const [editing, setEditing] = useState<string | null>(null);
   const [draft, setDraft] = useState<Draft | null>(null);
   const [busy, setBusy] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const input =
     "h-11 w-full rounded-sm border border-border bg-card px-3 text-sm text-foreground focus:border-gold focus:outline-none";
@@ -294,8 +295,23 @@ function ProductsAdmin() {
         </form>
       )}
 
-      <ul className="space-y-2">
-        {managed.map((p) => (
+      <div className="mb-4">
+  <input
+    type="text"
+    placeholder="Search products to edit..."
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    className={input}
+  />
+</div>
+
+<ul className="space-y-2">
+  {managed
+    .filter((p) =>
+      p.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.category?.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .map((p) => (
           <li
             key={p.id}
             className="flex flex-wrap items-center gap-3 rounded-sm border border-border bg-card p-3"
