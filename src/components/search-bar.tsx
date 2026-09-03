@@ -1,7 +1,8 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { PRODUCTS, cedis, searchProducts } from "@/lib/products";
+import { cedis, searchProducts } from "@/lib/products";
+import { useProducts } from "@/lib/catalog";
 import { cn } from "@/lib/utils";
 
 export function SearchBar({
@@ -26,7 +27,8 @@ export function SearchBar({
     return () => document.removeEventListener("mousedown", onDoc);
   }, []);
 
-  const suggestions = q.trim() ? searchProducts(q, PRODUCTS).slice(0, 5) : [];
+  const products = useProducts();
+  const suggestions = q.trim() ? searchProducts(q, products).slice(0, 5) : [];
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();

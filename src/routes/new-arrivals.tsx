@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHeader } from "@/components/page";
 import { ProductCard } from "@/components/product-card";
 import { newArrivals } from "@/lib/products";
+import { useProducts } from "@/lib/catalog";
 
 export const Route = createFileRoute("/new-arrivals")({
   head: () => ({
@@ -15,7 +16,12 @@ export const Route = createFileRoute("/new-arrivals")({
       { property: "og:description", content: "Fresh drops, limited stock, rotating weekly." },
     ],
   }),
-  component: () => (
+  component: NewArrivalsPage,
+});
+
+function NewArrivalsPage() {
+  const products = useProducts();
+  return (
     <>
       <PageHeader
         eyebrow="Just Landed"
@@ -23,10 +29,10 @@ export const Route = createFileRoute("/new-arrivals")({
         subtitle="The newest pieces in the vault. Stock is limited and rotates whenever something new lands."
       />
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 px-4 py-8 lg:grid-cols-4">
-        {newArrivals().map((p) => (
+        {newArrivals(products).map((p) => (
           <ProductCard key={p.slug} product={p} />
         ))}
       </div>
     </>
-  ),
-});
+  );
+}

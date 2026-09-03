@@ -1,26 +1,19 @@
-import { Link, createFileRoute, notFound } from "@tanstack/react-router";
-import { useState } from "react";
+import { Link, createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { ProductCard } from "@/components/product-card";
 import { WhatsAppIcon } from "@/components/whatsapp-icon";
 import { productWaLink, useCart, waLink } from "@/lib/cart";
-import { bySlug, cedis, relatedTo } from "@/lib/products";
+import { bySlug, cedis, relatedTo, type Product } from "@/lib/products";
+import { useCatalog } from "@/lib/catalog";
 
 export const Route = createFileRoute("/product/$slug")({
-  loader: ({ params }) => {
+  head: ({ params }) => {
     const product = bySlug(params.slug);
-    if (!product) throw notFound();
-    return { product };
-  },
-  head: ({ loaderData }) => {
-    if (!loaderData) {
-      return {
-        meta: [{ title: "Product not found — Pobe's Vault" }, { name: "robots", content: "noindex" }],
-      };
-    }
-    const { product } = loaderData;
-    const title = `${product.name} — Pobe's Vault`;
-    const description = product.description.slice(0, 155);
+    const title = product ? `${product.name} — Pobe's Vault` : "Product — Pobe's Vault";
+    const description = product
+      ? product.description.slice(0, 155)
+      : "View this piece from the Pobe's Vault collection and order it on WhatsApp.";
     return {
       meta: [
         { title },
@@ -30,16 +23,37 @@ export const Route = createFileRoute("/product/$slug")({
       ],
     };
   },
-  component: ProductPage,
+  component: ProductRoute,
 });
 
-function ProductPage() {
-  const { product } = Route.useLoaderData();
+function ProductRoute() {
+  const { slug } = Route.useParams();
+  const { products, isLoading } = useCatalog();
+  const product = bySlug(slug, products);
+
+  if (!product) {
+    return (
+      <div className="px-4 py-20 text-center text-sm text-muted-foreground">
+        {isLoading ? "Loading…" : "This product is no longer available."}
+      </div>
+    );
+  }
+  return <ProductPage key={product.slug} product={product} products={products} />;
+}
+
+function ProductPage({ product, products }: { product: Product; products: Product[] }) {
   const { add } = useCart();
   const [size, setSize] = useState(product.sizes[0] ?? "One Size");
   const [colour, setColour] = useState(product.colours[0] ?? "—");
   const [qty, setQty] = useState(1);
   const [img, setImg] = useState(0);
+
+  useEffect(() => {
+    setSize(product.sizes[0] ?? "One Size");
+    setColour(product.colours[0] ?? "—");
+    setQty(1);
+    setImg(0);
+  }, [product.slug]);
 
   const chip = (active: boolean) =>
     "label-xs rounded-sm border px-3 py-2 " +
