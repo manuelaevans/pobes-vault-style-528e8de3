@@ -129,7 +129,10 @@ function CheckoutPage() {
         total,
         status: "paid",
       });
-      if (error) console.error("Could not save order:", error.message);
+      if (error) {
+        console.error("Could not save order:", error.message);
+        toast.error(`Order could not be saved: ${error.message}`);
+      }
 
       const summary = [
         `NEW ORDER: ${orderCode}`,
