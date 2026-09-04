@@ -1,10 +1,11 @@
 import { supabase } from "@/integrations/supabase/client";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { usePaystackPayment } from "react-paystack";
+import { toast } from "sonner";
 import { z } from "zod";
 import { PageHeader } from "@/components/page";
 import { cartWaLink, useCart } from "@/lib/cart";
+import { payWithPaystack } from "@/lib/paystack";
 import { cedis } from "@/lib/products";
 
 export const Route = createFileRoute("/checkout")({
@@ -60,89 +61,18 @@ const FIELDS: { key: keyof Form; label: string; type?: string }[] = [
 ];
 
 function CheckoutPage() {
-  const { detailed, subtotal, total } = useCart();
+  const { detailed, subtotal, total, clear } = useCart();
   const [form, setForm] = useState<Form>(EMPTY);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [busy, setBusy] = useState(false);
 
   const inputCls =
     "h-11 w-full rounded-sm border border-border bg-card px-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-gold focus:outline-none";
 
-  // 1. Order Code & Paystack Config at TOP LEVEL of component
-  const orderCode = `PV-${Math.floor(1000 + Math.random() * 9000)}`;
-
-  const paystackConfig = {
-    reference: orderCode,
-    email: form.email || "customer@pobesvault.com",
-    amount: Math.round(total * 100), // convert GHS to Pesewas
-    publicKey: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
-    currency: "GHS",
-  };
-
-  const initializePayment = usePaystackPayment(paystackConfig);
-
-  // 2. Paystack Success Callback
-  const onSuccess = async (reference: any) => {
-    // Save order to Supabase
-    const { error } = await supabase.from("orders").insert([
-      {
-        order_code: orderCode,
-        customer_name: form.name,
-        customer_phone: form.phone,
-        customer_email: form.email,
-        payment_ref: reference.reference,
-        status: "paid",
-        items: detailed,
-      },
-    ]);
-
-    if (error) {
-      console.error("Error saving order to Supabase:", error.message);
-    }
-
-    // Build WhatsApp order summary
-    const itemDetails = detailed
-      .map(
-        ({ line, product }) =>
-          `• ${product.name} (${line.size} / ${line.colour}) × ${line.qty} - ${cedis(product.price * line.qty)}`,
-      )
-      .join("\n");
-
-    const customerSummary = [
-      `🛍️ *NEW ORDER: ${orderCode}*`,
-      "",
-      "*Order Items:*",
-      itemDetails,
-      "",
-      `*Total:* ${cedis(total)}`,
-      "",
-      "*Customer Details:*",
-      `Name: ${form.name}`,
-      `Phone: ${form.phone}`,
-      `WhatsApp: ${form.whatsapp}`,
-      `Region: ${form.region}`,
-      `City/Town: ${form.city}`,
-      `Delivery Address: ${form.address}`,
-      form.email ? `Email: ${form.email}` : "",
-      form.directions ? `Directions: ${form.directions}` : "",
-      `Payment: ${form.payment}`,
-    ]
-      .filter(Boolean)
-      .join("\n");
-
-    // Redirect to WhatsApp
-    const waUrl = cartWaLink(detailed, { subtotal, total });
-    const message = encodeURIComponent(customerSummary);
-    const separator = waUrl.includes("?") ? "&" : "?";
-    window.open(`${waUrl}${separator}text=${message}`, "_blank");
-  };
-
-  const onClose = () => {
-    alert("Payment cancelled.");
-  };
-
-  // 3. Submit Handler
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (busy) return;
+
     const result = schema.safeParse(form);
     if (!result.success) {
       setErrors(
@@ -150,9 +80,96 @@ function CheckoutPage() {
       );
       return;
     }
-
     setErrors({});
-    initializePayment({ onSuccess, onClose });
+
+    const data = result.data;
+    const orderCode = `PV-${Date.now().toString(36).toUpperCase()}`;
+    const items = detailed.map(({ line, product }) => ({
+      slug: product.slug,
+      name: product.name,
+      size: line.size,
+      colour: line.colour,
+      qty: line.qty,
+      price: product.price,
+    }));
+
+    setBusy(true);
+    try {
+      const payment = await payWithPaystack({
+        email: data.email || "orders@pobesvault.com",
+        amountMinor: Math.round(total * 100),
+        reference: orderCode,
+        currency: "GHS",
+        metadata: { order_code: orderCode, customer: data.name, phone: data.phone },
+      });
+
+      if (payment.status === "cancelled") {
+        toast("Payment cancelled — your cart is still saved.");
+        return;
+      }
+
+      const location = [data.address, data.city, data.region].filter(Boolean).join(", ");
+      const note = [
+        `WhatsApp: ${data.whatsapp}`,
+        data.email ? `Email: ${data.email}` : "",
+        data.directions ? `Directions: ${data.directions}` : "",
+        `Payment method: ${data.payment}`,
+        `Paystack ref: ${payment.reference}`,
+      ]
+        .filter(Boolean)
+        .join(" | ");
+
+      const { error } = await supabase.from("orders").insert({
+        order_code: orderCode,
+        customer_name: data.name,
+        phone: data.phone,
+        location,
+        note,
+        items,
+        total,
+        status: "paid",
+      });
+      if (error) console.error("Could not save order:", error.message);
+
+      const summary = [
+        `NEW ORDER: ${orderCode}`,
+        "",
+        "Items:",
+        ...items.map(
+          (i) => `• ${i.name} (${i.size} / ${i.colour}) x${i.qty} — ${cedis(i.price * i.qty)}`,
+        ),
+        "",
+        `Total paid: ${cedis(total)}`,
+        `Paystack ref: ${payment.reference}`,
+        "",
+        "Customer:",
+        `Name: ${data.name}`,
+        `Phone: ${data.phone}`,
+        `WhatsApp: ${data.whatsapp}`,
+        `Region: ${data.region}`,
+        `City/Town: ${data.city}`,
+        `Address: ${data.address}`,
+        data.email ? `Email: ${data.email}` : "",
+        data.directions ? `Directions: ${data.directions}` : "",
+        "",
+        "Delivery fee to be confirmed based on location.",
+      ]
+        .filter(Boolean)
+        .join("\n");
+
+      const waUrl = cartWaLink(detailed, { subtotal, total });
+      const base = waUrl.split("?")[0];
+      window.open(`${base}?text=${encodeURIComponent(summary)}`, "_blank", "noopener");
+
+      clear();
+      setForm(EMPTY);
+      toast.success(`Payment received — order ${orderCode} confirmed.`);
+    } catch (err) {
+      console.error(err);
+      toast.error(err instanceof Error ? err.message : "Payment could not be started.");
+    } finally {
+      setBusy(false);
+    }
   };
 
   if (detailed.length === 0) {
@@ -179,7 +196,10 @@ function CheckoutPage() {
         title="Checkout"
         subtitle="Fill in your details and pay securely. We will confirm delivery on WhatsApp."
       />
-      <form onSubmit={submit} className="mx-auto grid max-w-7xl gap-8 px-4 py-8 lg:grid-cols-[minmax(0,1fr)_340px]">
+      <form
+        onSubmit={submit}
+        className="mx-auto grid max-w-7xl gap-8 px-4 py-8 lg:grid-cols-[minmax(0,1fr)_340px]"
+      >
         <div className="space-y-4">
           {FIELDS.map((f) => (
             <div key={f.key}>
@@ -218,7 +238,10 @@ function CheckoutPage() {
           <h2 className="font-display text-lg">Order Summary</h2>
           <ul className="mt-4 space-y-3 text-sm">
             {detailed.map(({ line, product }) => (
-              <li key={`${line.slug}-${line.size}-${line.colour}`} className="flex justify-between gap-3">
+              <li
+                key={`${line.slug}-${line.size}-${line.colour}`}
+                className="flex justify-between gap-3"
+              >
                 <span className="min-w-0 text-muted-foreground">
                   {product.name} · {line.size} · {line.colour} × {line.qty}
                 </span>
@@ -242,8 +265,12 @@ function CheckoutPage() {
               <dd className="text-gold">{cedis(total)}</dd>
             </div>
           </dl>
-          <button type="submit" className="label-xs mt-5 w-full rounded-sm bg-gold py-3 text-gold-foreground">
-            Pay Now & Confirm on WhatsApp
+          <button
+            type="submit"
+            disabled={busy}
+            className="label-xs mt-5 w-full rounded-sm bg-gold py-3 text-gold-foreground disabled:opacity-60"
+          >
+            {busy ? "Processing…" : "Pay Now & Confirm on WhatsApp"}
           </button>
           <p className="mt-3 text-xs text-muted-foreground">
             Complete payment securely via Paystack, then we confirm delivery details on WhatsApp.
@@ -252,3 +279,4 @@ function CheckoutPage() {
       </form>
     </>
   );
+}
