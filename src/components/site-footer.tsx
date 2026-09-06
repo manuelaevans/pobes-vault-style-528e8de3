@@ -2,15 +2,17 @@ import { Link } from "@tanstack/react-router";
 import { Instagram, MessageCircle, Phone } from "lucide-react";
 import { waLink } from "@/lib/cart";
 import { CATEGORIES, WHATSAPP_DISPLAY } from "@/lib/products";
+import { BrandMark } from "./brand-mark";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-16 border-t border-border bg-card">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:grid-cols-2 lg:grid-cols-4">
+    <footer className="mt-20 border-t border-border bg-card">
+      <div className="mx-auto grid max-w-[1440px] gap-10 px-4 py-16 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-12">
         <div>
-          <h3 className="font-display text-xl">
-            Pobe's <span className="text-gold">Vault</span>
-          </h3>
+          <div className="flex items-center gap-3">
+            <BrandMark className="h-14 w-14 object-contain" />
+            <h3 className="font-display text-2xl">Pobe's <span className="text-gold">Vault</span></h3>
+          </div>
           <p className="mt-3 text-sm text-muted-foreground">
             A fashion retail business bringing you a carefully selected range of clothing,
             footwear and accessories.
