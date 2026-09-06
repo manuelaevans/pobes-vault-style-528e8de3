@@ -1,10 +1,12 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { ArrowLeft, Menu, Moon, ShoppingBag, Sun, X } from "lucide-react";
+import { ArrowLeft, Menu, MessageCircle, Moon, ShoppingBag, Sun, X } from "lucide-react";
 import { useState } from "react";
 import { SearchBar } from "./search-bar";
 import { useCart, waLink } from "@/lib/cart";
 import { useTheme } from "@/lib/theme";
 import { WHATSAPP_DISPLAY } from "@/lib/products";
+import { BrandMark } from "./brand-mark";
+import { Button } from "./ui/button";
 
 function BackButton() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -14,7 +16,7 @@ function BackButton() {
     <button
       onClick={() => navigate({ to: "/" })}
       aria-label="Back to home"
-      className="shrink-0 rounded-sm border border-border p-2 transition-colors hover:border-gold"
+      className="grid h-9 w-9 shrink-0 place-items-center border border-border transition-colors hover:border-gold hover:text-gold"
     >
       <ArrowLeft className="h-4 w-4" />
     </button>
@@ -29,7 +31,7 @@ function ThemeToggle() {
       onClick={() => setTheme(next)}
       aria-label={`Switch to ${next} appearance`}
       title={`Switch to ${next} appearance`}
-      className="shrink-0 rounded-sm border border-border p-2 transition-colors hover:border-gold"
+      className="grid h-9 w-9 shrink-0 place-items-center border border-border transition-colors hover:border-gold hover:text-gold"
     >
       {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
     </button>
@@ -51,24 +53,27 @@ export function SiteHeader() {
   const wa = waLink("Hi Pobe's Vault, I'd like to ask about an item.");
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
-      <div className="mx-auto grid max-w-7xl grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 lg:gap-6">
-        <div className="flex items-center gap-2">
+    <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur-xl">
+      <div className="mx-auto grid max-w-[1440px] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 sm:px-6 lg:gap-8 lg:px-12 lg:py-4">
+        <div className="flex min-w-0 items-center gap-2">
           <BackButton />
           <ThemeToggle />
-          <Link to="/" className="font-display text-lg tracking-wide lg:text-xl">
-            Pobe's <span className="text-gold">Vault</span>
+          <Link to="/" className="ml-1 flex min-w-0 items-center gap-2.5">
+            <BrandMark className="h-10 w-10 shrink-0 object-contain lg:h-12 lg:w-12" />
+            <span className="hidden whitespace-nowrap font-display text-2xl leading-none sm:block lg:text-3xl">
+              Pobe's <span className="text-gold">Vault</span>
+            </span>
           </Link>
         </div>
 
-        <nav className="hidden min-w-0 items-center justify-center gap-5 lg:flex">
+        <nav className="hidden min-w-0 items-center justify-center gap-7 lg:flex">
           {NAV.map((n) => (
             <Link
               key={n.to}
               to={n.to}
               activeOptions={{ exact: n.to === "/" }}
               activeProps={{ className: "text-gold" }}
-              className="label-xs whitespace-nowrap text-muted-foreground transition-colors hover:text-foreground"
+              className="label-xs whitespace-nowrap text-muted-foreground transition-colors hover:text-gold"
             >
               {n.label}
             </Link>
@@ -79,18 +84,15 @@ export function SiteHeader() {
           <div className="hidden w-56 xl:block">
             <SearchBar placeholder="Search products…" />
           </div>
-          <a
-            href={wa}
-            target="_blank"
-            rel="noreferrer"
-            className="label-xs hidden shrink-0 rounded-sm bg-gold px-3 py-2 text-gold-foreground transition-opacity hover:opacity-90 sm:inline-block"
-          >
-            WhatsApp
-          </a>
+          <Button asChild variant="gold" size="icon" className="hidden sm:inline-flex" title="WhatsApp">
+            <a href={wa} target="_blank" rel="noreferrer" aria-label="WhatsApp">
+              <MessageCircle />
+            </a>
+          </Button>
           <Link
             to="/cart"
             aria-label="Cart"
-            className="relative shrink-0 rounded-sm border border-border p-2 hover:border-gold"
+            className="relative grid h-9 w-9 shrink-0 place-items-center border border-border hover:border-gold hover:text-gold"
           >
             <ShoppingBag className="h-4 w-4" />
             {count > 0 && (
@@ -102,14 +104,14 @@ export function SiteHeader() {
           <button
             onClick={() => setOpen((v) => !v)}
             aria-label="Menu"
-            className="shrink-0 rounded-sm border border-border p-2 lg:hidden"
+            className="grid h-9 w-9 shrink-0 place-items-center border border-border lg:hidden"
           >
             {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 pb-3 xl:hidden">
+      <div className="mx-auto max-w-[1440px] px-4 pb-3 sm:px-6 xl:hidden">
         <SearchBar />
       </div>
 

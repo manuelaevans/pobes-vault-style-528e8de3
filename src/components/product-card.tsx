@@ -18,20 +18,20 @@ export function ProductCard({
 
   if (compact) {
     return (
-      <article className="group flex flex-col overflow-hidden rounded-sm border border-border bg-card">
+      <article className="group flex min-w-0 flex-col">
         <Link
           to="/product/$slug"
           params={{ slug: product.slug }}
           className="flex flex-1 flex-col"
         >
-          <div className="relative aspect-square overflow-hidden bg-secondary">
+          <div className="relative aspect-[4/5] overflow-hidden bg-secondary ring-1 ring-border">
             <img
               src={product.images[0]}
               alt={product.name}
               loading="lazy"
               width={1000}
               height={1000}
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             />
             <div className="absolute left-2 top-2 flex flex-wrap gap-1">
               {badges.map((b) => (
@@ -50,15 +50,15 @@ export function ProductCard({
                 </span>
               ))}
             </div>
-            <div className="absolute inset-0 grid place-items-center bg-background/60 opacity-0 transition-opacity group-hover:opacity-100">
-              <span className="label-xs rounded-sm bg-gold px-4 py-2 text-gold-foreground">
+            <div className="absolute inset-0 grid place-items-center bg-background/55 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <span className="label-xs bg-bone px-5 py-3 text-background">
                 View Product
               </span>
             </div>
           </div>
 
-          <div className="flex flex-1 flex-col gap-1 p-3">
-            <p className="min-w-0 font-display text-sm leading-tight group-hover:text-gold">
+          <div className="flex flex-1 flex-col gap-1 pt-4">
+            <p className="min-w-0 font-display text-lg leading-tight group-hover:text-gold sm:text-xl">
               {product.name}
             </p>
             <div className="mt-auto">

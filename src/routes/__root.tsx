@@ -16,6 +16,7 @@ import { CatalogProvider } from "../lib/catalog";
 import { ThemeProvider } from "../lib/theme";
 import { SiteHeader } from "../components/site-header";
 import { SiteFooter } from "../components/site-footer";
+import { RouteLoader } from "../components/route-loader";
 import { Toaster } from "../components/ui/sonner";
 
 function NotFoundComponent() {
@@ -83,17 +84,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Pobe's Vault — Carefully Selected Fashion" },
+       { title: "Pobe's Vault — Premium Fashion in Ghana" },
       {
         name: "description",
-        content:
-          "Pobe's Vault is a fashion retail store offering hand-picked clothing, footwear and accessories with WhatsApp ordering and delivery in Ghana.",
+         content: "Shop curated sneakers, clothing and accessories from Pobe's Vault, with secure checkout and nationwide delivery in Ghana.",
       },
       { name: "author", content: "Pobe's Vault" },
       { property: "og:title", content: "Pobe's Vault" },
       {
         property: "og:description",
-        content: "Carefully selected clothing, footwear and accessories.",
+         content: "Curated sneakers, clothing and accessories from Ghana's fashion vault.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -107,13 +107,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;700&display=swap",
+         href: "https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Bebas+Neue&display=swap",
       },
-      { rel: "icon", type: "image/png", href: "/favicon-96x96.png?v=9", sizes: "96x96" },
-    { rel: "icon", type: "image/svg+xml", href: "/favicon.svg?v=9" },
-    { rel: "shortcut icon", href: "/favicon.ico?v=9" },
-    { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png?v=9" },
-    { rel: "manifest", href: "/site.webmanifest" },
+       { rel: "icon", type: "image/png", href: "/favicon.png?v=10", sizes: "64x64" },
+       { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png?v=10" },
+       { rel: "manifest", href: "/site.webmanifest" },
     ],
   }),
   shellComponent: RootShell,
@@ -144,6 +142,7 @@ function RootComponent() {
       <ThemeProvider>
         <CatalogProvider>
         <CartProvider>
+           <RouteLoader />
           <div className="flex min-h-screen flex-col">
             <SiteHeader />
             <main className="flex-1">
