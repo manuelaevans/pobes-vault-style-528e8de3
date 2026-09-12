@@ -11,15 +11,19 @@ import { CATEGORIES, WHATSAPP_DISPLAY, bestSellers, newArrivals } from "@/lib/pr
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Pobe's Vault — Premium Fashion in Ghana" },
+      { title: "Pobe's Vault - Premium Fashion in Ghana" },
       {
         name: "description",
-        content: "Shop curated sneakers, clothing and accessories at Pobe's Vault, with secure checkout and nationwide delivery in Ghana.",
+        content: "Shop curated sneakers, clothing and accessories at Pobe's Vault.",
       },
-      { property: "og:title", content: "Pobe's Vault — Premium Fashion in Ghana" },
-      { property: "og:description", content: "Curated sneakers, clothing and accessories from Ghana's fashion vault." },
+      { property: "og:title", content: "Pobe's Vault - Premium Fashion in Ghana" },
+      { property: "og:description", content: "Curated sneakers, clothing and accessories." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://www.pobesvault.com" },
+      
+      
+      { property: "og:image", content: "https://www.pobesvault.com/logo.png" },
+      { name: "twitter:image", content: "https://www.pobesvault.com/logo.png" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "canonical", href: "https://www.pobesvault.com" }],
