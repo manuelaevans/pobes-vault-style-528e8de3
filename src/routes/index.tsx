@@ -19,10 +19,10 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Pobe's Vault — Premium Fashion in Ghana" },
       { property: "og:description", content: "Curated sneakers, clothing and accessories from Ghana's fashion vault." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://pobes-vault-style.lovable.app" },
+      { property: "og:url", content: "https://www.pobesvault.com" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://pobes-vault-style.lovable.app" }],
+    links: [{ rel: "canonical", href: "https://www.pobesvault.com" }],
   }),
   component: Index,
 });
@@ -61,7 +61,7 @@ function Index() {
           <div className="max-w-3xl animate-fade-in">
             <div className="mb-5 flex items-center gap-3">
               <BrandMark className="h-14 w-14 object-contain sm:h-16 sm:w-16" />
-              <p className="label-xs text-gold">Accra · Ghana · Est. 2024</p>
+              <p className="label-xs text-gold">Accra · Ghana · Est. 2026</p>
             </div>
             <h1 className="max-w-2xl font-display text-6xl leading-[0.88] sm:text-8xl lg:text-9xl">Pobe's<br /><span className="text-gold">Vault</span></h1>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground sm:text-lg">Step into a private edit of standout sneakers, easy streetwear and everyday pieces selected to make an impression.</p>
