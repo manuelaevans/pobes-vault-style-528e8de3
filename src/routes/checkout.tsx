@@ -5,7 +5,6 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { PageHeader } from "@/components/page";
 import { cartWaLink, useCart } from "@/lib/cart";
-import { payWithPaystack } from "@/lib/paystack";
 import { cedis } from "@/lib/products";
 
 export const Route = createFileRoute("/checkout")({
@@ -18,6 +17,8 @@ export const Route = createFileRoute("/checkout")({
       },
       { property: "og:title", content: "Checkout — Pobe's Vault" },
       { property: "og:description", content: "Simple checkout, confirmed on WhatsApp." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: CheckoutPage,
@@ -27,12 +28,11 @@ const schema = z.object({
   name: z.string().trim().min(2, "Enter your full name").max(100),
   phone: z.string().trim().min(9, "Enter a valid phone number").max(20),
   whatsapp: z.string().trim().min(9, "Enter a valid WhatsApp number").max(20),
-  email: z.string().trim().email("Enter a valid email").max(255).or(z.literal("")),
+  email: z.string().trim().min(1, "Email is required").email("Enter a valid email").max(255),
   region: z.string().trim().min(2, "Enter your region").max(60),
   city: z.string().trim().min(2, "Enter your city or town").max(60),
   address: z.string().trim().min(4, "Enter your delivery address").max(200),
   directions: z.string().trim().max(300),
-  payment: z.string(),
 });
 
 type Form = z.infer<typeof schema>;
@@ -46,14 +46,13 @@ const EMPTY: Form = {
   city: "",
   address: "",
   directions: "",
-  payment: "Mobile Money",
 };
 
 const FIELDS: { key: keyof Form; label: string; type?: string }[] = [
   { key: "name", label: "Full Name" },
   { key: "phone", label: "Phone Number", type: "tel" },
   { key: "whatsapp", label: "WhatsApp Number", type: "tel" },
-  { key: "email", label: "Email (optional)", type: "email" },
+  { key: "email", label: "Email Address", type: "email" },
   { key: "region", label: "Region" },
   { key: "city", label: "City / Town" },
   { key: "address", label: "Delivery Address" },
@@ -95,26 +94,11 @@ function CheckoutPage() {
 
     setBusy(true);
     try {
-      const payment = await payWithPaystack({
-        email: data.email || "orders@pobesvault.com",
-        amountMinor: Math.round(total * 100),
-        reference: orderCode,
-        currency: "GHS",
-        metadata: { order_code: orderCode, customer: data.name, phone: data.phone },
-      });
-
-      if (payment.status === "cancelled") {
-        toast("Payment cancelled — your cart is still saved.");
-        return;
-      }
-
       const location = [data.address, data.city, data.region].filter(Boolean).join(", ");
       const note = [
         `WhatsApp: ${data.whatsapp}`,
-        data.email ? `Email: ${data.email}` : "",
+        `Email: ${data.email}`,
         data.directions ? `Directions: ${data.directions}` : "",
-        `Payment method: ${data.payment}`,
-        `Paystack ref: ${payment.reference}`,
       ]
         .filter(Boolean)
         .join(" | ");
@@ -127,11 +111,12 @@ function CheckoutPage() {
         note,
         items,
         total,
-        status: "paid",
+        status: "pending",
       });
       if (error) {
         console.error("Could not save order:", error.message);
         toast.error(`Order could not be saved: ${error.message}`);
+        return;
       }
 
       const summary = [
@@ -142,8 +127,7 @@ function CheckoutPage() {
           (i) => `• ${i.name} (${i.size} / ${i.colour}) x${i.qty} — ${cedis(i.price * i.qty)}`,
         ),
         "",
-        `Total paid: ${cedis(total)}`,
-        `Paystack ref: ${payment.reference}`,
+        `Order total: ${cedis(total)}`,
         "",
         "Customer:",
         `Name: ${data.name}`,
@@ -152,7 +136,7 @@ function CheckoutPage() {
         `Region: ${data.region}`,
         `City/Town: ${data.city}`,
         `Address: ${data.address}`,
-        data.email ? `Email: ${data.email}` : "",
+        `Email: ${data.email}`,
         data.directions ? `Directions: ${data.directions}` : "",
         "",
         "Delivery fee to be confirmed based on location.",
@@ -166,10 +150,10 @@ function CheckoutPage() {
 
       clear();
       setForm(EMPTY);
-      toast.success(`Payment received — order ${orderCode} confirmed.`);
+      toast.success(`Order ${orderCode} placed. We will confirm it on WhatsApp.`);
     } catch (err) {
       console.error(err);
-      toast.error(err instanceof Error ? err.message : "Payment could not be started.");
+      toast.error(err instanceof Error ? err.message : "Your order could not be placed.");
     } finally {
       setBusy(false);
     }
@@ -197,7 +181,7 @@ function CheckoutPage() {
       <PageHeader
         eyebrow="Order"
         title="Checkout"
-        subtitle="Fill in your details and pay securely. We will confirm delivery on WhatsApp."
+        subtitle="Fill in your details and place your order. Payment and delivery will be confirmed with you directly."
       />
       <form
         onSubmit={submit}
@@ -220,21 +204,6 @@ function CheckoutPage() {
               {errors[f.key] && <p className="mt-1 text-xs text-destructive">{errors[f.key]}</p>}
             </div>
           ))}
-          <div>
-            <label className="label-xs text-muted-foreground" htmlFor="payment">
-              Payment Method
-            </label>
-            <select
-              id="payment"
-              value={form.payment}
-              onChange={(e) => setForm((p) => ({ ...p, payment: e.target.value }))}
-              className={inputCls + " mt-1"}
-            >
-              <option>Mobile Money</option>
-              <option>Bank Transfer</option>
-              <option>Card</option>
-            </select>
-          </div>
         </div>
 
         <aside className="h-fit rounded-sm border border-border bg-card p-5">
@@ -273,10 +242,10 @@ function CheckoutPage() {
             disabled={busy}
             className="label-xs mt-5 w-full rounded-sm bg-gold py-3 text-gold-foreground disabled:opacity-60"
           >
-            {busy ? "Processing…" : "Pay Now & Confirm on WhatsApp"}
+            {busy ? "Placing order…" : "Place Order on WhatsApp"}
           </button>
           <p className="mt-3 text-xs text-muted-foreground">
-            Complete payment securely via Paystack, then we confirm delivery details on WhatsApp.
+            Payment instructions and the delivery fee will be confirmed with you directly.
           </p>
         </aside>
       </form>

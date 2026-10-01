@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { ProductCard } from "@/components/product-card";
 import { WhatsAppIcon } from "@/components/whatsapp-icon";
-import { productWaLink, useCart, waLink } from "@/lib/cart";
+import { productWaLink, restockWaLink, useCart, waLink } from "@/lib/cart";
 import { bySlug, cedis, relatedTo, type Product } from "@/lib/products";
 import { useCatalog } from "@/lib/catalog";
 
@@ -20,6 +20,8 @@ export const Route = createFileRoute("/product/$slug")({
         { name: "description", content: description },
         { property: "og:title", content: title },
         { property: "og:description", content: description },
+        { property: "og:type", content: "website" },
+        { name: "twitter:card", content: "summary" },
       ],
     };
   },
@@ -70,17 +72,31 @@ function ProductPage({ product, products }: { product: Product; products: Produc
 
       <div className="grid gap-8 lg:grid-cols-2">
         <div>
-          <div className="aspect-square overflow-hidden rounded-sm border border-border bg-secondary">
-            <img
-              src={product.images[img]}
-              alt={product.name}
-              width={1000}
-              height={1000}
-              className="h-full w-full object-cover"
-            />
+          <div className="relative -mx-4 sm:mx-0">
+            <div
+              className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth sm:hidden"
+              onScroll={(event) => {
+                const element = event.currentTarget;
+                setImg(Math.round(element.scrollLeft / Math.max(element.clientWidth, 1)));
+              }}
+            >
+              {product.images.map((src, index) => (
+                <div key={src} className="aspect-[4/5] w-full shrink-0 snap-center bg-secondary">
+                  <img src={src} alt={`${product.name} view ${index + 1}`} width={1000} height={1250} className="h-full w-full object-cover" />
+                </div>
+              ))}
+            </div>
+            <div className="hidden aspect-square overflow-hidden rounded-sm border border-border bg-secondary sm:block">
+              <img src={product.images[img]} alt={product.name} width={1000} height={1000} className="h-full w-full object-cover" />
+            </div>
+            {product.images.length > 1 && (
+              <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1.5 sm:hidden">
+                {product.images.map((src, index) => <span key={src} className={`h-1.5 rounded-full transition-all ${index === img ? "w-6 bg-gold" : "w-1.5 bg-background/70"}`} />)}
+              </div>
+            )}
           </div>
           {product.images.length > 1 && (
-            <div className="mt-3 flex gap-3">
+            <div className="mt-3 hidden gap-3 sm:flex">
               {product.images.map((src, i) => (
                 <button
                   key={src}
@@ -176,8 +192,12 @@ function ProductPage({ product, products }: { product: Product; products: Produc
           </div>
 
           <div className="mt-7 grid gap-3 sm:grid-cols-2">
+            {!product.inStock ? (
+              <a href={restockWaLink(product)} target="_blank" rel="noreferrer" className="label-xs col-span-full flex items-center justify-center gap-2 rounded-sm bg-gold py-3 text-gold-foreground">
+                <WhatsAppIcon className="h-5 w-5" /> Notify me / Enquire
+              </a>
+            ) : <>
             <button
-              disabled={!product.inStock}
               onClick={() => {
                 add({ slug: product.slug, size, colour, qty });
                 toast.success(`Added ${qty} × ${product.name} (${size} · ${colour}) to cart`);
@@ -197,6 +217,7 @@ function ProductPage({ product, products }: { product: Product; products: Produc
             >
               <WhatsAppIcon className="h-5 w-5" />
             </a>
+            </>}
           </div>
 
           <div className="mt-8 divide-y divide-border border-y border-border text-sm">

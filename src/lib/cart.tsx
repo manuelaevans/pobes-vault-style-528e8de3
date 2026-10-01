@@ -107,6 +107,13 @@ export function productWaLink(
   return waLink(msg);
 }
 
+export function restockWaLink(p: Product) {
+  const productUrl = `https://www.pobesvault.com/product/${encodeURIComponent(p.slug)}`;
+  return waLink(
+    `Restock Inquiry: I am interested in ${p.name} (currently out of stock). Link: ${productUrl}`,
+  );
+}
+
 export function cartWaLink(
   detailed: { line: CartLine; product: Product }[],
   totals: { subtotal: number; total: number },
