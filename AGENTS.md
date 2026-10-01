@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Checkout records unpaid orders as `pending`; payment is confirmed manually before the admin drafts a receipt email, because online Paystack collection is temporarily disabled.

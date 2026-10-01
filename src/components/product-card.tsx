@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { WhatsAppIcon } from "@/components/whatsapp-icon";
-import { productWaLink, useCart } from "@/lib/cart";
+import { productWaLink, restockWaLink, useCart } from "@/lib/cart";
 import { cedis, type Product } from "@/lib/products";
 
 export function ProductCard({
@@ -145,7 +145,11 @@ export function ProductCard({
           >
             View Product
           </Link>
-          <div className="grid grid-cols-2 gap-2">
+          {!product.inStock ? (
+            <a href={restockWaLink(product)} target="_blank" rel="noreferrer" className="label-xs flex items-center justify-center gap-2 rounded-sm bg-gold py-2 text-gold-foreground">
+              <WhatsAppIcon className="h-5 w-5" /> Notify me / Enquire
+            </a>
+          ) : <div className="grid grid-cols-2 gap-2">
             <button
               disabled={!product.inStock}
               onClick={() => {
@@ -165,7 +169,7 @@ export function ProductCard({
             >
               <WhatsAppIcon className="h-5 w-5" />
             </a>
-          </div>
+          </div>}
         </div>
       </div>
     </article>

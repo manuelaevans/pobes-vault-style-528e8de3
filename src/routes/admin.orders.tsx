@@ -1,10 +1,23 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { Mail } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { cedis } from "@/lib/products";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/admin/orders")({
+  head: () => ({
+    meta: [
+      { title: "Orders — Pobe's Vault" },
+      { name: "description", content: "Review and manage Pobe's Vault customer orders." },
+      { property: "og:title", content: "Orders — Pobe's Vault" },
+      { property: "og:description", content: "Review and manage customer orders." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+      { name: "robots", content: "noindex" },
+    ],
+  }),
   component: OrdersAdmin,
 });
 
@@ -24,6 +37,28 @@ type Order = {
 };
 
 const STATUSES = ["pending", "confirmed", "paid", "delivered", "cancelled"];
+
+function customerEmail(note: string) {
+  return note.match(/(?:^|\|\s*)Email:\s*([^|]+)/i)?.[1]?.trim() ?? "";
+}
+
+function receiptDraft(order: Order) {
+  const email = customerEmail(order.note);
+  const subject = `Order received — ${order.order_code} | Pobe's Vault`;
+  const body = [
+    `Hello ${order.customer_name},`,
+    "",
+    `We have received payment for your Pobe's Vault order ${order.order_code}.`,
+    `Your order total is ${cedis(order.total)} and it is now being prepared.`,
+    "",
+    "We will contact you with delivery details.",
+    "",
+    "Thank you for shopping with Pobe's Vault.",
+  ].join("\n");
+  return email
+    ? `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    : null;
+}
 
 async function fetchOrders(): Promise<Order[]> {
   const { data, error } = await supabase
@@ -113,6 +148,17 @@ function OrdersAdmin() {
               >
                 WhatsApp
               </a>
+              {receiptDraft(o) ? (
+                <Button asChild variant="outline" size="sm" title="Draft order receipt in Gmail">
+                  <a href={receiptDraft(o) ?? "#"} target="_blank" rel="noreferrer">
+                    <Mail /> Email receipt
+                  </a>
+                </Button>
+              ) : (
+                <Button variant="outline" size="sm" disabled title="This older order has no email address">
+                  <Mail /> No email
+                </Button>
+              )}
               <button
                 onClick={() => remove(o.id)}
                 className="label-xs rounded-sm border border-border px-3 py-2 text-destructive"

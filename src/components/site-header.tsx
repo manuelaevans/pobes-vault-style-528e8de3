@@ -23,7 +23,7 @@ function BackButton() {
   );
 }
 
-function ThemeToggle() {
+function ThemeToggle({ showLabel = false }: { showLabel?: boolean }) {
   const { theme, setTheme } = useTheme();
   const next = theme === "dark" ? "light" : "dark";
   return (
@@ -31,9 +31,12 @@ function ThemeToggle() {
       onClick={() => setTheme(next)}
       aria-label={`Switch to ${next} appearance`}
       title={`Switch to ${next} appearance`}
-      className="grid h-9 w-9 shrink-0 place-items-center border border-border transition-colors hover:border-gold hover:text-gold"
+      className={showLabel
+        ? "label-xs flex w-full items-center gap-3 py-3 text-muted-foreground transition-colors hover:text-gold"
+        : "grid h-9 w-9 shrink-0 place-items-center border border-border transition-colors hover:border-gold hover:text-gold"}
     >
       {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+      {showLabel && <span>Appearance</span>}
     </button>
   );
 }
@@ -57,7 +60,6 @@ export function SiteHeader() {
       <div className="mx-auto grid max-w-[1440px] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 sm:px-6 lg:gap-8 lg:px-12 lg:py-4">
         <div className="flex min-w-0 items-center gap-2">
           <BackButton />
-          <ThemeToggle />
           <Link to="/" className="ml-1 flex min-w-0 items-center gap-2.5">
             <BrandMark className="h-10 w-10 shrink-0 object-contain lg:h-12 lg:w-12" />
             <span className="hidden whitespace-nowrap font-display text-2xl leading-none sm:block lg:text-3xl">
@@ -78,6 +80,7 @@ export function SiteHeader() {
               {n.label}
             </Link>
           ))}
+          <ThemeToggle />
         </nav>
 
         <div className="flex items-center justify-end gap-2">
@@ -130,6 +133,7 @@ export function SiteHeader() {
                 {n.label}
               </Link>
             ))}
+            <ThemeToggle showLabel />
             <a
               href={wa}
               target="_blank"
