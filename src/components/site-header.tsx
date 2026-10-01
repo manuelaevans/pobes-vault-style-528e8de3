@@ -80,7 +80,6 @@ export function SiteHeader() {
               {n.label}
             </Link>
           ))}
-          <ThemeToggle />
         </nav>
 
         <div className="flex items-center justify-end gap-2">

@@ -116,6 +116,7 @@ function CheckoutPage() {
       if (error) {
         console.error("Could not save order:", error.message);
         toast.error(`Order could not be saved: ${error.message}`);
+        return;
       }
 
       const summary = [
