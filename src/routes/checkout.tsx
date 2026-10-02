@@ -139,7 +139,7 @@ function CheckoutPage() {
         `Email: ${data.email}`,
         data.directions ? `Directions: ${data.directions}` : "",
         "",
-        "Delivery fee to be confirmed based on location.",
+        "Delivery: 30-50 GHS in Accra, 60-80 GHS outside Accra. Pay on delivery.",
       ]
         .filter(Boolean)
         .join("\n");
@@ -181,7 +181,7 @@ function CheckoutPage() {
       <PageHeader
         eyebrow="Order"
         title="Checkout"
-        subtitle="Fill in your details and place your order. Payment and delivery will be confirmed with you directly."
+        subtitle="Fill in your details and place your order. Pay on delivery."
       />
       <form
         onSubmit={submit}
@@ -229,7 +229,7 @@ function CheckoutPage() {
             <div className="flex justify-between gap-3">
               <dt className="text-muted-foreground">Delivery</dt>
               <dd className="text-right text-xs text-muted-foreground">
-                Varies by location — confirmed on WhatsApp
+                30–50 GHS in Accra, 60–80 GHS outside Accra. Pay on delivery.
               </dd>
             </div>
             <div className="hairline flex justify-between pt-3 font-bold">
@@ -245,7 +245,7 @@ function CheckoutPage() {
             {busy ? "Placing order…" : "Place Order on WhatsApp"}
           </button>
           <p className="mt-3 text-xs text-muted-foreground">
-            Payment instructions and the delivery fee will be confirmed with you directly.
+            Delivery is 30–50 GHS in Accra and 60–80 GHS outside Accra. Pay on delivery.
           </p>
         </aside>
       </form>

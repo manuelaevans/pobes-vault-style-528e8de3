@@ -128,7 +128,7 @@ export function cartWaLink(
     ),
     "",
     `Subtotal: ${cedis(totals.subtotal)}`,
-    "Delivery: charged separately based on location",
+    "Delivery: 30-50 GHS in Accra, 60-80 GHS outside Accra. Pay on delivery.",
     `Total: ${cedis(totals.total)}`,
     ...(customer ? ["", customer] : []),
     "",

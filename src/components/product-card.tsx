@@ -12,7 +12,7 @@ export function ProductCard({
   compact?: boolean;
 }) {
   const { add } = useCart();
-  const badges = product.inStock ? product.badges : (["OUT OF STOCK"] as const);
+  const badges = product.inStock ? product.badges : (["RESTOCKING SOON"] as const);
   const size = product.sizes[0] ?? "One Size";
   const colour = product.colours[0] ?? "—";
 
@@ -39,7 +39,7 @@ export function ProductCard({
                   key={b}
                   className={
                     "label-xs rounded-sm px-2 py-1 " +
-                    (b === "SALE" || b === "OUT OF STOCK"
+                    (b === "SALE" || b === "RESTOCKING SOON"
                       ? "bg-destructive text-destructive-foreground"
                       : b === "NEW"
                         ? "bg-gold text-gold-foreground"
@@ -96,7 +96,7 @@ export function ProductCard({
               key={b}
               className={
                 "label-xs rounded-sm px-2 py-1 " +
-                (b === "SALE" || b === "OUT OF STOCK"
+                (b === "SALE" || b === "RESTOCKING SOON"
                   ? "bg-destructive text-destructive-foreground"
                   : b === "NEW"
                     ? "bg-gold text-gold-foreground"
@@ -133,7 +133,7 @@ export function ProductCard({
         <p className="text-xs text-muted-foreground">
           Colours: {product.colours.join(", ")} ·{" "}
           <span className={product.inStock ? "text-gold" : "text-destructive"}>
-            {product.inStock ? "In stock" : "Out of stock"}
+            {product.inStock ? "In stock" : "Restocking soon"}
           </span>
         </p>
 

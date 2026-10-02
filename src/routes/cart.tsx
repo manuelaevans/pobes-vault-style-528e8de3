@@ -132,7 +132,7 @@ function CartPage() {
                 <div className="flex justify-between gap-3">
                   <dt className="text-muted-foreground">Delivery</dt>
                   <dd className="text-right text-xs text-muted-foreground">
-                    Varies by location — confirmed on WhatsApp
+                    30–50 GHS in Accra, 60–80 GHS outside Accra. Pay on delivery.
                   </dd>
                 </div>
                 <div className="hairline flex justify-between pt-3 font-bold">
