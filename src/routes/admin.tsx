@@ -13,6 +13,8 @@ export const Route = createFileRoute("/admin")({
       },
       { property: "og:title", content: "Store Manager — Pobe's Vault" },
       { property: "og:description", content: "Manage products and orders." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),

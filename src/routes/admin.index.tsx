@@ -6,6 +6,17 @@ import { useCatalog, useRefreshCatalog, type ManagedProduct } from "@/lib/catalo
 import { CATEGORIES, PRODUCTS, cedis } from "@/lib/products";
 
 export const Route = createFileRoute("/admin/")({
+  head: () => ({
+    meta: [
+      { title: "Products — Pobe's Vault" },
+      { name: "description", content: "Manage the Pobe's Vault product catalogue." },
+      { property: "og:title", content: "Products — Pobe's Vault" },
+      { property: "og:description", content: "Manage the Pobe's Vault product catalogue." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+      { name: "robots", content: "noindex" },
+    ],
+  }),
   component: ProductsAdmin,
 });
 
