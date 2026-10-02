@@ -15,6 +15,8 @@ export const Route = createFileRoute("/auth")({
       },
       { property: "og:title", content: "Owner Sign In — Pobe's Vault" },
       { property: "og:description", content: "Private area for managing products and orders." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),
