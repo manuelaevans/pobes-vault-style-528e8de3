@@ -30,7 +30,7 @@ function BestSellersPage() {
       />
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 px-4 py-8 lg:grid-cols-4">
         {bestSellers(products).map((p) => (
-          <ProductCard key={p.slug} product={p} />
+          <ProductCard key={p.slug} product={p} compact />
         ))}
       </div>
     </>

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { ImagePlus, X } from "lucide-react";
+import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useCatalog, useRefreshCatalog, type ManagedProduct } from "@/lib/catalog";
@@ -88,7 +89,9 @@ function ProductsAdmin() {
   const [editing, setEditing] = useState<string | null>(null);
   const [draft, setDraft] = useState<Draft | null>(null);
   const [busy, setBusy] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const fileInput = useRef<HTMLInputElement>(null);
 
   const input =
     "h-11 w-full rounded-sm border border-border bg-card px-3 text-sm text-foreground focus:border-gold focus:outline-none";
@@ -161,6 +164,42 @@ function ProductsAdmin() {
     refresh();
   };
 
+  const uploadPhotos = async (files: FileList | null) => {
+    if (!draft || !files?.length) return;
+    const selected = Array.from(files);
+    const invalid = selected.find((file) => !file.type.startsWith("image/") || file.size > 10 * 1024 * 1024);
+    if (invalid) {
+      toast.error("Choose image files smaller than 10 MB each");
+      return;
+    }
+
+    setUploading(true);
+    const uploaded: string[] = [];
+    try {
+      for (const file of selected) {
+        const extension = file.name.split(".").pop()?.toLowerCase().replace(/[^a-z0-9]/g, "") || "jpg";
+        const path = `${crypto.randomUUID()}.${extension}`;
+        const { error } = await supabase.storage.from("product-images").upload(path, file, {
+          cacheControl: "31536000",
+          contentType: file.type,
+        });
+        if (error) throw error;
+        const { data, error: signError } = await supabase.storage
+          .from("product-images")
+          .createSignedUrl(path, 60 * 60 * 24 * 365 * 10);
+        if (signError) throw signError;
+        uploaded.push(data.signedUrl);
+      }
+      setDraft((current) => current ? { ...current, images: [...list(current.images), ...uploaded].join(", ") } : current);
+      toast.success(`${uploaded.length} photo${uploaded.length === 1 ? "" : "s"} uploaded`);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Photos could not be uploaded");
+    } finally {
+      setUploading(false);
+      if (fileInput.current) fileInput.current.value = "";
+    }
+  };
+
   const remove = async (p: ManagedProduct) => {
     if (!confirm(`Delete ${p.name}?`)) return;
     const { error } = await supabase.from("products").delete().eq("id", p.id);
@@ -221,13 +260,37 @@ function ProductsAdmin() {
           <h2 className="font-display text-lg sm:col-span-2">
             {editing ? "Edit product" : "New product"}
           </h2>
+          <div className="rounded-sm border border-border p-3 sm:col-span-2">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="label-xs text-muted-foreground">Product photos</p>
+                <p className="mt-1 text-xs text-muted-foreground">Choose one or more photos from your gallery.</p>
+              </div>
+              <button type="button" disabled={uploading} onClick={() => fileInput.current?.click()} className="label-xs inline-flex items-center gap-2 rounded-sm bg-gold px-4 py-2 text-gold-foreground disabled:opacity-60">
+                <ImagePlus className="h-4 w-4" /> {uploading ? "Uploading…" : "Choose photos"}
+              </button>
+              <input ref={fileInput} type="file" accept="image/*" multiple className="hidden" onChange={(event) => uploadPhotos(event.target.files)} />
+            </div>
+            {list(draft.images).length > 0 && (
+              <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-6">
+                {list(draft.images).map((src, index) => (
+                  <div key={`${src}-${index}`} className="relative aspect-square overflow-hidden rounded-sm bg-secondary">
+                    <img src={src} alt={`Product preview ${index + 1}`} className="h-full w-full object-cover" />
+                    <button type="button" aria-label={`Remove photo ${index + 1}`} onClick={() => setDraft({ ...draft, images: list(draft.images).filter((_, photoIndex) => photoIndex !== index).join(", ") })} className="absolute right-1 top-1 grid h-7 w-7 place-items-center rounded-full bg-background/90 text-foreground">
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
           {(
             [
               ["name", "Name"],
               ["brand", "Brand"],
               ["price", "Price (GH₵)"],
               ["old_price", "Old price (optional)"],
-              ["images", "Image paths (comma separated, e.g. /images/samba.jpeg)"],
+              ["images", "Image links (optional when using gallery upload)"],
               ["sizes", "Sizes (comma separated)"],
               ["colours", "Colours (comma separated)"],
               ["badges", "Badges (NEW, BEST SELLER, SALE, LIMITED)"],

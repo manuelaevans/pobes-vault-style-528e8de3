@@ -12,10 +12,10 @@
 - [x] Add larger swipeable mobile product galleries
 - [x] Move Appearance into the mobile menu
 - [x] Add WhatsApp restock enquiries for unavailable products
-- [ ] Replace the homepage hero with the supplied bright editorial artwork
-- [ ] Show the branded loader for at least 1.5 seconds after navigation clicks
-- [ ] Make the bright appearance the first-visit default
-- [ ] Simplify Latest Acquisitions and Best Sellers product listings
-- [ ] Rename out-of-stock badges to Restocking soon
-- [ ] Update delivery pricing and pay-on-delivery messaging
-- [ ] Add gallery photo uploads to product management
+- [x] Replace the homepage hero with the supplied bright editorial artwork
+- [x] Show the branded loader for at least 1.5 seconds after navigation clicks
+- [x] Make the bright appearance the first-visit default
+- [x] Simplify Latest Acquisitions and Best Sellers product listings
+- [x] Rename out-of-stock badges to Restocking soon
+- [x] Update delivery pricing and pay-on-delivery messaging
+- [x] Add gallery photo uploads to product management

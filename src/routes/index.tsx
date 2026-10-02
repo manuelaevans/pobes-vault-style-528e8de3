@@ -1,7 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { ArrowDownRight, BadgeCheck, HeartHandshake, Sparkles, Truck } from "lucide-react";
-import heroImg from "@/assets/hero.jpg";
-import { BrandMark } from "@/components/brand-mark";
+import { BadgeCheck, HeartHandshake, Sparkles, Truck } from "lucide-react";
+import heroAsset from "@/assets/pobes-vault-bright-hero.webp.asset.json";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { waLink } from "@/lib/cart";
@@ -57,33 +56,11 @@ function Index() {
 
   return (
     <>
-      <section className="relative min-h-[calc(100svh-7rem)] overflow-hidden border-b border-border bg-background lg:min-h-[720px]">
-        <img src={heroImg} alt="Pobe's Vault curated sneakers and fashion" width={1600} height={1200} className="absolute inset-0 h-full w-full object-cover object-center" fetchPriority="high" />
-        <div className="absolute inset-0 bg-hero-wash" />
-        <div className="relative mx-auto flex min-h-[calc(100svh-7rem)] max-w-[1440px] items-center px-4 py-16 sm:px-6 lg:min-h-[720px] lg:px-12">
-          <div className="max-w-3xl animate-fade-in text-hero-foreground">
-            <div className="mb-5 flex items-center gap-3">
-              <BrandMark className="h-14 w-14 object-contain sm:h-16 sm:w-16" />
-              <p className="label-xs text-gold">Accra · Ghana · Est. 2026</p>
-            </div>
-            <h1 className="max-w-2xl font-display text-6xl leading-[0.88] sm:text-8xl lg:text-9xl">Pobe's<br /><span className="text-gold">Vault</span></h1>
-            <p className="mt-6 max-w-lg text-base leading-relaxed text-hero-muted sm:text-lg">Step into a private edit of standout sneakers, easy streetwear and everyday pieces selected to make an impression.</p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild variant="gold" size="lg" className="label-xs h-12 rounded-none px-8"><Link to="/shop">Enter the vault</Link></Button>
-              <Button asChild variant="outline" size="lg" className="label-xs h-12 rounded-none bg-background/45 px-8 backdrop-blur"><Link to="/new-arrivals">Latest drops</Link></Button>
-            </div>
-          </div>
-          <div className="absolute bottom-24 right-4 hidden items-center gap-3 text-hero-muted sm:flex lg:right-12">
-            <span className="label-xs">Scroll to discover</span><ArrowDownRight className="h-5 w-5 text-gold" />
-          </div>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 border-t border-border bg-background/85 backdrop-blur-md">
-          <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-4 overflow-x-auto px-4 py-4 sm:px-6 lg:px-12">
-            <span className="label-xs shrink-0 text-muted-foreground">Explore collections</span>
-            <div className="flex gap-6">
-              {CATEGORIES.map((category) => <Link key={category} to="/shop" search={{ category }} className="label-xs shrink-0 transition-colors hover:text-gold">{category}</Link>)}
-            </div>
-          </div>
+      <section className="border-b border-border bg-bone">
+        <div className="relative mx-auto aspect-[768/1365] w-full max-w-[768px] overflow-hidden">
+          <img src={heroAsset.url} alt="Pobe's Vault — curated sneakers and streetwear in Ghana" width={768} height={1365} className="h-full w-full object-contain" fetchPriority="high" />
+          <Link to="/shop" aria-label="Enter the vault" className="absolute left-[6%] top-[51%] h-[5%] w-[29%]" />
+          <Link to="/new-arrivals" aria-label="View latest drops" className="absolute left-[6%] top-[57%] h-[5%] w-[29%]" />
         </div>
       </section>
 

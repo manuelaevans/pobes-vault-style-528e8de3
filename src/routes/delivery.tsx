@@ -26,8 +26,7 @@ export const Route = createFileRoute("/delivery")({
         </ul>
         <h2>Delivery Fees</h2>
         <p>
-          Delivery fees are not added to your order total because they vary depending on your
-          location. We confirm the exact fee with you on WhatsApp before dispatch.
+          Delivery: 30–50 GHS in Accra, 60–80 GHS outside Accra. Pay on delivery.
         </p>
         <h2>Estimated Delivery Times</h2>
         <ul>

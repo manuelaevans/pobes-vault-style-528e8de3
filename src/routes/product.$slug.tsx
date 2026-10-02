@@ -126,7 +126,7 @@ function ProductPage({ product, products }: { product: Product; products: Produc
           </div>
           <p className="mt-1 text-xs">
             <span className={product.inStock ? "text-gold" : "text-destructive"}>
-              {product.inStock ? "In stock — ready to ship" : "Out of stock"}
+              {product.inStock ? "In stock — ready to ship" : "Restocking soon"}
             </span>
           </p>
 
@@ -238,7 +238,7 @@ function ProductPage({ product, products }: { product: Product; products: Produc
             <details className="py-3">
               <summary className="label-xs cursor-pointer">Delivery Information</summary>
               <p className="mt-2 text-muted-foreground">
-                Accra delivery in 1–2 days, other regions 2–4 days. Pickup available in Accra.{" "}
+                Delivery: 30–50 GHS in Accra, 60–80 GHS outside Accra. Pay on delivery.{" "}
                 <Link to="/delivery" className="text-gold">
                   Delivery details
                 </Link>

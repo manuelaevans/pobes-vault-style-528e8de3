@@ -6,7 +6,7 @@ const KEY = "pobes-vault-theme";
 const Ctx = createContext<{ theme: Theme; setTheme: (t: Theme) => void } | null>(null);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>("light");
 
   useEffect(() => {
     try {
@@ -19,6 +19,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const root = document.documentElement;
+    root.classList.toggle("dark", theme === "dark");
     root.classList.toggle("light", theme === "light");
     try {
       localStorage.setItem(KEY, theme);
