@@ -33,7 +33,7 @@ export const Route = createFileRoute("/")({
 const WHY = [
   [Sparkles, "Curated pieces", "Every item is hand-picked for style, quality and everyday wear."],
   [BadgeCheck, "Fair value", "Premium fashion at clear, competitive prices."],
-  [Truck, "Nationwide delivery", "Delivery is arranged based on your location in Ghana."],
+  [Truck, "Nationwide delivery", "30–50 GHS in Accra, 60–80 GHS outside Accra. Pay on delivery."],
   [HeartHandshake, "Personal service", "Real support before, during and after your order."],
 ] as const;
 

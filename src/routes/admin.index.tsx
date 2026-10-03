@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ImagePlus, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useCatalog, useRefreshCatalog, type ManagedProduct } from "@/lib/catalog";
 import { CATEGORIES, PRODUCTS, cedis } from "@/lib/products";
@@ -266,9 +267,9 @@ function ProductsAdmin() {
                 <p className="label-xs text-muted-foreground">Product photos</p>
                 <p className="mt-1 text-xs text-muted-foreground">Choose one or more photos from your gallery.</p>
               </div>
-              <button type="button" disabled={uploading} onClick={() => fileInput.current?.click()} className="label-xs inline-flex items-center gap-2 rounded-sm bg-gold px-4 py-2 text-gold-foreground disabled:opacity-60">
+              <Button type="button" variant="gold" disabled={uploading} onClick={() => fileInput.current?.click()} className="label-xs inline-flex items-center gap-2 rounded-sm px-4 py-2">
                 <ImagePlus className="h-4 w-4" /> {uploading ? "Uploading…" : "Choose photos"}
-              </button>
+              </Button>
               <input ref={fileInput} type="file" accept="image/*" multiple className="hidden" onChange={(event) => uploadPhotos(event.target.files)} />
             </div>
             {list(draft.images).length > 0 && (
