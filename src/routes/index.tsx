@@ -1,6 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { BadgeCheck, HeartHandshake, Sparkles, Truck } from "lucide-react";
-import heroAsset from "@/assets/pobes-vault-bright-hero.webp.asset.json";
+import heroAsset from "@/assets/pobes-vault-bright-hero.png.asset.json";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { waLink } from "@/lib/cart";
@@ -57,8 +57,8 @@ function Index() {
   return (
     <>
       <section className="border-b border-border bg-bone">
-        <div className="relative mx-auto aspect-[768/1365] w-full max-w-[768px] overflow-hidden">
-          <img src={heroAsset.url} alt="Pobe's Vault — curated sneakers and streetwear in Ghana" width={768} height={1365} className="h-full w-full object-contain" fetchPriority="high" />
+        <div className="relative mx-auto aspect-[1084/1920] w-full max-w-[768px] overflow-hidden">
+          <img src={heroAsset.url} alt="Pobe's Vault — curated sneakers and streetwear in Ghana" width={1084} height={1920} className="h-full w-full object-contain" fetchPriority="high" />
           <Link to="/shop" aria-label="Enter the vault" className="absolute left-[6%] top-[51%] h-[5%] w-[29%]" />
           <Link to="/new-arrivals" aria-label="View latest drops" className="absolute left-[6%] top-[57%] h-[5%] w-[29%]" />
         </div>
