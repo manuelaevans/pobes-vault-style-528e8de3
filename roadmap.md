@@ -19,3 +19,5 @@
 - [x] Rename out-of-stock badges to Restocking soon
 - [x] Update delivery pricing and pay-on-delivery messaging
 - [x] Add gallery photo uploads to product management
+- [ ] Simplify Shop and You May Also Like cards to image, name, and price only
+- [ ] Repair the homepage hero image on mobile browsers
