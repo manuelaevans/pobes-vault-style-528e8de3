@@ -189,7 +189,7 @@ function ShopPage() {
         ) : (
           <div className="mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4">
             {list.map((p) => (
-              <ProductCard key={p.slug} product={p} />
+              <ProductCard key={p.slug} product={p} compact />
             ))}
           </div>
         )}
