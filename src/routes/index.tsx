@@ -71,6 +71,22 @@ function Index() {
         </div>
       </section>
 
+      <nav aria-label="Explore collections" className="border-b border-border bg-bone">
+        <div className="mx-auto flex max-w-[1440px] items-center gap-8 overflow-x-auto px-4 py-6 sm:px-6 lg:justify-center lg:px-12">
+          <p className="label-xs shrink-0 text-muted-foreground">Explore Collections</p>
+          {CATEGORIES.map((category) => (
+            <Link
+              key={category}
+              to="/shop"
+              search={{ category }}
+              className="label-xs shrink-0 whitespace-nowrap text-foreground transition-colors hover:text-gold"
+            >
+              {category}
+            </Link>
+          ))}
+        </div>
+      </nav>
+
       <section className="mx-auto max-w-[1440px] px-4 py-20 sm:px-6 lg:px-12 lg:py-28">
         <CollectionHeading eyebrow="Just landed" title="Latest Acquisitions" href="/new-arrivals" />
          <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 md:grid md:grid-cols-4 md:overflow-visible md:pb-0 lg:gap-x-8">
