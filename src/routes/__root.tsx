@@ -18,6 +18,7 @@ import { ThemeProvider } from "../lib/theme";
 import { SiteHeader } from "../components/site-header";
 import { SiteFooter } from "../components/site-footer";
 import { RouteLoader } from "../components/route-loader";
+import { FloatingWhatsApp } from "../components/floating-whatsapp";
 import { Toaster } from "../components/ui/sonner";
 
 function NotFoundComponent() {
@@ -153,6 +154,7 @@ function RootComponent() {
             </main>
             <SiteFooter />
           </div>
+          <FloatingWhatsApp />
           <Toaster />
         </CartProvider>
         </CatalogProvider>
