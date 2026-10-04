@@ -7,6 +7,8 @@ import { waLink } from "@/lib/cart";
 import { useProducts } from "@/lib/catalog";
 import { CATEGORIES, WHATSAPP_DISPLAY, bestSellers, newArrivals } from "@/lib/products";
 
+const HERO_ASSET_ORIGIN = "https://project--14a28129-2d22-4409-9035-75f377d838a4-dev.lovable.app";
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -58,7 +60,7 @@ function Index() {
     <>
       <section className="border-b border-border bg-bone">
         <div className="relative mx-auto aspect-[1084/1920] w-full max-w-[768px] overflow-hidden">
-          <img src={heroAsset.url} alt="Black Vans Old Skool sneaker styled over folded blue denim" width={1084} height={1920} className="h-full w-full object-cover" fetchPriority="high" />
+          <img src={`${HERO_ASSET_ORIGIN}${heroAsset.url}`} alt="Black Vans Old Skool sneaker styled over folded blue denim" width={1084} height={1920} className="h-full w-full object-cover" fetchPriority="high" />
           <div className="absolute inset-x-0 top-0 bg-gradient-to-b from-background/95 via-background/60 to-transparent px-6 pb-28 pt-10 sm:px-10 sm:pt-14">
             <p className="label-xs text-gold">Accra · Ghana · Est. 2026</p>
             <h1 className="mt-4 max-w-sm font-display text-6xl leading-[0.86] text-foreground sm:text-7xl">Pobe's<br /><span className="text-gold">Vault</span></h1>
