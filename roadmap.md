@@ -21,3 +21,4 @@
 - [x] Add gallery photo uploads to product management
 - [x] Simplify Shop and You May Also Like cards to image, name, and price only
 - [x] Repair the homepage hero image on mobile browsers
+- [x] Replace the homepage hero with the supplied Vans and denim photo

@@ -1,6 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { BadgeCheck, HeartHandshake, Sparkles, Truck } from "lucide-react";
-import heroAsset from "@/assets/pobes-vault-bright-hero.png.asset.json";
+import heroAsset from "@/assets/pobes-vault-vans-hero.png.asset.json";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { waLink } from "@/lib/cart";
@@ -58,9 +58,16 @@ function Index() {
     <>
       <section className="border-b border-border bg-bone">
         <div className="relative mx-auto aspect-[1084/1920] w-full max-w-[768px] overflow-hidden">
-          <img src={heroAsset.url} alt="Pobe's Vault — curated sneakers and streetwear in Ghana" width={1084} height={1920} className="h-full w-full object-contain" fetchPriority="high" />
-          <Link to="/shop" aria-label="Enter the vault" className="absolute left-[6%] top-[51%] h-[5%] w-[29%]" />
-          <Link to="/new-arrivals" aria-label="View latest drops" className="absolute left-[6%] top-[57%] h-[5%] w-[29%]" />
+          <img src={heroAsset.url} alt="Black Vans Old Skool sneaker styled over folded blue denim" width={1084} height={1920} className="h-full w-full object-cover" fetchPriority="high" />
+          <div className="absolute inset-x-0 top-0 bg-gradient-to-b from-background/95 via-background/60 to-transparent px-6 pb-28 pt-10 sm:px-10 sm:pt-14">
+            <p className="label-xs text-gold">Accra · Ghana · Est. 2026</p>
+            <h1 className="mt-4 max-w-sm font-display text-6xl leading-[0.86] text-foreground sm:text-7xl">Pobe's<br /><span className="text-gold">Vault</span></h1>
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-foreground">Curated sneakers, easy streetwear and everyday pieces selected to make an impression.</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Button asChild variant="gold" className="label-xs h-11 rounded-none px-5"><Link to="/shop">Enter the vault</Link></Button>
+              <Button asChild variant="outline" className="label-xs h-11 rounded-none border-foreground bg-background/70 px-5 text-foreground"><Link to="/new-arrivals">Latest drops</Link></Button>
+            </div>
+          </div>
         </div>
       </section>
 
