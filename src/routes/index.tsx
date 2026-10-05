@@ -1,5 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { BadgeCheck, HeartHandshake, Sparkles, Truck } from "lucide-react";
+import { BadgeCheck, HeartHandshake, MessageCircle, Repeat, Ruler, Sparkles, Truck } from "lucide-react";
 import heroAsset from "@/assets/pobes-vault-vans-hero.png.asset.json";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
@@ -37,6 +37,13 @@ const WHY = [
   [BadgeCheck, "Fair value", "Premium fashion at clear, competitive prices."],
   [Truck, "Nationwide delivery", "30–50 GHS in Accra, 60–80 GHS outside Accra. Pay on delivery."],
   [HeartHandshake, "Personal service", "Real support before, during and after your order."],
+] as const;
+
+const TRUST_ITEMS = [
+  [Truck, "Nationwide Delivery"],
+  [MessageCircle, "Easy WhatsApp Ordering"],
+  [Ruler, "Size Assistance"],
+  [Repeat, "3-Day Exchanges"],
 ] as const;
 
 function CollectionHeading({ eyebrow, title, href }: { eyebrow: string; title: string; href: "/new-arrivals" | "/best-sellers" }) {
@@ -90,6 +97,18 @@ function Index() {
           ))}
         </div>
       </nav>
+
+      <div className="border-b border-border bg-background">
+        <ul className="mx-auto flex max-w-[1440px] items-center justify-start gap-x-4 gap-y-2 overflow-x-auto px-4 py-4 sm:justify-center sm:gap-x-6 sm:px-6 lg:gap-x-8 lg:px-12">
+          {TRUST_ITEMS.map(([Icon, label], i) => (
+            <li key={label} className="flex shrink-0 items-center gap-2">
+              {i > 0 && <span aria-hidden className="mr-2 hidden text-border sm:inline">·</span>}
+              <Icon className="h-4 w-4 shrink-0 text-gold" />
+              <span className="label-xs whitespace-nowrap text-foreground">{label}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <section className="mx-auto max-w-[1440px] px-4 py-20 sm:px-6 lg:px-12 lg:py-28">
         <CollectionHeading eyebrow="Just landed" title="Latest Acquisitions" href="/new-arrivals" />
