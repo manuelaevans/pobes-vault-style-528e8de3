@@ -161,6 +161,8 @@ function ProductPage({ product, products }: { product: Product; products: Produc
                   onClick={() => {
                     setColour(c);
                     setQty(1);
+                    const colourIndex = product.colours.indexOf(c);
+                    if (product.images[colourIndex]) setImg(colourIndex);
                   }}
                   className={chip(c === colour)}
                 >
