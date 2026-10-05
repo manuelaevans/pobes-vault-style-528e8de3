@@ -1,5 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { BadgeCheck, HeartHandshake, Sparkles, Truck } from "lucide-react";
+import { BadgeCheck, HeartHandshake, MessageCircle, Repeat, Ruler, Sparkles, Truck } from "lucide-react";
 import heroAsset from "@/assets/pobes-vault-vans-hero.png.asset.json";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
@@ -37,6 +37,13 @@ const WHY = [
   [BadgeCheck, "Fair value", "Premium fashion at clear, competitive prices."],
   [Truck, "Nationwide delivery", "30–50 GHS in Accra, 60–80 GHS outside Accra. Pay on delivery."],
   [HeartHandshake, "Personal service", "Real support before, during and after your order."],
+] as const;
+
+const TRUST_ITEMS = [
+  [Truck, "Nationwide Delivery"],
+  [MessageCircle, "Easy WhatsApp Ordering"],
+  [Ruler, "Size Assistance"],
+  [Repeat, "3-Day Exchanges"],
 ] as const;
 
 function CollectionHeading({ eyebrow, title, href }: { eyebrow: string; title: string; href: "/new-arrivals" | "/best-sellers" }) {
