@@ -1,6 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { BadgeCheck, HeartHandshake, MessageCircle, Repeat, Ruler, Sparkles, Truck } from "lucide-react";
-import heroAsset from "@/assets/pobes-vault-vans-hero.png.asset.json";
+import heroAsset from "@/assets/pobes-vault-hero-oldskool-denim.png.asset.json";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { waLink } from "@/lib/cart";
