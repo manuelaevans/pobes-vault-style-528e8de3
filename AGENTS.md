@@ -11,3 +11,4 @@
 
 - Checkout records unpaid orders as `pending`; payment is confirmed manually before the admin drafts a receipt email, because online Paystack collection is temporarily disabled.
 - Product gallery uploads use the private `product-images` library with admin-only access and long-lived signed display URLs, because public storage is disabled for this workspace.
+- Catalogue products are database-first with a matching static fallback, so the storefront remains usable if catalogue loading fails.

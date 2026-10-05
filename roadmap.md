@@ -23,3 +23,4 @@
 - [x] Repair the homepage hero image on mobile browsers
 - [x] Replace the homepage hero with the supplied Vans and denim photo
 - Floating WhatsApp button, homepage trust bar, delivery-fee wording consistency check (2026-10-05)
+- [x] Add ASICS Gel-NYC / P134 with four colourways and matching photos

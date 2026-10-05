@@ -20,6 +20,10 @@ import timberlandAsset from "@/assets/timberland.asset.json";
 import poloHoodieAsset from "@/assets/polohoodie.asset.json";
 import burberryAsset from "@/assets/burberryslides.asset.json";
 import asicsAsset from "@/assets/asicsgel.asset.json";
+import gelNycCreamAsset from "@/assets/asics-gel-nyc-cream-grey.png.asset.json";
+import gelNycSilverAsset from "@/assets/asics-gel-nyc-silver-grey.png.asset.json";
+import gelNycBlueAsset from "@/assets/asics-gel-nyc-sky-blue.png.asset.json";
+import gelNycBlackAsset from "@/assets/asics-gel-nyc-black-silver.png.asset.json";
 
 const jordan4 = jordan4Asset.url;
 const samba = sambaAsset.url;
@@ -62,6 +66,26 @@ export const WHATSAPP_NUMBER = "233558763858";
 export const WHATSAPP_DISPLAY = "0558763858";
 
 export const PRODUCTS: Product[] = [
+  {
+    slug: "asics-gel-nyc-p134",
+    name: "Gel-NYC / P134",
+    brand: "Asics",
+    category: "Shoes",
+    price: 250,
+    images: [
+      gelNycCreamAsset.url,
+      gelNycSilverAsset.url,
+      gelNycBlueAsset.url,
+      gelNycBlackAsset.url,
+    ],
+    sizes: ["40", "41", "42", "43", "44"],
+    colours: ["Cream / Grey", "Silver / Grey", "Sky Blue", "Black / Silver"],
+    inStock: true,
+    badges: ["NEW"],
+    addedIndex: 128,
+    description:
+      "ASICS Gel-NYC / P134 runner with layered mesh and synthetic overlays, available in four colourways with cushioned everyday comfort.",
+  },
   {
     slug: "air-jordan-4-white-cement",
     name: "Air Jordan 4 — White Cement",
