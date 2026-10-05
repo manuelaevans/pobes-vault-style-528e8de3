@@ -91,6 +91,18 @@ function Index() {
         </div>
       </nav>
 
+      <div className="border-b border-border bg-background">
+        <ul className="mx-auto flex max-w-[1440px] items-center justify-start gap-x-4 gap-y-2 overflow-x-auto px-4 py-4 sm:justify-center sm:gap-x-6 sm:px-6 lg:gap-x-8 lg:px-12">
+          {TRUST_ITEMS.map(([Icon, label], i) => (
+            <li key={label} className="flex shrink-0 items-center gap-2">
+              {i > 0 && <span aria-hidden className="mr-2 hidden text-border sm:inline">·</span>}
+              <Icon className="h-4 w-4 shrink-0 text-gold" />
+              <span className="label-xs whitespace-nowrap text-foreground">{label}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
       <section className="mx-auto max-w-[1440px] px-4 py-20 sm:px-6 lg:px-12 lg:py-28">
         <CollectionHeading eyebrow="Just landed" title="Latest Acquisitions" href="/new-arrivals" />
          <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 md:grid md:grid-cols-4 md:overflow-visible md:pb-0 lg:gap-x-8">
