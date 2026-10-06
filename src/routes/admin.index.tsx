@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useCatalog, useRefreshCatalog, type ManagedProduct } from "@/lib/catalog";
-import { CATEGORIES, PRODUCTS, cedis } from "@/lib/products";
+import { PRODUCTS, allCategories, cedis } from "@/lib/products";
 
 export const Route = createFileRoute("/admin/")({
   head: () => ({
@@ -113,6 +113,7 @@ function ProductsAdmin() {
       badges: p.badges,
       best_seller_rank: p.bestSellerRank ?? null,
       added_index: p.addedIndex,
+      related_slugs: p.relatedSlugs ?? [],
       description: p.description,
     }));
     const { error } = await supabase.from("products").upsert(rows, { onConflict: "slug" });
@@ -292,7 +293,6 @@ function ProductsAdmin() {
               ["price", "Price (GH₵)"],
               ["old_price", "Old price (optional)"],
               ["images", "Image links (optional when using gallery upload)"],
-              ["related_slugs", "Related product slugs (comma separated, overrides automatic recommendations)"],
               ["sizes", "Sizes (comma separated)"],
               ["colours", "Colours (comma separated)"],
               ["badges", "Badges (NEW, BEST SELLER, SALE, LIMITED)"],
@@ -315,18 +315,17 @@ function ProductsAdmin() {
             <label className="label-xs text-muted-foreground" htmlFor="category">
               Category
             </label>
-            <select
+            <input
               id="category"
+              list="product-categories"
               value={draft.category}
               onChange={(e) => setDraft({ ...draft, category: e.target.value })}
               className={input + " mt-1"}
-            >
-              {CATEGORIES.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
+              placeholder="Type or choose a category"
+            />
+            <datalist id="product-categories">
+              {allCategories(managed).map((category) => <option key={category} value={category} />)}
+            </datalist>
           </div>
           <label className="mt-6 flex items-center gap-2 text-sm">
             <input
@@ -348,6 +347,31 @@ function ProductsAdmin() {
               className="mt-1 w-full rounded-sm border border-border bg-card p-3 text-sm focus:border-gold focus:outline-none"
             />
           </div>
+          <fieldset className="rounded-sm border border-border p-3 sm:col-span-2">
+            <legend className="label-xs px-1 text-muted-foreground">You May Also Like</legend>
+            <p className="mb-3 text-xs text-muted-foreground">Choose what appears below this product. Leave everything unchecked to show nothing.</p>
+            <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+              {managed.filter((product) => product.id !== editing).map((product) => {
+                const selected = list(draft.related_slugs).includes(product.slug);
+                return (
+                  <label key={product.id} className="flex items-center gap-2 text-sm">
+                    <input
+                      type="checkbox"
+                      checked={selected}
+                      onChange={(event) => {
+                        const current = list(draft.related_slugs);
+                        const next = event.target.checked
+                          ? [...current, product.slug]
+                          : current.filter((slug) => slug !== product.slug);
+                        setDraft({ ...draft, related_slugs: next.join(", ") });
+                      }}
+                    />
+                    <span className="truncate">{product.name}</span>
+                  </label>
+                );
+              })}
+            </div>
+          </fieldset>
           <div className="flex gap-2 sm:col-span-2">
             <button
               type="submit"
