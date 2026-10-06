@@ -265,7 +265,7 @@ function ProductPage({ product, products }: { product: Product; products: Produc
       <section className="mt-16">
         <h2 className="font-display text-2xl">You May Also Like</h2>
         <div className="mt-5 grid grid-cols-2 gap-4 lg:grid-cols-4">
-          {relatedTo(product).map((p) => (
+          {relatedTo(product, products).map((p) => (
             <ProductCard key={p.slug} product={p} compact />
           ))}
         </div>
