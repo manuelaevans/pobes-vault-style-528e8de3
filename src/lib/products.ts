@@ -40,9 +40,12 @@ const greyJeans = greyJeansAsset.url;
 
 export type Badge = "NEW" | "BEST SELLER" | "SALE" | "LIMITED";
 
-export type Category = "Shoes" | "Slides" | "Shirts" | "Hoodies" | "Jeans" | "Pants";
+export type Category = string;
 
 export const CATEGORIES: Category[] = ["Shoes", "Slides", "Shirts", "Hoodies", "Jeans", "Pants"];
+
+export const allCategories = (list: Product[] = PRODUCTS) =>
+  Array.from(new Set([...CATEGORIES, ...list.map((product) => product.category)])).sort();
 
 
 export type Product = {
@@ -503,15 +506,9 @@ export const bestSellers = (list: Product[] = PRODUCTS) =>
 export const deals = (list: Product[] = PRODUCTS) =>
   list.filter((p) => p.oldPrice || p.badges.includes("LIMITED"));
 export const relatedTo = (p: Product, list: Product[] = PRODUCTS) => {
-  if (p.relatedSlugs && p.relatedSlugs.length > 0) {
-    return p.relatedSlugs
-      .map((s) => list.find((x) => x.slug === s))
-      .filter((x): x is Product => Boolean(x));
-  }
-  return list
-    .filter((x) => x.slug !== p.slug && x.category === p.category)
-    .concat(list.filter((x) => x.slug !== p.slug && x.category !== p.category))
-    .slice(0, 4);
+  return (p.relatedSlugs ?? [])
+    .map((slug) => list.find((candidate) => candidate.slug === slug))
+    .filter((candidate): candidate is Product => Boolean(candidate));
 };
 
 export const allSizes = (list: Product[] = PRODUCTS) =>
