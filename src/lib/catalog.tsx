@@ -38,7 +38,7 @@ export function rowToProduct(row: ProductRow): ManagedProduct {
     inStock: row.in_stock,
     badges: (row.badges ?? []) as Badge[],
     ...(row.best_seller_rank != null ? { bestSellerRank: row.best_seller_rank } : {}),
-    addedIndex: row.added_index,
+    ...(row.related_slugs ? { relatedSlugs: row.related_slugs } : {}),
     description: row.description,
   };
 }

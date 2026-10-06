@@ -72,6 +72,7 @@ export type Database = {
           name: string
           old_price: number | null
           price: number
+          related_slugs: string[]
           sizes: string[]
           slug: string
           updated_at: string
@@ -91,6 +92,7 @@ export type Database = {
           name: string
           old_price?: number | null
           price?: number
+          related_slugs?: string[]
           sizes?: string[]
           slug: string
           updated_at?: string
@@ -110,6 +112,7 @@ export type Database = {
           name?: string
           old_price?: number | null
           price?: number
+          related_slugs?: string[]
           sizes?: string[]
           slug?: string
           updated_at?: string

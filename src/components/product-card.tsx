@@ -33,6 +33,25 @@ export function ProductCard({
               height={1000}
               className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
             />
+            {badges.length > 0 && (
+              <div className="absolute left-2 top-2 flex flex-wrap gap-1">
+                {badges.map((badge) => (
+                  <span
+                    key={badge}
+                    className={
+                      "label-xs rounded-sm px-2 py-1 " +
+                      (badge === "SALE" || badge === "RESTOCKING SOON"
+                        ? "bg-destructive text-destructive-foreground"
+                        : badge === "NEW"
+                          ? "bg-gold text-gold-foreground"
+                          : "bg-background/90 text-foreground")
+                    }
+                  >
+                    {badge}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="flex flex-1 flex-col gap-1 pt-4">

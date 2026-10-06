@@ -24,3 +24,6 @@
 - [x] Replace the homepage hero with the supplied Vans and denim photo
 - Floating WhatsApp button, homepage trust bar, delivery-fee wording consistency check (2026-10-05)
 - [x] Add ASICS Gel-NYC / P134 with four colourways and matching photos
+- [x] Let the admin choose You May Also Like products and clear automatic recommendations
+- [x] Let the admin create and use custom product categories
+- [x] Restore visible product badges

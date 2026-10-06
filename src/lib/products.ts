@@ -40,9 +40,12 @@ const greyJeans = greyJeansAsset.url;
 
 export type Badge = "NEW" | "BEST SELLER" | "SALE" | "LIMITED";
 
-export type Category = "Shoes" | "Slides" | "Shirts" | "Hoodies" | "Jeans" | "Pants";
+export type Category = string;
 
 export const CATEGORIES: Category[] = ["Shoes", "Slides", "Shirts", "Hoodies", "Jeans", "Pants"];
+
+export const allCategories = (list: Product[] = PRODUCTS) =>
+  Array.from(new Set([...CATEGORIES, ...list.map((product) => product.category)])).sort();
 
 
 export type Product = {
@@ -56,9 +59,9 @@ export type Product = {
   sizes: string[];
   colours: string[];
   inStock: boolean;
-  badges: Badge[];
   bestSellerRank?: number;
   addedIndex: number;
+  relatedSlugs?: string[];
   description: string;
 };
 
@@ -499,18 +502,11 @@ export const bestSellers = (list: Product[] = PRODUCTS) =>
     .filter((p) => p.bestSellerRank)
     .sort((a, b) => (a.bestSellerRank ?? 99) - (b.bestSellerRank ?? 99));
 
-export const deals = (list: Product[] = PRODUCTS) =>
-  list.filter((p) => p.oldPrice || p.badges.includes("LIMITED"));
-
 export const relatedTo = (p: Product, list: Product[] = PRODUCTS) =>
   list
     .filter((x) => x.slug !== p.slug && x.category === p.category)
     .concat(list.filter((x) => x.slug !== p.slug && x.category !== p.category))
     .slice(0, 4);
-
-export const allSizes = (list: Product[] = PRODUCTS) =>
-  Array.from(new Set(list.flatMap((p) => p.sizes))).sort((a, b) => a.localeCompare(b));
-
 export const allColours = (list: Product[] = PRODUCTS) =>
   Array.from(new Set(list.flatMap((p) => p.colours))).sort();
 
