@@ -59,6 +59,7 @@ export type Product = {
   badges: Badge[];
   bestSellerRank?: number;
   addedIndex: number;
+  relatedSlugs?: string[];
   description: string;
 };
 
@@ -501,12 +502,17 @@ export const bestSellers = (list: Product[] = PRODUCTS) =>
 
 export const deals = (list: Product[] = PRODUCTS) =>
   list.filter((p) => p.oldPrice || p.badges.includes("LIMITED"));
-
-export const relatedTo = (p: Product, list: Product[] = PRODUCTS) =>
-  list
+export const relatedTo = (p: Product, list: Product[] = PRODUCTS) => {
+  if (p.relatedSlugs && p.relatedSlugs.length > 0) {
+    return p.relatedSlugs
+      .map((s) => list.find((x) => x.slug === s))
+      .filter((x): x is Product => Boolean(x));
+  }
+  return list
     .filter((x) => x.slug !== p.slug && x.category === p.category)
     .concat(list.filter((x) => x.slug !== p.slug && x.category !== p.category))
     .slice(0, 4);
+};
 
 export const allSizes = (list: Product[] = PRODUCTS) =>
   Array.from(new Set(list.flatMap((p) => p.sizes))).sort((a, b) => a.localeCompare(b));
