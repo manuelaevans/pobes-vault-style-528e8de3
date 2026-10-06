@@ -35,7 +35,6 @@ type Draft = {
   in_stock: boolean;
   badges: string;
   best_seller_rank: string;
-  related_slugs: string;
   description: string;
 };
 
@@ -52,7 +51,6 @@ const EMPTY: Draft = {
   in_stock: true,
   badges: "",
   related_slugs: "",
-  best_seller_rank: "",
   description: "",
 };
 
@@ -81,7 +79,6 @@ function toDraft(p: ManagedProduct): Draft {
     colours: p.colours.join(", "),
     related_slugs: p.relatedSlugs ? p.relatedSlugs.join(", ") : "",
     in_stock: p.inStock,
-    badges: p.badges.join(", "),
     best_seller_rank: p.bestSellerRank ? String(p.bestSellerRank) : "",
     description: p.description,
   };
@@ -149,7 +146,6 @@ function ProductsAdmin() {
       related_slugs: list(draft.related_slugs),
       in_stock: draft.in_stock,
       badges: list(draft.badges),
-      best_seller_rank: draft.best_seller_rank ? Number(draft.best_seller_rank) : null,
       description: draft.description,
     };
     setBusy(true);
@@ -300,7 +296,6 @@ function ProductsAdmin() {
               ["sizes", "Sizes (comma separated)"],
               ["colours", "Colours (comma separated)"],
               ["badges", "Badges (NEW, BEST SELLER, SALE, LIMITED)"],
-              ["best_seller_rank", "Best seller rank (optional)"],
               ["slug", "URL slug (auto from name if blank)"],
             ] as [keyof Draft, string][]
           ).map(([key, label]) => (

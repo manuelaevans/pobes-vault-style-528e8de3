@@ -1,10 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { Instagram, MessageCircle, Phone } from "lucide-react";
 import { waLink } from "@/lib/cart";
-import { CATEGORIES, WHATSAPP_DISPLAY } from "@/lib/products";
+import { WHATSAPP_DISPLAY, allCategories } from "@/lib/products";
+import { useProducts } from "@/lib/catalog";
 import { BrandMark } from "./brand-mark";
 
 export function SiteFooter() {
+  const products = useProducts();
   return (
     <footer className="mt-20 border-t border-border bg-card">
       <div className="mx-auto grid max-w-[1440px] gap-10 px-4 py-16 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-12">
@@ -49,7 +51,7 @@ export function SiteFooter() {
         <div>
           <p className="label-xs text-muted-foreground">Shop</p>
           <ul className="mt-3 space-y-2 text-sm">
-            {CATEGORIES.map((c) => (
+            {allCategories(products).map((c) => (
               <li key={c}>
                 <Link
                   to="/shop"

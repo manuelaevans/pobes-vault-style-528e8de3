@@ -18,7 +18,6 @@ export type ProductRow = {
   badges: string[];
   best_seller_rank: number | null;
   added_index: number;
-  related_slugs: string[] | null;
   description: string;
 };
 
@@ -40,7 +39,6 @@ export function rowToProduct(row: ProductRow): ManagedProduct {
     badges: (row.badges ?? []) as Badge[],
     ...(row.best_seller_rank != null ? { bestSellerRank: row.best_seller_rank } : {}),
     ...(row.related_slugs ? { relatedSlugs: row.related_slugs } : {}),
-    addedIndex: row.added_index,
     description: row.description,
   };
 }

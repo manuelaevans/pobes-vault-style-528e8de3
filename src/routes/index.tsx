@@ -5,7 +5,7 @@ import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { waLink } from "@/lib/cart";
 import { useProducts } from "@/lib/catalog";
-import { CATEGORIES, WHATSAPP_DISPLAY, bestSellers, newArrivals } from "@/lib/products";
+import { WHATSAPP_DISPLAY, allCategories, bestSellers, newArrivals } from "@/lib/products";
 
 const HERO_ASSET_ORIGIN = "https://project--14a28129-2d22-4409-9035-75f377d838a4-dev.lovable.app";
 
@@ -85,7 +85,7 @@ function Index() {
       <nav aria-label="Explore collections" className="border-b border-border bg-bone">
         <div className="mx-auto flex max-w-[1440px] items-center gap-8 overflow-x-auto px-4 py-6 sm:px-6 lg:justify-center lg:px-12">
           <p className="label-xs shrink-0 text-muted-foreground">Explore Collections</p>
-          {CATEGORIES.map((category) => (
+          {allCategories(products).map((category) => (
             <Link
               key={category}
               to="/shop"

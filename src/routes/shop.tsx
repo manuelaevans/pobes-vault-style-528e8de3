@@ -3,7 +3,7 @@ import { ProductCard } from "@/components/product-card";
 import { PageHeader } from "@/components/page";
 import { SearchBar } from "@/components/search-bar";
 import {
-  CATEGORIES,
+  allCategories,
   allColours,
   allSizes,
   searchProducts,
@@ -98,7 +98,7 @@ function ShopPage() {
         <SearchBar initial={search.q ?? ""} />
 
         <div className="mt-5 flex gap-2 overflow-x-auto pb-2">
-          {["All Products", ...CATEGORIES].map((c) => {
+          {["All Products", ...allCategories(products)].map((c) => {
             const active =
               c === "All Products" ? !search.category : search.category === c;
             return (
