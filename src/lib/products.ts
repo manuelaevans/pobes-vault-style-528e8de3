@@ -42,7 +42,7 @@ export type Badge = "NEW" | "BEST SELLER" | "SALE" | "LIMITED";
 
 export type Category = string;
 
-export const CATEGORIES: Category[] = ["Shoes", "Slides", "Shirts", "Hoodies", "Jeans", "Pants"];
+export const CATEGORIES: Category[] = ["Shoes", "Slides", "Shirts", "Hoodies", "Jeans", "Pants", "Jersey", "Shorts", "Accessories"];
 
 export const allCategories = (list: Product[] = PRODUCTS) =>
   Array.from(new Set([...CATEGORIES, ...list.map((product) => product.category)])).sort();
