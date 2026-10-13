@@ -1,5 +1,6 @@
 import { Composition } from "remotion";
 import { MainVideo, TOTAL_FRAMES } from "./MainVideo";
+import { Analytics } from "@vercel/analytics/react";
 
 export const RemotionRoot = () => (
   <Composition
@@ -11,3 +12,4 @@ export const RemotionRoot = () => (
     height={1920}
   />
 );
+<Analytics />
