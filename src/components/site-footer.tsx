@@ -30,7 +30,7 @@ export function SiteFooter() {
               <MessageCircle className="h-4 w-4" />
             </a>
             <a
-              href="https://instagram.com"
+              href="https://instagram.com/pobesvault/"
               target="_blank"
               rel="noreferrer"
               aria-label="Instagram"
