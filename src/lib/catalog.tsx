@@ -100,3 +100,8 @@ export function useRefreshCatalog() {
   const qc = useQueryClient();
   return () => qc.invalidateQueries({ queryKey: productsQueryKey });
 }
+
+/** Non-throwing variant: falls back to the static catalogue if the provider is missing (e.g. during a hot reload). */
+export function useProductsSafe() {
+  return useContext(Ctx)?.products ?? PRODUCTS;
+}
