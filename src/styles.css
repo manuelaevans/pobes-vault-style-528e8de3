@@ -287,4 +287,6 @@
   object-fit: contain;
   padding: 8%;
   mix-blend-mode: multiply;
+  /* lift pale studio backdrops to white so they melt into the surface */
+  filter: brightness(1.07) contrast(1.08);
 }
