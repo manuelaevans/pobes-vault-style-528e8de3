@@ -18,6 +18,7 @@ export type ProductRow = {
   badges: string[];
   best_seller_rank: number | null;
   added_index: number;
+  related_slugs?: string[] | null;
   description: string;
 };
 

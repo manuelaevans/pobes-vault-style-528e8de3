@@ -59,6 +59,7 @@ export type Product = {
   sizes: string[];
   colours: string[];
   inStock: boolean;
+  badges: Badge[];
   bestSellerRank?: number;
   addedIndex: number;
   relatedSlugs?: string[];
