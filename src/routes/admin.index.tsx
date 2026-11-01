@@ -418,13 +418,13 @@ function ProductsAdmin() {
             key={p.id}
             className="flex flex-wrap items-center gap-3 rounded-sm border border-border bg-card p-3"
           >
-            <img
+            <span className="product-frame isolate block h-14 w-14 shrink-0 overflow-hidden rounded-sm"><img
               src={p.images[0]}
               alt={p.name}
               width={56}
               height={56}
-              className="h-14 w-14 shrink-0 rounded-sm object-cover"
-            />
+              className="product-photo !p-1"
+            /></span>
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-bold">{p.name}</p>
               <p className="text-xs text-muted-foreground">

@@ -47,14 +47,14 @@ function CartPage() {
                   key={`${line.slug}-${line.size}-${line.colour}`}
                   className="grid grid-cols-[80px_minmax(0,1fr)] gap-4 rounded-sm border border-border bg-card p-3"
                 >
-                  <img
+                  <span className="product-frame isolate block h-20 w-20 shrink-0 overflow-hidden rounded-sm"><img
                     src={product.images[0]}
                     alt={product.name}
                     loading="lazy"
                     width={80}
                     height={80}
-                    className="h-20 w-20 rounded-sm object-cover"
-                  />
+                    className="product-photo !p-1"
+                  /></span>
                   <div className="min-w-0">
                     <div className="flex items-start justify-between gap-3">
                       <Link

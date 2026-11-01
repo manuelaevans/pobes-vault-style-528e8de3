@@ -81,13 +81,13 @@ function ProductPage({ product, products }: { product: Product; products: Produc
               }}
             >
               {product.images.map((src, index) => (
-                <div key={src} className="aspect-[4/5] w-full shrink-0 snap-center bg-secondary">
-                  <img src={src} alt={`${product.name} view ${index + 1}`} width={1000} height={1250} className="h-full w-full object-cover" />
+                <div key={src} className="product-frame isolate aspect-[4/5] w-full shrink-0 snap-center">
+                  <img src={src} alt={`${product.name} view ${index + 1}`} width={1000} height={1250} className="product-photo" />
                 </div>
               ))}
             </div>
-            <div className="hidden aspect-square overflow-hidden rounded-sm border border-border bg-secondary sm:block">
-              <img src={product.images[img]} alt={product.name} width={1000} height={1000} className="h-full w-full object-cover" />
+            <div className="product-frame isolate hidden aspect-[4/5] overflow-hidden rounded-sm border border-border sm:block">
+              <img src={product.images[img]} alt={product.name} width={1000} height={1250} className="product-photo" />
             </div>
             {product.images.length > 1 && (
               <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1.5 sm:hidden">
@@ -102,11 +102,11 @@ function ProductPage({ product, products }: { product: Product; products: Produc
                   key={src}
                   onClick={() => setImg(i)}
                   className={
-                    "h-20 w-20 overflow-hidden rounded-sm border " +
+                    "product-frame isolate h-20 w-16 overflow-hidden rounded-sm border " +
                     (i === img ? "border-gold" : "border-border")
                   }
                 >
-                  <img src={src} alt="" loading="lazy" className="h-full w-full object-cover" />
+                  <img src={src} alt="" loading="lazy" className="product-photo !p-1" />
                 </button>
               ))}
             </div>
