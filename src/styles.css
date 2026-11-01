@@ -181,7 +181,8 @@
     background: linear-gradient(0deg, oklch(0.08 0.006 60 / 0.96) 0%, oklch(0.08 0.006 60 / 0.65) 58%, oklch(0.08 0.006 60 / 0.22) 100%);
   }
 
-  section .snap-mandatory > article {
+  section .snap-mandatory > article,
+  section .snap-mandatory > .reveal {
     width: min(82vw, 22rem);
     flex: none;
     scroll-snap-align: start;
