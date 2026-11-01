@@ -35,6 +35,7 @@ type Draft = {
   in_stock: boolean;
   badges: string;
   best_seller_rank: string;
+  related_slugs: string;
   description: string;
 };
 
@@ -50,6 +51,7 @@ const EMPTY: Draft = {
   colours: "",
   in_stock: true,
   badges: "",
+  best_seller_rank: "",
   related_slugs: "",
   description: "",
 };
@@ -79,6 +81,7 @@ function toDraft(p: ManagedProduct): Draft {
     colours: p.colours.join(", "),
     related_slugs: p.relatedSlugs ? p.relatedSlugs.join(", ") : "",
     in_stock: p.inStock,
+    badges: p.badges.join(", "),
     best_seller_rank: p.bestSellerRank ? String(p.bestSellerRank) : "",
     description: p.description,
   };

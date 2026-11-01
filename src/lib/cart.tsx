@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { WHATSAPP_NUMBER, cedis, type Product } from "./products";
-import { useCatalog } from "./catalog";
+import { useProductsSafe } from "./catalog";
 
 export type CartLine = {
   slug: string;
@@ -26,7 +26,7 @@ const KEY = "pobes-vault-cart";
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [lines, setLines] = useState<CartLine[]>([]);
-  const { products } = useCatalog();
+  const products = useProductsSafe();
 
   useEffect(() => {
     try {

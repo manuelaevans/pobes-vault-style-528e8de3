@@ -18,6 +18,7 @@ export type ProductRow = {
   badges: string[];
   best_seller_rank: number | null;
   added_index: number;
+  related_slugs?: string[] | null;
   description: string;
 };
 
@@ -38,6 +39,7 @@ export function rowToProduct(row: ProductRow): ManagedProduct {
     inStock: row.in_stock,
     badges: (row.badges ?? []) as Badge[],
     ...(row.best_seller_rank != null ? { bestSellerRank: row.best_seller_rank } : {}),
+    addedIndex: row.added_index,
     ...(row.related_slugs ? { relatedSlugs: row.related_slugs } : {}),
     description: row.description,
   };
@@ -97,4 +99,9 @@ export function useProducts() {
 export function useRefreshCatalog() {
   const qc = useQueryClient();
   return () => qc.invalidateQueries({ queryKey: productsQueryKey });
+}
+
+/** Non-throwing variant: falls back to the static catalogue if the provider is missing (e.g. during a hot reload). */
+export function useProductsSafe() {
+  return useContext(Ctx)?.products ?? PRODUCTS;
 }
