@@ -1,6 +1,7 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { BadgeCheck, HeartHandshake, MessageCircle, Repeat, Ruler, Sparkles, Truck } from "lucide-react";
 import heroAsset from "@/assets/pobes-vault-hero-oldskool-denim.png.asset.json";
+import { Reveal } from "@/components/reveal";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { waLink } from "@/lib/cart";
@@ -111,36 +112,36 @@ function Index() {
       </div>
 
       <section className="mx-auto max-w-[1440px] px-4 py-20 sm:px-6 lg:px-12 lg:py-28">
-        <CollectionHeading eyebrow="Just landed" title="Latest Acquisitions" href="/new-arrivals" />
+        <Reveal><CollectionHeading eyebrow="Just landed" title="Latest Acquisitions" href="/new-arrivals" /></Reveal>
          <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 md:grid md:grid-cols-4 md:overflow-visible md:pb-0 lg:gap-x-8">
-          {arrivals.map((product) => <ProductCard key={product.slug} product={product} compact />)}
+          {arrivals.map((product, i) => <Reveal key={product.slug} delay={i * 90} className="shrink-0 md:shrink"><ProductCard product={product} compact /></Reveal>)}
         </div>
       </section>
 
       <section className="border-y border-border bg-card">
         <div className="mx-auto grid max-w-[1440px] lg:grid-cols-[0.8fr_1.2fr]">
-          <div className="flex flex-col justify-center px-4 py-16 sm:px-6 lg:px-12 lg:py-24">
+          <Reveal className="flex flex-col justify-center px-4 py-16 sm:px-6 lg:px-12 lg:py-24">
             <p className="label-xs text-gold">The Pobe's edit</p>
             <h2 className="mt-3 max-w-md font-display text-5xl leading-[0.95] sm:text-6xl">Built for your next look.</h2>
             <p className="mt-5 max-w-md leading-relaxed text-muted-foreground">From low-key staples to statement footwear, every drop is chosen to work hard in your wardrobe.</p>
             <Button asChild variant="outline" className="label-xs mt-8 h-12 w-fit rounded-none px-7"><Link to="/about">Our story</Link></Button>
-          </div>
+          </Reveal>
           <div className="grid grid-cols-2 border-t border-border lg:border-l lg:border-t-0">
-            {WHY.map(([Icon, title, copy]) => (
-              <div key={title} className="min-h-52 border-b border-r border-border p-6 sm:p-8">
+            {WHY.map(([Icon, title, copy], i) => (
+              <Reveal key={title} delay={i * 100} className="min-h-52 border-b border-r border-border p-6 sm:p-8">
                 <Icon className="h-6 w-6 text-gold" />
                 <h3 className="mt-8 font-display text-2xl">{title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{copy}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
       <section className="mx-auto max-w-[1440px] px-4 py-20 sm:px-6 lg:px-12 lg:py-28">
-        <CollectionHeading eyebrow="Vault favourites" title="Best Sellers" href="/best-sellers" />
+        <Reveal><CollectionHeading eyebrow="Vault favourites" title="Best Sellers" href="/best-sellers" /></Reveal>
         <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-4 lg:gap-x-8">
-          {sellers.map((product) => <ProductCard key={product.slug} product={product} compact />)}
+          {sellers.map((product, i) => <Reveal key={product.slug} delay={i * 90}><ProductCard product={product} compact /></Reveal>)}
         </div>
       </section>
 
