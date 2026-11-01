@@ -24,14 +24,14 @@ export function ProductCard({
           params={{ slug: product.slug }}
           className="flex flex-1 flex-col"
         >
-          <div className="relative aspect-[4/5] overflow-hidden bg-secondary ring-1 ring-border">
+          <div className="product-frame relative isolate aspect-[4/5] overflow-hidden ring-1 ring-border">
             <img
               src={product.images[0]}
               alt={product.name}
               loading="lazy"
               width={1000}
               height={1000}
-              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              className="product-photo transition-transform duration-700 ease-out group-hover:scale-105"
             />
             {badges.length > 0 && (
               <div className="absolute left-2 top-2 flex flex-wrap gap-1">
@@ -77,7 +77,7 @@ export function ProductCard({
       <Link
         to="/product/$slug"
         params={{ slug: product.slug }}
-        className="relative block aspect-square overflow-hidden bg-secondary"
+        className="product-frame relative isolate block aspect-[4/5] overflow-hidden"
       >
         <img
           src={product.images[0]}
@@ -85,7 +85,7 @@ export function ProductCard({
           loading="lazy"
           width={1000}
           height={1000}
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="product-photo transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute left-2 top-2 flex flex-wrap gap-1">
           {badges.map((b) => (

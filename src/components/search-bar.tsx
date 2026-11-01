@@ -62,14 +62,14 @@ export function SearchBar({
               onClick={() => setOpen(false)}
               className="flex items-center gap-3 px-3 py-2 hover:bg-accent"
             >
-              <img
+              <span className="product-frame isolate block h-10 w-10 shrink-0 overflow-hidden rounded-sm"><img
                 src={p.images[0]}
                 alt={p.name}
                 loading="lazy"
                 width={40}
                 height={40}
-                className="h-10 w-10 shrink-0 rounded-sm object-cover"
-              />
+                className="product-photo !p-1"
+              /></span>
               <span className="min-w-0 flex-1 truncate text-sm">{p.name}</span>
               <span className="shrink-0 text-xs text-gold">{cedis(p.price)}</span>
             </Link>
