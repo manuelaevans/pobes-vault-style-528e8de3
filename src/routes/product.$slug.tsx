@@ -81,7 +81,7 @@ function ProductPage({ product, products }: { product: Product; products: Produc
               }}
             >
               {product.images.map((src, index) => (
-                <div key={`${index}-${src}`} className="product-frame aspect-[4/5] w-full shrink-0 snap-center">
+                <div key={`${index}-${src}`} className="product-frame isolate aspect-[4/5] w-full shrink-0 snap-center overflow-hidden [transform:translateZ(0)]">
                   <img
                     src={src}
                     alt={`${product.name} view ${index + 1}`}
@@ -89,7 +89,7 @@ function ProductPage({ product, products }: { product: Product; products: Produc
                     height={1250}
                     loading={index === 0 ? "eager" : "lazy"}
                     decoding="async"
-                    className="product-photo !mix-blend-normal"
+                    className="product-photo"
                   />
                 </div>
               ))}
