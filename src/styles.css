@@ -279,9 +279,12 @@
 /* Product photos: same off-white surface everywhere, identical frame size,
    whole item visible; multiply blends white photo backdrops into the surface. */
 .product-frame {
+  position: relative;
   background: var(--product-surface);
 }
 .product-photo {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;

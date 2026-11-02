@@ -81,8 +81,16 @@ function ProductPage({ product, products }: { product: Product; products: Produc
               }}
             >
               {product.images.map((src, index) => (
-                <div key={src} className="product-frame isolate aspect-[4/5] w-full shrink-0 snap-center">
-                  <img src={src} alt={`${product.name} view ${index + 1}`} width={1000} height={1250} className="product-photo" />
+                <div key={`${index}-${src}`} className="product-frame aspect-[4/5] w-full shrink-0 snap-center">
+                  <img
+                    src={src}
+                    alt={`${product.name} view ${index + 1}`}
+                    width={1000}
+                    height={1250}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    decoding="async"
+                    className="product-photo !mix-blend-normal"
+                  />
                 </div>
               ))}
             </div>
@@ -91,7 +99,7 @@ function ProductPage({ product, products }: { product: Product; products: Produc
             </div>
             {product.images.length > 1 && (
               <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1.5 sm:hidden">
-                {product.images.map((src, index) => <span key={src} className={`h-1.5 rounded-full transition-all ${index === img ? "w-6 bg-gold" : "w-1.5 bg-background/70"}`} />)}
+                {product.images.map((src, index) => <span key={`${index}-${src}`} className={`h-1.5 rounded-full transition-all ${index === img ? "w-6 bg-gold" : "w-1.5 bg-background/70"}`} />)}
               </div>
             )}
           </div>
@@ -99,7 +107,7 @@ function ProductPage({ product, products }: { product: Product; products: Produc
             <div className="mt-3 hidden gap-3 sm:flex">
               {product.images.map((src, i) => (
                 <button
-                  key={src}
+                  key={`${i}-${src}`}
                   onClick={() => setImg(i)}
                   className={
                     "product-frame isolate h-20 w-16 overflow-hidden rounded-sm border " +
