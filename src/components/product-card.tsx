@@ -24,7 +24,7 @@ export function ProductCard({
           params={{ slug: product.slug }}
           className="flex flex-1 flex-col"
         >
-          <div className="product-frame relative isolate aspect-[4/5] overflow-hidden ring-1 ring-border">
+          <div className="product-frame relative isolate aspect-[4/5] overflow-hidden">
             <img
               src={product.images[0]}
               alt={product.name}
