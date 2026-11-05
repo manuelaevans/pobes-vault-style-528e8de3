@@ -19,7 +19,9 @@ import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DeliveryRouteImport } from './routes/delivery'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as NewArrivalsRouteImport } from './routes/new-arrivals'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ReturnsRouteImport } from './routes/returns'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as SizeGuideRouteImport } from './routes/size-guide'
@@ -77,9 +79,19 @@ const FaqRoute = FaqRouteImport.update({
   path: '/faq',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NewArrivalsRoute = NewArrivalsRouteImport.update({
   id: '/new-arrivals',
   path: '/new-arrivals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReturnsRoute = ReturnsRouteImport.update({
@@ -124,7 +136,9 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/delivery': typeof DeliveryRoute
   '/faq': typeof FaqRoute
+  '/login': typeof LoginRoute
   '/new-arrivals': typeof NewArrivalsRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/returns': typeof ReturnsRoute
   '/shop': typeof ShopRoute
   '/size-guide': typeof SizeGuideRoute
@@ -142,7 +156,9 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/delivery': typeof DeliveryRoute
   '/faq': typeof FaqRoute
+  '/login': typeof LoginRoute
   '/new-arrivals': typeof NewArrivalsRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/returns': typeof ReturnsRoute
   '/shop': typeof ShopRoute
   '/size-guide': typeof SizeGuideRoute
@@ -162,7 +178,9 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/delivery': typeof DeliveryRoute
   '/faq': typeof FaqRoute
+  '/login': typeof LoginRoute
   '/new-arrivals': typeof NewArrivalsRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/returns': typeof ReturnsRoute
   '/shop': typeof ShopRoute
   '/size-guide': typeof SizeGuideRoute
@@ -183,7 +201,9 @@ export interface FileRouteTypes {
     | '/contact'
     | '/delivery'
     | '/faq'
+    | '/login'
     | '/new-arrivals'
+    | '/reset-password'
     | '/returns'
     | '/shop'
     | '/size-guide'
@@ -201,7 +221,9 @@ export interface FileRouteTypes {
     | '/contact'
     | '/delivery'
     | '/faq'
+    | '/login'
     | '/new-arrivals'
+    | '/reset-password'
     | '/returns'
     | '/shop'
     | '/size-guide'
@@ -220,7 +242,9 @@ export interface FileRouteTypes {
     | '/contact'
     | '/delivery'
     | '/faq'
+    | '/login'
     | '/new-arrivals'
+    | '/reset-password'
     | '/returns'
     | '/shop'
     | '/size-guide'
@@ -240,7 +264,9 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   DeliveryRoute: typeof DeliveryRoute
   FaqRoute: typeof FaqRoute
+  LoginRoute: typeof LoginRoute
   NewArrivalsRoute: typeof NewArrivalsRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   ReturnsRoute: typeof ReturnsRoute
   ShopRoute: typeof ShopRoute
   SizeGuideRoute: typeof SizeGuideRoute
@@ -319,11 +345,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FaqRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/new-arrivals': {
       id: '/new-arrivals'
       path: '/new-arrivals'
       fullPath: '/new-arrivals'
       preLoaderRoute: typeof NewArrivalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/returns': {
@@ -394,7 +434,9 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   DeliveryRoute: DeliveryRoute,
   FaqRoute: FaqRoute,
+  LoginRoute: LoginRoute,
   NewArrivalsRoute: NewArrivalsRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   ReturnsRoute: ReturnsRoute,
   ShopRoute: ShopRoute,
   SizeGuideRoute: SizeGuideRoute,
