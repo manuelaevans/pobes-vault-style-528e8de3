@@ -2,6 +2,7 @@ import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { ArrowLeft, Menu, MessageCircle, Moon, ShoppingBag, Sun, X } from "lucide-react";
 import { useState } from "react";
 import { SearchBar } from "./search-bar";
+import { useAuth } from "@/lib/auth";
 import { useCart, waLink } from "@/lib/cart";
 import { useTheme } from "@/lib/theme";
 import { WHATSAPP_DISPLAY } from "@/lib/products";
@@ -53,6 +54,7 @@ const NAV = [
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { count } = useCart();
+  const { user } = useAuth();
   const wa = waLink("Hi Pobe's Vault, I'd like to ask about an item.");
 
   return (
@@ -80,6 +82,13 @@ export function SiteHeader() {
               {n.label}
             </Link>
           ))}
+          <Link
+            to="/account"
+            activeProps={{ className: "text-gold" }}
+            className="label-xs whitespace-nowrap text-muted-foreground transition-colors hover:text-gold"
+          >
+            {user ? "My Account" : "Log In"}
+          </Link>
         </nav>
 
         <div className="flex items-center justify-end gap-2">
@@ -132,6 +141,14 @@ export function SiteHeader() {
                 {n.label}
               </Link>
             ))}
+            <Link
+              to="/account"
+              onClick={() => setOpen(false)}
+              activeProps={{ className: "text-gold" }}
+              className="label-xs border-b border-border/60 py-3 text-muted-foreground"
+            >
+              {user ? "My Account" : "Log In / Sign Up"}
+            </Link>
             <ThemeToggle showLabel />
             <a
               href={wa}

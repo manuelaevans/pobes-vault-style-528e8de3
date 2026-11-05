@@ -1,11 +1,13 @@
 import { supabase } from "@/integrations/supabase/client";
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 import { PageHeader } from "@/components/page";
+import { useAuth } from "@/lib/auth";
 import { cartWaLink, useCart } from "@/lib/cart";
 import { cedis } from "@/lib/products";
+import { fetchMyProfile } from "@/lib/profile";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({
@@ -61,9 +63,34 @@ const FIELDS: { key: keyof Form; label: string; type?: string }[] = [
 
 function CheckoutPage() {
   const { detailed, subtotal, total, clear } = useCart();
+  const { user } = useAuth();
   const [form, setForm] = useState<Form>(EMPTY);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState(false);
+
+  // Signed-in customers get their saved delivery details filled in.
+  useEffect(() => {
+    if (!user) return;
+    let cancelled = false;
+    fetchMyProfile(user.id)
+      .then((profile) => {
+        if (cancelled || !profile) return;
+        setForm((current) => ({
+          name: current.name || profile.full_name,
+          phone: current.phone || profile.phone,
+          whatsapp: current.whatsapp || profile.whatsapp || profile.phone,
+          email: current.email || profile.email || user.email || "",
+          region: current.region || profile.region,
+          city: current.city || profile.city,
+          address: current.address || profile.address,
+          directions: current.directions || profile.directions,
+        }));
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [user?.id]);
 
   const inputCls =
     "h-11 w-full rounded-sm border border-border bg-card px-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-gold focus:outline-none";
@@ -112,6 +139,7 @@ function CheckoutPage() {
         items,
         total,
         status: "pending",
+        user_id: user?.id ?? null,
       });
       if (error) {
         console.error("Could not save order:", error.message);
