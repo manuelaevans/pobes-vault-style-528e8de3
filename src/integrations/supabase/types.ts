@@ -27,6 +27,7 @@ export type Database = {
           status: string
           total: number
           updated_at: string
+          user_id: string | null
         }
         Insert: {
           created_at?: string
@@ -40,6 +41,7 @@ export type Database = {
           status?: string
           total?: number
           updated_at?: string
+          user_id?: string | null
         }
         Update: {
           created_at?: string
@@ -53,6 +55,7 @@ export type Database = {
           status?: string
           total?: number
           updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -116,6 +119,51 @@ export type Database = {
           sizes?: string[]
           slug?: string
           updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          address: string
+          city: string
+          created_at: string
+          directions: string
+          email: string
+          full_name: string
+          id: string
+          notify_new_drops: boolean
+          phone: string
+          region: string
+          updated_at: string
+          whatsapp: string
+        }
+        Insert: {
+          address?: string
+          city?: string
+          created_at?: string
+          directions?: string
+          email?: string
+          full_name?: string
+          id: string
+          notify_new_drops?: boolean
+          phone?: string
+          region?: string
+          updated_at?: string
+          whatsapp?: string
+        }
+        Update: {
+          address?: string
+          city?: string
+          created_at?: string
+          directions?: string
+          email?: string
+          full_name?: string
+          id?: string
+          notify_new_drops?: boolean
+          phone?: string
+          region?: string
+          updated_at?: string
+          whatsapp?: string
         }
         Relationships: []
       }

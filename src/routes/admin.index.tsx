@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ImagePlus, X } from "lucide-react";
+import { Bell, ImagePlus, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
+import { listDropAlertRecipients } from "@/lib/account.functions";
 import { useCatalog, useRefreshCatalog, type ManagedProduct } from "@/lib/catalog";
 import { PRODUCTS, allCategories, cedis } from "@/lib/products";
 
@@ -214,6 +215,33 @@ function ProductsAdmin() {
     }
     toast.success("Product deleted");
     refresh();
+  };
+
+  const draftDropAlert = async (p: ManagedProduct) => {
+    try {
+      const { emails } = await listDropAlertRecipients();
+      if (emails.length === 0) {
+        toast.info("No customers have turned on new drop notifications yet.");
+        return;
+      }
+      const link = `${window.location.origin}/product/${p.slug}`;
+      const subject = `POBE'S VAULT 🆕 New drop just landed`;
+      const body = [
+        "POBE'S VAULT 🆕",
+        "New drop just landed.",
+        "Check out the latest pieces in the Vault.",
+        "",
+        `${p.name} — ${cedis(p.price)}`,
+        `SHOP NOW → ${link}`,
+      ].join("\n");
+      const gmail = `https://mail.google.com/mail/?view=cm&fs=1&bcc=${encodeURIComponent(
+        emails.join(","),
+      )}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.open(gmail, "_blank", "noopener");
+      toast.success(`Gmail draft opened for ${emails.length} customer(s)`);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not load notification list");
+    }
   };
 
   const toggleStock = async (p: ManagedProduct) => {
@@ -432,6 +460,13 @@ function ProductsAdmin() {
               </p>
             </div>
             <div className="flex gap-2">
+              <button
+                onClick={() => draftDropAlert(p)}
+                title="Draft a new drop email to customers who opted in"
+                className="label-xs inline-flex items-center gap-1 rounded-sm border border-border px-3 py-2 text-gold hover:border-gold"
+              >
+                <Bell className="h-3.5 w-3.5" /> Drop alert
+              </button>
               <button
                 onClick={() => toggleStock(p)}
                 className="label-xs rounded-sm border border-border px-3 py-2"
