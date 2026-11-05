@@ -27,3 +27,5 @@
 - [x] Let the admin choose You May Also Like products and clear automatic recommendations
 - [x] Let the admin create and use custom product categories
 - [x] Restore visible product badges
+- [ ] Customer accounts: sign up, log in, password reset, profile, delivery info, order history, notification settings, account deletion
+- [ ] New-drop email notifications for opted-in customers when a product is published (needs email domain setup)
