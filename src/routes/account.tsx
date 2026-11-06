@@ -97,8 +97,8 @@ function AccountPage() {
             id: user.id,
             ...EMPTY_PROFILE,
             email: user.email ?? "",
-            full_name: (user.user_metadata?.full_name as string) ?? "",
-            phone: (user.user_metadata?.phone as string) ?? "",
+            full_name: (user.user_metadata?.["full_name"] as string) ?? "",
+            phone: (user.user_metadata?.["phone"] as string) ?? "",
           };
         const { data: orderRows } = await supabase
           .from("orders")
