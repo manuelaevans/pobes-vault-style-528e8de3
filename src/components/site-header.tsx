@@ -7,6 +7,11 @@ import { useCart, waLink } from "@/lib/cart";
 import { WHATSAPP_DISPLAY } from "@/lib/products";
 import { BrandMark } from "./brand-mark";
 import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
+
+/* Compact auth buttons: explicit sizing so the pair never has to wrap on small phones. */
+const AUTH_BTN =
+  "grid h-9 place-items-center whitespace-nowrap px-2 text-[10px] font-semibold uppercase tracking-[0.14em] transition-colors sm:px-3 sm:text-[11px] sm:tracking-[0.22em]";
 
 function BackButton() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -23,6 +28,41 @@ function BackButton() {
   );
 }
 
+function AuthButtons({ className }: { className?: string }) {
+  const { user } = useAuth();
+  return (
+    <div className={cn("items-center gap-2", className)}>
+      {user ? (
+        <Link
+          to="/account"
+          className={cn(AUTH_BTN, "bg-gold text-gold-foreground hover:opacity-90")}
+        >
+          My Account
+        </Link>
+      ) : (
+        <>
+          <Link
+            to="/login"
+            className={cn(
+              AUTH_BTN,
+              "border border-border text-foreground hover:border-gold hover:text-gold",
+            )}
+          >
+            Log In
+          </Link>
+          <Link
+            to="/login"
+            search={{ mode: "signup" }}
+            className={cn(AUTH_BTN, "bg-gold text-gold-foreground hover:opacity-90")}
+          >
+            Sign Up
+          </Link>
+        </>
+      )}
+    </div>
+  );
+}
+
 const NAV = [
   { to: "/", label: "Home" },
   { to: "/shop", label: "Shop" },
@@ -36,6 +76,7 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { count } = useCart();
   const { user } = useAuth();
+  const isHome = useRouterState({ select: (s) => s.location.pathname }) === "/";
   const wa = waLink("Hi Pobe's Vault, I'd like to ask about an item.");
 
   return (
@@ -51,26 +92,31 @@ export function SiteHeader() {
           </Link>
         </div>
 
-        <nav className="hidden min-w-0 items-center justify-center gap-7 lg:flex">
-          {NAV.map((n) => (
-            <Link
-              key={n.to}
-              to={n.to}
-              activeOptions={{ exact: n.to === "/" }}
-              activeProps={{ className: "text-gold" }}
-              className="label-xs whitespace-nowrap text-muted-foreground transition-colors hover:text-gold"
-            >
-              {n.label}
-            </Link>
-          ))}
-          <Link
-            to="/account"
-            activeProps={{ className: "text-gold" }}
-            className="label-xs whitespace-nowrap text-muted-foreground transition-colors hover:text-gold"
-          >
-            {user ? "My Account" : "Log In"}
-          </Link>
-        </nav>
+        <div className="flex min-w-0 items-center justify-end lg:justify-center">
+          <AuthButtons className="flex w-full justify-end gap-1.5 lg:hidden" />
+          <nav className="hidden min-w-0 items-center justify-center gap-7 lg:flex">
+            {NAV.map((n) => (
+              <Link
+                key={n.to}
+                to={n.to}
+                activeOptions={{ exact: n.to === "/" }}
+                activeProps={{ className: "text-gold" }}
+                className="label-xs whitespace-nowrap text-muted-foreground transition-colors hover:text-gold"
+              >
+                {n.label}
+              </Link>
+            ))}
+            {!isHome && (
+              <Link
+                to="/account"
+                activeProps={{ className: "text-gold" }}
+                className="label-xs whitespace-nowrap text-muted-foreground transition-colors hover:text-gold"
+              >
+                {user ? "My Account" : "Log In"}
+              </Link>
+            )}
+          </nav>
+        </div>
 
         <div className="flex items-center justify-end gap-2">
           <div className="hidden w-56 xl:block">
@@ -103,9 +149,18 @@ export function SiteHeader() {
         </div>
       </div>
 
-      <div className="mx-auto max-w-[1440px] px-4 pb-3 sm:px-6 xl:hidden">
-        <SearchBar />
+      <div className="mx-auto flex max-w-[1440px] items-center gap-3 px-4 pb-3 sm:px-6 xl:hidden">
+        <div className="min-w-0 flex-1">
+          <SearchBar />
+        </div>
+        {isHome && <AuthButtons className="hidden lg:flex" />}
       </div>
+
+      {isHome && (
+        <div className="mx-auto hidden max-w-[1440px] justify-end px-4 pb-3 sm:px-6 xl:flex xl:px-12">
+          <AuthButtons className="flex" />
+        </div>
+      )}
 
       {open && (
         <div className="border-t border-border bg-background lg:hidden">

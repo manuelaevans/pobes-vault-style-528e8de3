@@ -5,6 +5,12 @@ import { PageHeader } from "@/components/page";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 
+const MODES = ["signin", "signup", "forgot"] as const;
+type Mode = (typeof MODES)[number];
+
+const toMode = (v: unknown): Mode | undefined =>
+  (MODES as readonly string[]).includes(v as string) ? (v as Mode) : undefined;
+
 export const Route = createFileRoute("/login")({
   head: () => ({
     meta: [
@@ -20,15 +26,17 @@ export const Route = createFileRoute("/login")({
       { name: "robots", content: "noindex" },
     ],
   }),
+  validateSearch: (search: Record<string, unknown>): { mode?: Mode | undefined } => ({
+    mode: toMode(search["mode"]),
+  }),
   component: LoginPage,
 });
-
-type Mode = "signin" | "signup" | "forgot";
 
 function LoginPage() {
   const navigate = useNavigate();
   const { user, loading } = useAuth();
-  const [mode, setMode] = useState<Mode>("signin");
+  const { mode: initialMode } = Route.useSearch();
+  const [mode, setMode] = useState<Mode>(initialMode ?? "signin");
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
