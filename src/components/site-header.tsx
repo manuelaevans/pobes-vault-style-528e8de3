@@ -7,6 +7,7 @@ import { useCart, waLink } from "@/lib/cart";
 import { WHATSAPP_DISPLAY } from "@/lib/products";
 import { BrandMark } from "./brand-mark";
 import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
 
 function BackButton() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -23,6 +24,38 @@ function BackButton() {
   );
 }
 
+function AuthButtons({ className }: { className?: string }) {
+  const { user } = useAuth();
+  return (
+    <div className={cn("items-center gap-2", className)}>
+      {user ? (
+        <Link
+          to="/account"
+          className="label-xs grid h-9 place-items-center whitespace-nowrap bg-gold px-3 text-gold-foreground transition-opacity hover:opacity-90"
+        >
+          My Account
+        </Link>
+      ) : (
+        <>
+          <Link
+            to="/login"
+            className="label-xs grid h-9 place-items-center whitespace-nowrap border border-border px-2.5 text-foreground transition-colors hover:border-gold hover:text-gold sm:px-3"
+          >
+            Log In
+          </Link>
+          <Link
+            to="/login"
+            search={{ mode: "signup" }}
+            className="label-xs grid h-9 place-items-center whitespace-nowrap bg-gold px-2.5 text-gold-foreground transition-opacity hover:opacity-90 sm:px-3"
+          >
+            Sign Up
+          </Link>
+        </>
+      )}
+    </div>
+  );
+}
+
 const NAV = [
   { to: "/", label: "Home" },
   { to: "/shop", label: "Shop" },
@@ -36,6 +69,7 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const { count } = useCart();
   const { user } = useAuth();
+  const isHome = useRouterState({ select: (s) => s.location.pathname }) === "/";
   const wa = waLink("Hi Pobe's Vault, I'd like to ask about an item.");
 
   return (
@@ -51,26 +85,33 @@ export function SiteHeader() {
           </Link>
         </div>
 
-        <nav className="hidden min-w-0 items-center justify-center gap-7 lg:flex">
-          {NAV.map((n) => (
-            <Link
-              key={n.to}
-              to={n.to}
-              activeOptions={{ exact: n.to === "/" }}
-              activeProps={{ className: "text-gold" }}
-              className="label-xs whitespace-nowrap text-muted-foreground transition-colors hover:text-gold"
-            >
-              {n.label}
-            </Link>
-          ))}
-          <Link
-            to="/account"
-            activeProps={{ className: "text-gold" }}
-            className="label-xs whitespace-nowrap text-muted-foreground transition-colors hover:text-gold"
-          >
-            {user ? "My Account" : "Log In"}
-          </Link>
-        </nav>
+        <div className="flex min-w-0 items-center justify-end lg:justify-center">
+          <AuthButtons className="flex w-full flex-wrap justify-end gap-1.5 lg:hidden" />
+          <nav className="hidden min-w-0 items-center justify-center gap-7 lg:flex">
+            {NAV.map((n) => (
+              <Link
+                key={n.to}
+                to={n.to}
+                activeOptions={{ exact: n.to === "/" }}
+                activeProps={{ className: "text-gold" }}
+                className="label-xs whitespace-nowrap text-muted-foreground transition-colors hover:text-gold"
+              >
+                {n.label}
+              </Link>
+            ))}
+            {isHome ? (
+              <AuthButtons className="flex" />
+            ) : (
+              <Link
+                to="/account"
+                activeProps={{ className: "text-gold" }}
+                className="label-xs whitespace-nowrap text-muted-foreground transition-colors hover:text-gold"
+              >
+                {user ? "My Account" : "Log In"}
+              </Link>
+            )}
+          </nav>
+        </div>
 
         <div className="flex items-center justify-end gap-2">
           <div className="hidden w-56 xl:block">
