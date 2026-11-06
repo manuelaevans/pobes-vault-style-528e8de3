@@ -26,8 +26,8 @@ export const Route = createFileRoute("/login")({
       { name: "robots", content: "noindex" },
     ],
   }),
-  validateSearch: (search: Record<string, unknown>): { mode?: Mode } => ({
-    mode: toMode(search.mode),
+  validateSearch: (search: Record<string, unknown>): { mode?: Mode | undefined } => ({
+    mode: toMode(search["mode"]),
   }),
   component: LoginPage,
 });
