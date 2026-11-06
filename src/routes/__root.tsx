@@ -14,7 +14,6 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { CartProvider } from "../lib/cart";
 import { CatalogProvider } from "../lib/catalog";
-import { ThemeProvider } from "../lib/theme";
 import { SiteHeader } from "../components/site-header";
 import { SiteFooter } from "../components/site-footer";
 import { RouteLoader } from "../components/route-loader";
@@ -142,8 +141,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <CatalogProvider>
+      <CatalogProvider>
         <CartProvider>
            <RouteLoader />
           <div className="flex min-h-screen flex-col">
@@ -157,8 +155,7 @@ function RootComponent() {
           <FloatingWhatsApp />
           <Toaster />
         </CartProvider>
-        </CatalogProvider>
-      </ThemeProvider>
+      </CatalogProvider>
     </QueryClientProvider>
   );
 }

@@ -1,10 +1,9 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { ArrowLeft, Menu, MessageCircle, Moon, ShoppingBag, Sun, X } from "lucide-react";
+import { ArrowLeft, Menu, MessageCircle, ShoppingBag, X } from "lucide-react";
 import { useState } from "react";
 import { SearchBar } from "./search-bar";
 import { useAuth } from "@/lib/auth";
 import { useCart, waLink } from "@/lib/cart";
-import { useTheme } from "@/lib/theme";
 import { WHATSAPP_DISPLAY } from "@/lib/products";
 import { BrandMark } from "./brand-mark";
 import { Button } from "./ui/button";
@@ -20,24 +19,6 @@ function BackButton() {
       className="grid h-9 w-9 shrink-0 place-items-center border border-border transition-colors hover:border-gold hover:text-gold"
     >
       <ArrowLeft className="h-4 w-4" />
-    </button>
-  );
-}
-
-function ThemeToggle({ showLabel = false }: { showLabel?: boolean }) {
-  const { theme, setTheme } = useTheme();
-  const next = theme === "dark" ? "light" : "dark";
-  return (
-    <button
-      onClick={() => setTheme(next)}
-      aria-label={`Switch to ${next} appearance`}
-      title={`Switch to ${next} appearance`}
-      className={showLabel
-        ? "label-xs flex w-full items-center gap-3 py-3 text-muted-foreground transition-colors hover:text-gold"
-        : "grid h-9 w-9 shrink-0 place-items-center border border-border transition-colors hover:border-gold hover:text-gold"}
-    >
-      {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-      {showLabel && <span>Appearance</span>}
     </button>
   );
 }
@@ -149,7 +130,6 @@ export function SiteHeader() {
             >
               {user ? "My Account" : "Log In / Sign Up"}
             </Link>
-            <ThemeToggle showLabel />
             <a
               href={wa}
               target="_blank"
