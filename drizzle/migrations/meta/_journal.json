@@ -8,6 +8,13 @@
       "when": 1793922341844,
       "tag": "0000_customer_profiles_and_order_ownership",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794010044828,
+      "tag": "0001_admins_read_profiles",
+      "breakpoints": true
     }
   ]
 }
