@@ -4,7 +4,6 @@ import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
-import { listDropAlertRecipients } from "@/lib/account.functions";
 import { useCatalog, useRefreshCatalog, type ManagedProduct } from "@/lib/catalog";
 import { PRODUCTS, allCategories, cedis } from "@/lib/products";
 
@@ -219,7 +218,12 @@ function ProductsAdmin() {
 
   const draftDropAlert = async (p: ManagedProduct) => {
     try {
-      const { emails } = await listDropAlertRecipients();
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("email")
+        .eq("notify_new_drops", true);
+      if (error) throw new Error(error.message);
+      const emails = (data ?? []).map((r) => r.email).filter(Boolean);
       if (emails.length === 0) {
         toast.info("No customers have turned on new drop notifications yet.");
         return;
