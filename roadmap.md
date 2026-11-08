@@ -1,6 +1,6 @@
 # Roadmap
 
-- [ ] Fix mobile Gmail composing for drop alerts and receipts; preserve full draft and manual send.
+- [x] Fix mobile Gmail composing for drop alerts and receipts; preserve full draft and manual send (admin draft preview and compose links verified; physical Gmail app handoff needs phone check).
 
 - [x] Redesign the storefront for a more attractive, premium look
 - [x] Create and apply a distinctive Pobe's Vault logo
