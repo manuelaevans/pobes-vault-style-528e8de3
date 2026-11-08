@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useCatalog, useRefreshCatalog, type ManagedProduct } from "@/lib/catalog";
 import { PRODUCTS, allCategories, cedis } from "@/lib/products";
+import { EmailDraftDialog } from "@/components/email-draft-dialog";
+import type { EmailDraft } from "@/lib/email-draft";
 
 export const Route = createFileRoute("/admin/")({
   head: () => ({
@@ -95,6 +97,7 @@ function ProductsAdmin() {
   const [busy, setBusy] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [emailDraft, setEmailDraft] = useState<EmailDraft | null>(null);
   const fileInput = useRef<HTMLInputElement>(null);
 
   const input =
@@ -238,11 +241,7 @@ function ProductsAdmin() {
         `${p.name} — ${cedis(p.price)}`,
         `SHOP NOW → ${link}`,
       ].join("\n");
-      const gmail = `https://mail.google.com/mail/?view=cm&fs=1&bcc=${encodeURIComponent(
-        emails.join(","),
-      )}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.open(gmail, "_blank", "noopener");
-      toast.success(`Gmail draft opened for ${emails.length} customer(s)`);
+      setEmailDraft({ bcc: emails.join(","), subject, body });
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Could not load notification list");
     }
@@ -262,6 +261,7 @@ function ProductsAdmin() {
 
   return (
     <div className="space-y-6">
+      <EmailDraftDialog draft={emailDraft} onClose={() => setEmailDraft(null)} />
       {usingFallback && (
         <div className="rounded-sm border border-gold/50 bg-card p-4">
           <h2 className="font-display text-lg">Import your current catalogue</h2>
@@ -464,13 +464,13 @@ function ProductsAdmin() {
               </p>
             </div>
             <div className="flex gap-2">
-              <button
+              <Button variant="outline" size="sm"
                 onClick={() => draftDropAlert(p)}
                 title="Draft a new drop email to customers who opted in"
                 className="label-xs inline-flex items-center gap-1 rounded-sm border border-border px-3 py-2 text-gold hover:border-gold"
               >
                 <Bell className="h-3.5 w-3.5" /> Drop alert
-              </button>
+              </Button>
               <button
                 onClick={() => toggleStock(p)}
                 className="label-xs rounded-sm border border-border px-3 py-2"

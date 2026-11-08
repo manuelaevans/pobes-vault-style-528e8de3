@@ -1,5 +1,7 @@
 # Roadmap
 
+- [ ] Fix mobile Gmail composing for drop alerts and receipts; preserve full draft and manual send.
+
 - [x] Redesign the storefront for a more attractive, premium look
 - [x] Create and apply a distinctive Pobe's Vault logo
 - [x] Show the logo during page loading and navigation
