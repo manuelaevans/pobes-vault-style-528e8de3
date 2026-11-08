@@ -76,8 +76,8 @@ function LoginPage() {
           },
         });
         if (error) throw error;
-        toast.success("Account created. Check your email to confirm, then sign in.");
-        setMode("signin");
+        toast.success("Account created. Welcome to the Vault!");
+        navigate({ to: "/account" });
       } else {
         const { error } = await supabase.auth.signInWithPassword({
           email: email.trim(),
