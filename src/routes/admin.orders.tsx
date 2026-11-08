@@ -5,6 +5,9 @@ import { Mail } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { cedis } from "@/lib/products";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { EmailDraftDialog } from "@/components/email-draft-dialog";
+import type { EmailDraft } from "@/lib/email-draft";
 
 export const Route = createFileRoute("/admin/orders")({
   head: () => ({
@@ -56,7 +59,7 @@ function receiptDraft(order: Order) {
     "Thank you for shopping with Pobe's Vault.",
   ].join("\n");
   return email
-    ? `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    ? { to: email, subject, body }
     : null;
 }
 
@@ -74,6 +77,7 @@ async function fetchOrders(): Promise<Order[]> {
 }
 
 function OrdersAdmin() {
+  const [emailDraft, setEmailDraft] = useState<EmailDraft | null>(null);
   const qc = useQueryClient();
   const { data: orders = [], isLoading, error } = useQuery({
     queryKey: ["admin", "orders"],
@@ -112,6 +116,7 @@ function OrdersAdmin() {
 
   return (
     <div className="space-y-4">
+      <EmailDraftDialog draft={emailDraft} onClose={() => setEmailDraft(null)} />
       <p className="text-xs text-muted-foreground">{orders.length} order(s)</p>
       {orders.map((o) => (
         <article key={o.id} className="rounded-sm border border-border bg-card p-4">
@@ -149,10 +154,8 @@ function OrdersAdmin() {
                 WhatsApp
               </a>
               {receiptDraft(o) ? (
-                <Button asChild variant="outline" size="sm" title="Draft order receipt in Gmail">
-                  <a href={receiptDraft(o) ?? "#"} target="_blank" rel="noreferrer">
+                <Button variant="outline" size="sm" title="Draft order receipt in Gmail" onClick={() => setEmailDraft(receiptDraft(o))}>
                     <Mail /> Email receipt
-                  </a>
                 </Button>
               ) : (
                 <Button variant="outline" size="sm" disabled title="This older order has no email address">
