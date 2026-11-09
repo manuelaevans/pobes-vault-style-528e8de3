@@ -1,5 +1,7 @@
 # Roadmap
 
+- [ ] Require signup email confirmation and return verification links to pobesvault.com (hosted confirmation and allowed redirect settings need checking).
+
 - [x] Fix mobile Gmail composing for drop alerts and receipts; preserve full draft and manual send (admin draft preview and compose links verified; physical Gmail app handoff needs phone check).
 
 - [x] Redesign the storefront for a more attractive, premium look
